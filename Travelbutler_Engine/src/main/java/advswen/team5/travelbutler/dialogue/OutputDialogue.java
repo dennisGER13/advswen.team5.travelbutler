@@ -22,6 +22,7 @@ public class OutputDialogue {
 		
 	}
 
+	//OutputDialog erstellen
 	private void initializeOutputWindow() {
 		
 		frmOutputWindow = new JFrame();
