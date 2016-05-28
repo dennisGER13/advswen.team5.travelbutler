@@ -1,0 +1,3 @@
+nyt.api.search.key	=	
+bing.api.search.key =   
+maps.google.api.key =	
