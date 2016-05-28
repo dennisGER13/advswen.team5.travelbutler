@@ -42,6 +42,7 @@ public class OutputDialogue {
 		
 	}
 	
+	
 	public void run() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
