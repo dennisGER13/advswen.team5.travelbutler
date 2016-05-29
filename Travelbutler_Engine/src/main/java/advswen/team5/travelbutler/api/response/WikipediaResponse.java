@@ -1,6 +1,6 @@
 package advswen.team5.travelbutler.api.response;
 
-public class WikipediaResponse implements ApiResponse {
+public class WikipediaResponse implements IAPIResponse {
 	private String title;
 	private String content;
 	private boolean missing = false;
@@ -10,6 +10,8 @@ public class WikipediaResponse implements ApiResponse {
 		this.title = title;
 		this.content = content;
 		
+		// If no content is returend the page is not existing
+		// TODO: Check for "Missing"-Attribute in response
 		if(content == null || content.length() > 1){
 			this.missing = true;
 		}
