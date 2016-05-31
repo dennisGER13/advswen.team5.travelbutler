@@ -32,6 +32,5 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/User/SkyDrive/Dokumente/Studium/Hochschule Ravensburg-Weingarten/Master/Semester 1/Advanced Software Engineering/Class Sprint - Project Information Butler/swingx-0.9.4.jar/swingx-0.9.4.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

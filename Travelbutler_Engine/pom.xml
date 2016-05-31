@@ -31,6 +31,13 @@
     		<version>3.1</version>
 		</dependency>
 		
+		<!-- http://mvnrepository.com/artifact/org.swinglabs/swingx -->
+		<dependency>
+    		<groupId>org.swinglabs</groupId>
+    		<artifactId>swingx</artifactId>
+    		<version>0.9.4</version>
+		</dependency>
+				
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
