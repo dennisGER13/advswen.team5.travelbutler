@@ -42,13 +42,5 @@ public class APIContainerTwitter implements IAPIContainer{
 		
 		return null;
 	}
-	
-	public void twitterSearch(){
 
-//	  if (args.length < 1) {
-//          System.out.println("java twitter4j.examples.search.SearchTweets [query]");
-//          System.exit(-1);
-//      }
-      
-	}
 }
