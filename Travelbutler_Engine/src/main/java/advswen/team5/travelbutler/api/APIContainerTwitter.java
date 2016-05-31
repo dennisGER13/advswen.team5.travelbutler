@@ -13,7 +13,7 @@ import twitter4j.TwitterFactory;
 
 public class APIContainerTwitter implements IAPIContainer{
 
-	private InputDialogue input = new InputDialogue();
+//	private InputDialogue input = new InputDialogue();
 	
 	
 	@Override
@@ -22,9 +22,10 @@ public class APIContainerTwitter implements IAPIContainer{
 		Twitter twitter = new TwitterFactory().getInstance();
 	      try {
 	    	  
-	    	  input.setTravelDestination();
+//	    	  input.setTravelDestination();
+//	    	  input.getTravelDestination()
 	    	  
-	          Query query = new Query(input.getTravelDestination());
+	          Query query = new Query(requestedString);
 	          QueryResult result;
 	          do {
 	              result = twitter.search(query);
