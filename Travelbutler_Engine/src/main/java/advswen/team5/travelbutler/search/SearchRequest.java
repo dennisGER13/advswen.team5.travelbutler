@@ -4,13 +4,17 @@
 // Last Changed: $Date: 2016/05/24 18:19:00 $
 // Author:       <A HREF="mailto:[al-161385@hs-weingarten.de]">[Alexander Lohr]</A>
 //**************************************************************************************
-//Description: 	Klasse für Aufnahme der Nutzeranfrage und zum initialisieren der Search
+//Description: 	Klasse fï¿½r Aufnahme der Nutzeranfrage und zum initialisieren der Search
 //				Engine. 
 //**************************************************************************************
    
 package advswen.team5.travelbutler.search;
 
 import advswen.team5.travelbutler.strategy.ConcreteStrategyFoo;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class SearchRequest {
 	private String requestString;
@@ -28,17 +32,52 @@ public class SearchRequest {
 		this.search();
 		
 	}
-	//search() führt eine Grain Prüfung durch. Der Grain wird durch die Nutzereingabe bestimmt. Bsp. "Frankreich" = "Land"
-	//Anschließend wird die suche gestartet, der Grain bestimmt welche Strategie gewählt wird.
+	//search() fï¿½hrt eine Grain Prï¿½fung durch. Der Grain wird durch die Nutzereingabe bestimmt. Bsp. "Frankreich" = "Land"
+	//Anschlieï¿½end wird die suche gestartet, der Grain bestimmt welche Strategie gewï¿½hlt wird.
 	public String search(){
 		if(grain == GrainEnum.foo){
 			searchengine.setStrategy(new ConcreteStrategyFoo());
 		}
 		return searchengine.execute(requestString);
 	}
-	//Aktuell nur mit Dummy Code versehen
-	public GrainEnum grainDetection(){
-		return grain = GrainEnum.foo;
+	
+	
+	public GrainEnum grainDetection() {
+		// String csvFile = "src/lands.CSV";
+		BufferedReader br = null;
+		String line = "";
+		String cvsSplitBy = ";";
+		String searchString = this.requestString;
+
+		try {
+
+			br = new BufferedReader(new FileReader("C:/Users/Alexander/Documents/Workspace/grain/src/grain/lands.CSV"));
+			while ((line = br.readLine()) != null) {
+
+				String[] country = line.split(cvsSplitBy);
+				for (String foo : country) {
+					// System.out.println(foo);
+					if (searchString.equals(foo)) {
+						System.out.println("Done");
+						return GrainEnum.land;
+					}
+				}
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		System.out.println("Done");
+		return GrainEnum.foo;
 	}
 	
 	public void languageDetection(){
