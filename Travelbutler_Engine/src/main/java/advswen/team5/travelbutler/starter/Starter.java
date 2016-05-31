@@ -4,9 +4,10 @@ import advswen.team5.travelbutler.dialogue.*;
 
 public class Starter {
 
-	public static void main(String[] args) {
+	public static void main(String[] args){
+		
 		InputDialogue inputdialogue = new InputDialogue();
 		inputdialogue.run();
+	
 	}
-
 }
