@@ -1,3 +1,4 @@
-nyt.api.search.key	=	
+nyt.api.search.key	=	3454fa16797048ab9b443978ed1aca1a
 bing.api.search.key =   
-maps.google.api.key =	
+maps.google.api.key =	AIzaSyDCfERTe9pquhxM38YqEhayDdjemtKBD0c
+twitter.api.key		=

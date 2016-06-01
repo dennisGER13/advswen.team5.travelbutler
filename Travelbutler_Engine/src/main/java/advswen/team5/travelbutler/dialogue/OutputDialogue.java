@@ -14,8 +14,6 @@ public class OutputDialogue {
 	//Elemente des Outputdialogs
 	private JFrame frmOutputWindow;
 	private JLabel lblInputString;
-	private InputDialogue inputDialogue;
-	
 	
 	public OutputDialogue(){
 		
@@ -33,16 +31,7 @@ public class OutputDialogue {
 		frmOutputWindow.getContentPane().setLayout(null);
 		centreWindow(frmOutputWindow);
 		
-		//InputString auf der Ergebnisseite anzeigen
-//		lblInputString = new JLabel();
-//		inputDialogue = new InputDialogue();
-//		inputDialogue.setTravelDestination();
-//		lblInputString.setText(inputDialogue.getTravelDestination());
-//		lblInputString.setBounds(20, 0, 500, 30);
-//		frmOutputWindow.add(lblInputString);
-		
 	}
-	
 	
 	public void run() {
 		EventQueue.invokeLater(new Runnable() {

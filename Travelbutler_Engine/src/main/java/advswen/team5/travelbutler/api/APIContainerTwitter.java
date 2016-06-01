@@ -29,10 +29,10 @@ public class APIContainerTwitter implements IAPIContainer{
 		
 		//Twitter-API-Keys müssen anstelle der "null" eingesetzt werden!!!
 		cb.setDebugEnabled(true)
-			.setOAuthConsumerKey(null)
-			.setOAuthConsumerSecret(null)
-			.setOAuthAccessToken(null)
-			.setOAuthAccessTokenSecret(null);
+			.setOAuthConsumerKey("cwIHzbPZzoe097AeWe7w5PnA2")
+			.setOAuthConsumerSecret("HwCns5LD0NbvspTunsyEr0E4UJvXcuC0Qomh7SXiDfdi5dB59v")
+			.setOAuthAccessToken("3040667098-r6eZUatWvdaiF618uVUxVPTSsRmyTjw5ewOsJgh")
+			.setOAuthAccessTokenSecret("el1ZH6dEhniERoCCjhFIO6mCzM5ucYGLApUE7mAR29U9T");
 		
 		Twitter twitter = new TwitterFactory(cb.build()).getInstance();
 	    
