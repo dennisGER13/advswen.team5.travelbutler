@@ -18,10 +18,12 @@ import advswen.team5.travelbutler.api.response.WikipediaResponse;
 public class APIContainerWikipedia implements IAPIContainer {
 
 	@Override
-	public IAPIResponse processSearch(String requestString) {
+	public WikipediaResponse processSearch(String requestString) {
 		Gson gson = new Gson();
 		
 		WikipediaResponse response = gson.fromJson(getPageAsJson(requestString), WikipediaResponse.class);
+		
+		System.out.println(response.getExtract());
 		return response;
 
 	}
@@ -30,7 +32,7 @@ public class APIContainerWikipedia implements IAPIContainer {
 		InputStream in = null;
 		JsonObject page = null;
 		try {
-			in = new URL("https://de.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&indexpageids=1&titles="+ requestString +"&exintro=1&explaintext=1").openStream();
+			in = new URL("https://de.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&indexpageids=1&titles=" + requestString + "&utf8=1&exintro=1&explaintext=1").openStream();
 			JsonParser parser = new JsonParser();
 			JsonObject o = parser.parse(IOUtils.toString(in)).getAsJsonObject().getAsJsonObject("query");
 			

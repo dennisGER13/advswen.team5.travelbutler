@@ -1,11 +1,13 @@
 package advswen.team5.travelbutler.api.response;
 
 public class Response {
+	private String destination = null;
 	private WikipediaResponse wikipediaResponse = null;
 	private TwitterResponse twitterResponse = null;
 	
-	public Response() {
-
+	public Response(String destination) {
+		super();
+		this.destination = destination;
 	}
 
 	public WikipediaResponse getWikipediaResponse() {
@@ -31,6 +33,10 @@ public class Response {
 
 	public void setTwitterResponse(TwitterResponse twitterResponse) {
 		this.twitterResponse = twitterResponse;
+	}
+
+	public String getDestination() {
+		return destination;
 	}
 	
 	
