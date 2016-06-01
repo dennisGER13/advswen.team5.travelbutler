@@ -1,12 +1,3 @@
-// *************************************************************************************
-// File:         [APIContainerFoo.java]
-// Created:      [2016/05/24 Tuesday]
-// Last Changed: $Date: 2016/05/24 18:19:00 $
-// Author:       <A HREF="mailto:[al-161385@hs-weingarten.de]">[Alexander Lohr]</A>
-//**************************************************************************************
-//Description: 	Klasse f�r die Beschaffung von Informationen durch eine API
-//				
-//**************************************************************************************
 package advswen.team5.travelbutler.api;
 
 import java.io.IOException;
@@ -24,7 +15,7 @@ import com.google.gson.JsonParser;
 import advswen.team5.travelbutler.api.response.IAPIResponse;
 import advswen.team5.travelbutler.api.response.WikipediaResponse;
 
-public class WikipediaContainer implements IAPIContainer {
+public class APIContainerWikipedia implements IAPIContainer {
 
 	@Override
 	public IAPIResponse processSearch(String requestString) {
