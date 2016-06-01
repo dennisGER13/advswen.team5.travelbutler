@@ -1,51 +1,36 @@
 package advswen.team5.travelbutler.api.response;
 
-public class TwitterResponse implements IAPIResponse{
+import java.util.List;
 
-	private String user;
-	private String tweet;
+import twitter4j.Status;
+import twitter4j.api.TweetsResources;
+
+public class TwitterResponse implements IAPIResponse{
+	
+	private List <Status> tweets;
 	private boolean missing = false;
 	
-	
-	public TwitterResponse(String user, String tweet, boolean missing) {
-		super();
-		this.user = user;
-		this.tweet = tweet;
+	public TwitterResponse(){
 		
-		if (tweet == null || tweet.length() > 1) {
+		this.tweets = tweets;
+		
+		//Bei leerer Liste keine Ergebnisse zu Tweets
+		if(tweets.isEmpty()){
+		
 			this.missing = true;
+		 
 		}
-
+		
 	}
-
-
-	public String getUser() {
-		return user;
+	
+	public void setMissing(boolean missing) {
+		this.missing = missing;
 	}
-
-
-	public void setUser(String user) {
-		this.user = user;
-	}
-
-
-	public String getTweet() {
-		return tweet;
-	}
-
-
-	public void setTweet(String tweet) {
-		this.tweet = tweet;
-	}
-
 
 	public boolean isMissing() {
 		return missing;
 	}
-
-
-	public void setMissing(boolean missing) {
-		this.missing = missing;
-	}
+	
+	
 	
 }

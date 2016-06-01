@@ -18,12 +18,12 @@ public class APIContainerTwitter implements IAPIContainer{
 	@Override
 	public IAPIResponse processSearch(String requestedString) {
 		
-		TwitterResponse response = null;
+		TwitterResponse response = new TwitterResponse();
 		
 		return response;
 	}
 	
-	public String twitterFeed(String requestedString){
+	public List twitterFeed(String requestedString){
 		
 		ConfigurationBuilder cb = new ConfigurationBuilder();
 		
@@ -36,6 +36,8 @@ public class APIContainerTwitter implements IAPIContainer{
 		
 		Twitter twitter = new TwitterFactory(cb.build()).getInstance();
 	    
+		List<Status> tweets = null;
+		
 		try {
 	    	  
 	          Query query = new Query(requestedString);
@@ -43,7 +45,7 @@ public class APIContainerTwitter implements IAPIContainer{
 	          
 	          do {
 	              result = twitter.search(query);
-	              List<Status> tweets = result.getTweets();
+	              tweets = result.getTweets();
 	             
 	              for (Status tweet : tweets) {
 	                  System.out.println(tweet.getUser().getScreenName() + " ------ " + tweet.getText());
@@ -58,7 +60,7 @@ public class APIContainerTwitter implements IAPIContainer{
 	          System.exit(-1);
 	      }
 		
-		return null;
+		return  tweets;
 		
 	}
 
