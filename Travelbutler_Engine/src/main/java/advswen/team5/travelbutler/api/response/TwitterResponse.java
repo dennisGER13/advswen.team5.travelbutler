@@ -31,6 +31,4 @@ public class TwitterResponse implements IAPIResponse{
 		return missing;
 	}
 	
-	
-	
 }
