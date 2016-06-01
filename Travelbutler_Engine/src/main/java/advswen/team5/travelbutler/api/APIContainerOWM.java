@@ -12,10 +12,6 @@ import net.aksingh.owmjapis.OpenWeatherMap.Language;
 import net.aksingh.owmjapis.OpenWeatherMap.Units;
 
 public class APIContainerOWM implements IAPIContainer {
-	public static void main(String[] args) {
-		APIContainerOWM test = new APIContainerOWM();
-		test.processSearch("London");
-	}
 	
 	@Override
 	public IAPIResponse processSearch(String requestString) {
@@ -42,6 +38,7 @@ public class APIContainerOWM implements IAPIContainer {
     CurrentWeather cwd = owm.currentWeatherByCityName(requestString);
 
 	
+
     //printing city name from the retrieved data
     System.out.println("City: " + cwd.getCityName());
 
