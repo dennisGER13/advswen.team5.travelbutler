@@ -93,16 +93,11 @@
 			<version>2.22.1</version>
 		</dependency>
 
-		<!-- <dependency>
-			<groupId>info.bliki.wiki</groupId>
-			<artifactId>bliki-core</artifactId>
-			<version>3.1.0</version>
-		</dependency> -->
-
+		<!-- http://mvnrepository.com/artifact/commons-io/commons-io -->
 		<dependency>
-			<groupId>com.bitplan</groupId>
-			<artifactId>mediawiki-japi</artifactId>
-			<version>0.0.14</version>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.5</version>
 		</dependency>
 
 		<dependency>
