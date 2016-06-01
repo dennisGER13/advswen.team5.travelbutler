@@ -37,7 +37,7 @@ public class InputDialogue extends JFrame implements ActionListener {
 	private JXDatePicker pickerStartDate;
 	private JXDatePicker pickerEndDate;
 	
-	//Attribute mit Getter und Setter, um Eingaben verwenden zu können
+	//Attribute mit Getter und Setter, um Eingaben verwenden zu kï¿½nnen
 	private Date startDate;
 	private Date endDate;
 	private String travelDestination;
@@ -45,17 +45,17 @@ public class InputDialogue extends JFrame implements ActionListener {
 	//Aufruf des OutputFensters
 	private OutputDialogue outputDialogue;
 	
-	//Aufruf der SearchRequest mit Übergabe des InputString 
+	//Aufruf der SearchRequest mit ï¿½bergabe des InputString 
 	private SearchRequest request;
 	
-	//Constructor, der die GUI initialisiert über die Methode inizializeWindow();
+	//Constructor, der die GUI initialisiert ï¿½ber die Methode inizializeWindow();
 	public InputDialogue(){
 		
 		initializeInputWindow();
 		
 	}
 
-	//Bauplan für die GUI mit Anordnung der Button, Label und Eingabefelder
+	//Bauplan fï¿½r die GUI mit Anordnung der Button, Label und Eingabefelder
 	private void initializeInputWindow() {
 
 		frmInputWindow = new JFrame();
@@ -113,7 +113,7 @@ public class InputDialogue extends JFrame implements ActionListener {
 		
 	}
 	
-	//Auführen des Programms
+	//Aufï¿½hren des Programms
 	public void run() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -141,8 +141,8 @@ public class InputDialogue extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		if(e.getActionCommand().equals("SEARCH")){
-		
-//			Methode, die nach der Suchbetätigung weitere Operationen in die Wege leiten soll
+			
+//			Methode, die nach der Suchbetï¿½tigung weitere Operationen in die Wege leiten soll
 //			doSomething();
 			
 			//Attribute setzen, um keine null-Werte zu bekommen
@@ -150,20 +150,20 @@ public class InputDialogue extends JFrame implements ActionListener {
 //			setStartDate();
 //			setEndDate();
 			
-			//String travelDestination an SearchRequest übergeben!!			
+			//String travelDestination an SearchRequest ï¿½bergeben!!			
 			request = new SearchRequest(travelDestination);
 			System.out.println(request.search());
 
 //			System.out.println("Sie haben die Suche gestartet!");
 //			System.out.println("Sucheingaben:");
-//			System.out.println("Reiseziel: " + travelDestination);
+			System.out.println("Reiseziel: " + travelDestination);
 //			System.out.println("Check-In: " + startDate);
 //			System.out.println("Check-Out: " + endDate);	
 			
-			//Fenster nach Sucheingabe schließen!!
+			//Fenster nach Sucheingabe schlieï¿½en!!
 			frmInputWindow.dispose();
 			
-			//Neues Fenster mit Suchergebnissen öffnen!!
+			//Neues Fenster mit Suchergebnissen ï¿½ffnen!!
 			outputDialogue = new OutputDialogue();
 			outputDialogue.run();
 		

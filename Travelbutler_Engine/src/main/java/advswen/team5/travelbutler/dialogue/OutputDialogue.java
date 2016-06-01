@@ -7,6 +7,7 @@ import java.awt.Window;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 public class OutputDialogue {
 
@@ -33,12 +34,12 @@ public class OutputDialogue {
 		centreWindow(frmOutputWindow);
 		
 		//InputString auf der Ergebnisseite anzeigen
-		lblInputString = new JLabel();
-		inputDialogue = new InputDialogue();
-		inputDialogue.setTravelDestination();
-		lblInputString.setText(inputDialogue.getTravelDestination());
-		lblInputString.setBounds(20, 0, 500, 30);
-		frmOutputWindow.add(lblInputString);
+//		lblInputString = new JLabel();
+//		inputDialogue = new InputDialogue();
+//		inputDialogue.setTravelDestination();
+//		lblInputString.setText(inputDialogue.getTravelDestination());
+//		lblInputString.setBounds(20, 0, 500, 30);
+//		frmOutputWindow.add(lblInputString);
 		
 	}
 	
