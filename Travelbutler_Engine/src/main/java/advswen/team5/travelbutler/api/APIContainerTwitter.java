@@ -3,6 +3,7 @@ package advswen.team5.travelbutler.api;
 import java.util.List;
 
 import advswen.team5.travelbutler.api.response.IAPIResponse;
+import advswen.team5.travelbutler.api.response.TwitterResponse;
 import advswen.team5.travelbutler.dialogue.InputDialogue;
 import twitter4j.Query;
 import twitter4j.QueryResult;
@@ -17,6 +18,13 @@ public class APIContainerTwitter implements IAPIContainer{
 	@Override
 	public IAPIResponse processSearch(String requestedString) {
 		
+		TwitterResponse response = null;
+		
+		return response;
+	}
+	
+	public String twitterFeed(String requestedString){
+		
 		ConfigurationBuilder cb = new ConfigurationBuilder();
 		
 		//Twitter-API-Keys müssen anstelle der "null" eingesetzt werden!!!
@@ -27,7 +35,8 @@ public class APIContainerTwitter implements IAPIContainer{
 			.setOAuthAccessTokenSecret(null);
 		
 		Twitter twitter = new TwitterFactory(cb.build()).getInstance();
-	      try {
+	    
+		try {
 	    	  
 	          Query query = new Query(requestedString);
 	          QueryResult result;
@@ -49,8 +58,8 @@ public class APIContainerTwitter implements IAPIContainer{
 	          System.exit(-1);
 	      }
 		
-	      //Rückgabewert muss ausgewählt werden!!!
 		return null;
+		
 	}
 
 }
