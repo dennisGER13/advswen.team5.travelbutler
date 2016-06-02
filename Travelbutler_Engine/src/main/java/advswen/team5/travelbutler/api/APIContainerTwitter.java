@@ -41,8 +41,8 @@ public class APIContainerTwitter implements IAPIContainer{
 		List<Status> usedTweets = new ArrayList<Status>();
 		
 		try {
-	    	  
-	          Query query = new Query(requestedString);
+	    	  String queryString = requestedString + " Reise OR Urlaub " + requestedString + " -filter:links"; 
+	          Query query = new Query(queryString);
 	          query.setLang("de");
 	          QueryResult result;
 	          
@@ -62,7 +62,6 @@ public class APIContainerTwitter implements IAPIContainer{
 	      } catch (TwitterException te) {
 	          te.printStackTrace();
 	          System.out.println("Failed to search tweets: " + te.getMessage());
-	          System.exit(-1);
 	      }
 		
 		return  usedTweets;

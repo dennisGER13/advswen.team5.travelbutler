@@ -4,8 +4,10 @@ import java.awt.Color;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +27,7 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.GrayColor;
@@ -40,8 +43,13 @@ public class PDFGenerator {
 	private Response response;
 
 	private static Font catFont = new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD);
+	private static Font subcatFont = new Font(Font.FontFamily.HELVETICA, 13, Font.BOLD);
 	private static Font normalFont = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL);
+	private static Font smallFont = new Font(Font.FontFamily.HELVETICA, 8, Font.NORMAL, BaseColor.WHITE);
 	private static Font highlightFont = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD, BaseColor.WHITE);
+	
+	private static DateFormat df = DateFormat.getDateTimeInstance( 	/* dateStyle */ DateFormat.MEDIUM,
+	                                     							/* timeStyle */ DateFormat.SHORT );
 
 	public PDFGenerator(Response response) {
 		this.response = response;
@@ -63,25 +71,31 @@ public class PDFGenerator {
 		addTweets(document, 10);
 
 		document.close();
+		System.out.println("Finished");
 	}
 
 	private void addWikipediaInfo(Document document) throws DocumentException {
-		if (response.getWikipediaResponse().isMissing())
+		if (response.getWikipediaResponse() == null || response.getWikipediaResponse().isMissing())
 			return;
 
-		Paragraph wikipedia = new Paragraph(response.getWikipediaResponse().getExtract(), normalFont);
+		Paragraph wikipedia = new Paragraph();
+		wikipedia.add(new Paragraph("Das erwartet Sie vor Ort", subcatFont));
+		wikipedia.add(new Paragraph(response.getWikipediaResponse().getExtract(), normalFont));
 		document.add(wikipedia);
 	}
 
-	private void addTweets(Document document, int numOfTweets) throws DocumentException {
-		if (response.getTwitterResponse().isMissing())
+	private void addTweets(Document document, int numOfTweets) throws DocumentException, MalformedURLException, IOException {
+		if (response.getTwitterResponse() == null || response.getTwitterResponse().isMissing()){
+			System.out.println("No Tweets");
 			return;
+		}
 
 		Paragraph twitter = new Paragraph();
 		addEmptyLine(twitter, 1);
+		twitter.add(new Paragraph("Viele unserer Kunden genießen bereits ihren Urlaub in " + response.getDestination(), subcatFont));
 		List<Status> tweets = response.getTwitterResponse().getTweets();
 
-		float[] columnWidths = { 1, 4 };
+		float[] columnWidths = { 1, 2, 8 };
 		PdfPTable table = new PdfPTable(columnWidths);
 		table.setWidthPercentage(100);
 
@@ -92,17 +106,27 @@ public class PDFGenerator {
 			counter = tweets.size();
 		}
 
-		for (int i = 0; i <= counter; i++) {
+		PdfPCell cell;
+		for (int i = 0; i < counter; i++) {
 			Status tweet = tweets.get(i);
-			PdfPCell cell = new PdfPCell(new Phrase(tweet.getUser().getScreenName(), highlightFont));
+			
+			Image image=Image.getInstance(tweet.getUser().getProfileImageURL());
+			cell = new PdfPCell(image, true);
+			cell.setBorderWidth(3);
+			cell.setPadding(2);
+			cell.setBorderColor(BaseColor.WHITE);
+			table.addCell(cell);
+			
+			cell = new PdfPCell();
+			cell.addElement(new Phrase(tweet.getUser().getScreenName(), highlightFont));
+			cell.addElement(new Phrase(df.format(tweet.getCreatedAt()), smallFont));
 			cell.setBackgroundColor(new BaseColor(64,153,255));
-			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 			cell.setPadding(5);
 			cell.setBorderWidth(3);
 			cell.setBorderColor(BaseColor.WHITE);
 			table.addCell(cell);
 			
-			cell = new PdfPCell(new Phrase(tweet.getText()));
+			cell = new PdfPCell(new Phrase(tweet.getText(), normalFont));
 			cell.setPadding(5);
 			cell.setBorderWidth(3);
 			cell.setBorderColor(BaseColor.WHITE);
