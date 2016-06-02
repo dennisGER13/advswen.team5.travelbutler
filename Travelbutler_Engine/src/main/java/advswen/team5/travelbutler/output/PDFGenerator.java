@@ -2,6 +2,7 @@ package advswen.team5.travelbutler.output;
 
 import java.awt.Color;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
@@ -19,113 +20,72 @@ import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+
 import advswen.team5.travelbutler.api.response.Response;
+import twitter4j.Status;
 
 public class PDFGenerator {
 
 	private Response response;
 
-	private PDRectangle mediabox;
-	private float marginX = 50;
-	private float marginY = 70;
-	private float width;
-	private float startX;
-	private float startY;
+	private static Font catFont = new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD);
+	private static Font normalFont = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL);
 
 	public PDFGenerator(Response response) {
 		this.response = response;
 	}
 
 	public void generate() throws Exception {
-		String outputFileName = response.getDestination() + ".pdf";
+		Document document = new Document();
+		PdfWriter.getInstance(document, new FileOutputStream(response.getDestination() + ".pdf"));
+		document.open();
+		document.addTitle("Ihre Reise nach " + response.getDestination());
 
-		// Create a document and add a page to it
-		PDDocument document = new PDDocument();
-		PDPage page1 = new PDPage(PDRectangle.A4);
-	    mediabox = page1.getMediaBox();
-	    width = mediabox.getWidth() - 2*marginX;
-	    startX = mediabox.getLowerLeftX() + marginX;
-	    startY = mediabox.getUpperRightY() - marginX;
-		document.addPage(page1);
+		Paragraph headline = new Paragraph();
+		addEmptyLine(headline, 1);
+		headline.add(new Paragraph("Ihre Reise nach " + response.getDestination(), catFont));
+		addEmptyLine(headline, 1);
+		document.add(headline);
 
-		// Create a new font object selecting one of the PDF base fonts
-		PDType0Font fontPlain = PDType0Font.load(document, new File("src/main/resources/arial.ttf"));
-		
-		// Start a new content stream which will "hold" the to be created
-		// content
-		PDPageContentStream cos = new PDPageContentStream(document, page1);
+		addWikipediaInfo(document);
+		addTweets(document, 10);
 
-		int line = 0;
-
-		cos.beginText();
-		cos.setFont(fontPlain, 18);
-		cos.newLineAtOffset(marginX, mediabox.getHeight() - marginY);
-		cos.showText("Ihre Reise nach " + response.getDestination());
-		cos.endText();
-		line++;
-
-		if (!response.getWikipediaResponse().isMissing()) {
-			List<String> lines = getLines(prepareText(response.getWikipediaResponse().getExtract(), true), 12, fontPlain);
-			cos.beginText();
-			cos.setFont(fontPlain, 12);
-			cos.newLineAtOffset(marginX, mediabox.getHeight() - 50 * (++line));
-			for (String textLine: lines)
-		    {
-				cos.showText(textLine);
-				cos.moveTextPositionByAmount(0, -1.3f*12);
-		    }
-			cos.endText();
-		}
-
-		// Make sure that the content stream is closed:
-		cos.close();
-
-		// Save the results and ensure that the document is properly closed:
-		document.save(outputFileName);
 		document.close();
 	}
-	
-	private String prepareText(String text, boolean removeBrackets){
-		text = text.replaceAll("[_[^\\w\\däüöÄÜÖß\\[\\]\\(\\)\\+\\-\\.\\,\\;\\:\\?\\! ]]", "");
-		if(removeBrackets)
-			text = text.replaceAll("\\(.*?\\)","");
-		
-		return text;
+
+	private void addWikipediaInfo(Document document) throws DocumentException {
+		if (response.getWikipediaResponse().isMissing())
+			return;
+
+		Paragraph wikipedia = new Paragraph(response.getWikipediaResponse().getExtract(), normalFont);
+		document.add(wikipedia);
 	}
-	
-	private List<String> getLines (String text, int fontSize, PDType0Font font) throws Exception{
-		List<String> lines = new ArrayList<String>();
-	    int lastSpace = -1;
-	    while (text.length() > 0)
-	    {
-	        int spaceIndex = text.indexOf(' ', lastSpace + 1);
-	        if (spaceIndex < 0)
-	            spaceIndex = text.length();
-	        String subString = text.substring(0, spaceIndex);
-	        float size = fontSize * font.getStringWidth(subString) / 1000;
-	        System.out.printf("'%s' - %f of %f\n", subString, size, width);
-	        if (size > width)
-	        {
-	            if (lastSpace < 0)
-	                lastSpace = spaceIndex;
-	            subString = text.substring(0, lastSpace);
-	            lines.add(subString);
-	            text = text.substring(lastSpace).trim();
-	            System.out.printf("'%s' is line\n", subString);
-	            lastSpace = -1;
-	        }
-	        else if (spaceIndex == text.length())
-	        {
-	            lines.add(text);
-	            System.out.printf("'%s' is line\n", text);
-	            text = "";
-	        }
-	        else
-	        {
-	            lastSpace = spaceIndex;
-	        }
-	    }
-	    return lines;
+
+	private void addTweets(Document document, int numOfTweets) throws DocumentException {
+		if (response.getTwitterResponse().isMissing())
+			return;
+		
+		PdfPTable table = new PdfPTable(2);
+		
+		for (Status tweet : response.getTwitterResponse().getTweets()){
+			table.addCell(tweet.getUser().getScreenName());
+			table.addCell(tweet.getText());
+		}
+		
+		document.add(table);
+	}
+
+	private static void addEmptyLine(Paragraph paragraph, int number) {
+		for (int i = 0; i < number; i++) {
+			paragraph.add(new Paragraph(" "));
+		}
 	}
 
 }
