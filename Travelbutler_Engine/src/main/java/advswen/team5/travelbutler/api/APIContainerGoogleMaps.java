@@ -13,13 +13,12 @@ import org.apache.http.impl.client.HttpClients;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import advswen.team5.travelbutler.api.response.IAPIResponse;
-import advswen.team5.travelbutler.google.maps.api.GoogleGeoCode;
+import advswen.team5.travelbutler.google.maps.api.support.GoogleGeoCode;
 
 public class APIContainerGoogleMaps implements IAPIResponse {
 
-	private static final String API_KEY = "AIzaSyDCfERTe9pquhxM38YqEhayDdjemtKBD0c";
 	private boolean missing = false;
-	private String address;
+	private final String API_KEY ="AIzaSyDCfERTe9pquhxM38YqEhayDdjemtKBD0c";
 	
 	public GoogleGeoCode getGeoCode(String address, boolean ssl) throws Exception {
 	    // build url
@@ -31,30 +30,32 @@ public class APIContainerGoogleMaps implements IAPIResponse {
 	    url.append("://maps.googleapis.com/maps/api/geocode/json?");
 	   
 	    if ( ssl ) {
-	        url.append("key=");;
-			url.append(API_KEY);
+	        url.append("key=");
+	        url.append(API_KEY);
 	        url.append("&");
 	    }
 	    url.append("sensor=false&address=");
 	    url.append( URLEncoder.encode(address) );
-
+	   
+	    // request url like: http://maps.googleapis.com/maps/api/geocode/json?address=" + URLEncoder.encode(address) + "&sensor=false"
 	    // do request
 	    try (CloseableHttpClient httpclient = HttpClients.createDefault();) {
 	        HttpGet request = new HttpGet(url.toString());
-	    
-	    try (CloseableHttpResponse response = httpclient.execute(request)) {
-            HttpEntity entity = response.getEntity();
-	    
-        // recover String response (for debug purposes)
-        StringBuilder result = new StringBuilder();
-        try (BufferedReader in = new BufferedReader(new InputStreamReader(entity.getContent()))) {
-            String inputLine;
-            while ((inputLine = in.readLine()) != null) {
-                result.append(inputLine);
-                result.append("\n");
-            }
-        }        
-	    		// parse result
+
+	        try (CloseableHttpResponse response = httpclient.execute(request)) {
+	            HttpEntity entity = response.getEntity();
+
+	            // recover String response (for debug purposes)
+	            StringBuilder result = new StringBuilder();
+	            try (BufferedReader in = new BufferedReader(new InputStreamReader(entity.getContent()))) {
+	                String inputLine;
+	                while ((inputLine = in.readLine()) != null) {
+	                    result.append(inputLine);
+	                    result.append("\n");
+	                }
+	            }
+
+	            // parse result
 	            ObjectMapper mapper = new ObjectMapper();
 	            GoogleGeoCode geocode = mapper.readValue(result.toString(), GoogleGeoCode.class);
 
@@ -65,7 +66,7 @@ public class APIContainerGoogleMaps implements IAPIResponse {
 	                throw new Exception("Can not find geocode for: " + address);
 	            }
 	            return geocode;
-			}
+	        }
 	    }
 	}
 	

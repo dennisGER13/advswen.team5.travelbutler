@@ -51,7 +51,7 @@ public class SearchRequest {
 
 		try {
 
-			br = new BufferedReader(new FileReader("C:/Users/Alexander/Documents/Workspace/grain/src/grain/lands.CSV"));
+			br = new BufferedReader(new FileReader("/Travelbutler_Engine/src/main/resources/lands.CSV"));
 			while ((line = br.readLine()) != null) {
 
 				String[] country = line.split(cvsSplitBy);

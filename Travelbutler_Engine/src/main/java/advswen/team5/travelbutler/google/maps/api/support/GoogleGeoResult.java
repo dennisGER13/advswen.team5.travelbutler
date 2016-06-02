@@ -1,4 +1,4 @@
-package advswen.team5.travelbutler.google.maps.api;
+package advswen.team5.travelbutler.google.maps.api.support;
 
 public class GoogleGeoResult {
 

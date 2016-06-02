@@ -1,4 +1,7 @@
-nyt.api.search.key	=	3454fa16797048ab9b443978ed1aca1a
-bing.api.search.key =   
-maps.google.api.key =	AIzaSyDCfERTe9pquhxM38YqEhayDdjemtKBD0c
-twitter.api.key		=
+nyt.api.search.key							=	3454fa16797048ab9b443978ed1aca1a
+bing.api.search.key 						=   
+maps.google.api.key							=	AIzaSyDCfERTe9pquhxM38YqEhayDdjemtKBD0c
+OAuthConsumerSecretKey.twitter.api.key		=	cwIHzbPZzoe097AeWe7w5PnA2
+OAuthConsumerSecret.twitter.api.key 		=	HwCns5LD0NbvspTunsyEr0E4UJvXcuC0Qomh7SXiDfdi5dB59v
+OAuthAccessToken.twitter.api.key			=	3040667098-r6eZUatWvdaiF618uVUxVPTSsRmyTjw5ewOsJgh
+OAuthAccessTokenSecret.twitter.api.key		=	el1ZH6dEhniERoCCjhFIO6mCzM5ucYGLApUE7mAR29U9T
