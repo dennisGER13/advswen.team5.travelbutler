@@ -21,7 +21,7 @@ import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
 import advswen.team5.travelbutler.api.response.Response;
 
-public class PDFGenerator {
+public class PDFGeneratorV1 {
 
 	private Response response;
 
@@ -32,7 +32,7 @@ public class PDFGenerator {
 	private float startX;
 	private float startY;
 
-	public PDFGenerator(Response response) {
+	public PDFGeneratorV1(Response response) {
 		this.response = response;
 	}
 

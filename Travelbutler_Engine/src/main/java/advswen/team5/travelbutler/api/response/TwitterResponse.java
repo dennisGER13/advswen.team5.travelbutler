@@ -10,7 +10,7 @@ public class TwitterResponse implements IAPIResponse{
 	private List <Status> tweets;
 	private boolean missing = false;
 	
-	public TwitterResponse(){
+	public TwitterResponse(List <Status> tweets){
 		
 		this.tweets = tweets;
 		
@@ -23,6 +23,14 @@ public class TwitterResponse implements IAPIResponse{
 		
 	}
 	
+	public List<Status> getTweets() {
+		return tweets;
+	}
+
+	public void setTweets(List<Status> tweets) {
+		this.tweets = tweets;
+	}
+
 	public void setMissing(boolean missing) {
 		this.missing = missing;
 	}

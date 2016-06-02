@@ -22,8 +22,6 @@ public class APIContainerWikipedia implements IAPIContainer {
 		Gson gson = new Gson();
 		
 		WikipediaResponse response = gson.fromJson(getPageAsJson(requestString), WikipediaResponse.class);
-		
-		System.out.println(response.getExtract());
 		return response;
 
 	}

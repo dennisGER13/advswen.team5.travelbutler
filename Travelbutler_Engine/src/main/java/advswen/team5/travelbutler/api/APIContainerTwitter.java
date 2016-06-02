@@ -1,5 +1,6 @@
 package advswen.team5.travelbutler.api;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import advswen.team5.travelbutler.api.response.IAPIResponse;
@@ -16,14 +17,14 @@ import twitter4j.conf.ConfigurationBuilder;
 public class APIContainerTwitter implements IAPIContainer{
 	
 	@Override
-	public IAPIResponse processSearch(String requestedString) {
+	public TwitterResponse processSearch(String requestedString) {
 		
-		TwitterResponse response = new TwitterResponse();
+		TwitterResponse response = new TwitterResponse(twitterFeed(requestedString));
 		
 		return response;
 	}
 	
-	public List twitterFeed(String requestedString){
+	public List<Status> twitterFeed(String requestedString){
 		
 		ConfigurationBuilder cb = new ConfigurationBuilder();
 		
@@ -37,10 +38,12 @@ public class APIContainerTwitter implements IAPIContainer{
 		Twitter twitter = new TwitterFactory(cb.build()).getInstance();
 	    
 		List<Status> tweets = null;
+		List<Status> usedTweets = new ArrayList<Status>();
 		
 		try {
 	    	  
 	          Query query = new Query(requestedString);
+	          query.setLang("de");
 	          QueryResult result;
 	          
 	          do {
@@ -48,11 +51,13 @@ public class APIContainerTwitter implements IAPIContainer{
 	              tweets = result.getTweets();
 	             
 	              for (Status tweet : tweets) {
-	                  System.out.println(tweet.getUser().getScreenName() + " ------ " + tweet.getText());
+	                  if(!tweet.isRetweet())
+	                	  usedTweets.add(tweet);
+	                  
+	            	  System.out.println(tweet.getUser().getScreenName() + " ------ " + tweet.getText());
 	              }
 	         
 	          } while ((query = result.nextQuery()) != null);
-	          System.exit(0);
 	     
 	      } catch (TwitterException te) {
 	          te.printStackTrace();
@@ -60,7 +65,7 @@ public class APIContainerTwitter implements IAPIContainer{
 	          System.exit(-1);
 	      }
 		
-		return  tweets;
+		return  usedTweets;
 		
 	}
 
