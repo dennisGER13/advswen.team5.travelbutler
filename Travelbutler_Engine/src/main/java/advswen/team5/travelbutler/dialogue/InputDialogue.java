@@ -22,7 +22,7 @@ import javax.swing.JTextField;
 
 import org.jdesktop.swingx.JXDatePicker;
 
-import advswen.team5.travelbutler.search.SearchRequest;
+import advswen.team5.travelbutler.search.SearchRequestFassade;
 
 public class InputDialogue extends JFrame implements ActionListener {
 
@@ -46,7 +46,7 @@ public class InputDialogue extends JFrame implements ActionListener {
 	private OutputDialogue outputDialogue;
 	
 	//Aufruf der SearchRequest mit �bergabe des InputString 
-	private SearchRequest request;
+	private SearchRequestFassade request;
 	
 	//Constructor, der die GUI initialisiert �ber die Methode inizializeWindow();
 	public InputDialogue(){
@@ -151,8 +151,8 @@ public class InputDialogue extends JFrame implements ActionListener {
 //			setEndDate();
 			
 			//String travelDestination an SearchRequest �bergeben!!			
-			request = new SearchRequest(travelDestination);
-			System.out.println(request.search());
+			request = new SearchRequestFassade();
+			System.out.println(request.search(travelDestination));
 
 //			System.out.println("Sie haben die Suche gestartet!");
 //			System.out.println("Sucheingaben:");
@@ -164,9 +164,9 @@ public class InputDialogue extends JFrame implements ActionListener {
 			frmInputWindow.dispose();
 			
 			//Neues Fenster mit Suchergebnissen �ffnen!!
-			outputDialogue = new OutputDialogue();
-			outputDialogue.run();
-		
+//			outputDialogue = new OutputDialogue();
+//			outputDialogue.run();
+//		
 		}else if(e.getActionCommand().equals("CANCEL")){
 			
 			//Bei "Abbrechen" endet das Programm!
