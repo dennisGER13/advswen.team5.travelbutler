@@ -30,7 +30,7 @@ public class APIContainerWikipedia implements IAPIContainer {
 		InputStream in = null;
 		JsonObject page = null;
 		try {
-			in = new URL("https://de.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&indexpageids=1&titles=" + requestString.replace(" ", "+") + "&utf8=1&exintro=1&explaintext=1").openStream();
+			in = new URL("https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&indexpageids=1&titles=" + requestString.replace(" ", "+") + "&utf8=1&exintro=1&explaintext=1").openStream();
 			JsonParser parser = new JsonParser();
 			JsonObject o = parser.parse(IOUtils.toString(in)).getAsJsonObject().getAsJsonObject("query");
 			

@@ -41,9 +41,9 @@ public class APIContainerTwitter implements IAPIContainer{
 		List<Status> usedTweets = new ArrayList<Status>();
 		
 		try {
-	    	  String queryString = requestedString + " Reise OR Urlaub " + requestedString + " -filter:links"; 
+	    	  String queryString = requestedString + " travel OR holiday " + requestedString + " -filter:links"; 
 	          Query query = new Query(queryString);
-	          query.setLang("de");
+	          query.setLang("en");
 	          QueryResult result;
 	          
 	          do {

@@ -61,11 +61,11 @@ public class PDFGenerator {
 		Document document = new Document();
 		PdfWriter.getInstance(document, new FileOutputStream("output/" + response.getDestination() + ".pdf"));
 		document.open();
-		document.addTitle("Ihre Reise nach " + response.getDestination());
+		document.addTitle("Traveling to " + response.getDestination());
 
 		Paragraph headline = new Paragraph();
 		addEmptyLine(headline, 1);
-		headline.add(new Paragraph("Ihre Reise nach " + response.getDestination(), catFont));
+		headline.add(new Paragraph("Traveling to " + response.getDestination(), catFont));
 		addEmptyLine(headline, 1);
 		document.add(headline);
 
@@ -81,7 +81,7 @@ public class PDFGenerator {
 			return;
 
 		Paragraph wikipedia = new Paragraph();
-		wikipedia.add(generateSubCategory("Das erwartet Sie vor Ort", "src/main/resources/icons/map.png"));
+		wikipedia.add(generateSubCategory("About your destination", "src/main/resources/icons/map.png"));
 		wikipedia.add(new Paragraph(response.getWikipediaResponse().getExtract(), normalFont));
 		document.add(wikipedia);
 	}
@@ -94,7 +94,7 @@ public class PDFGenerator {
 
 		Paragraph twitter = new Paragraph();
 		addEmptyLine(twitter, 1);
-		twitter.add(generateSubCategory("Viele unserer Kunden genießen bereits ihren Urlaub in " + response.getDestination(), "src/main/resources/icons/twitter.png"));
+		twitter.add(generateSubCategory("Many customers already enjoy their stay in " + response.getDestination(), "src/main/resources/icons/twitter.png"));
 		List<Status> tweets = response.getTwitterResponse().getTweets();
 
 		float[] columnWidths = { 1, 2, 8 };
