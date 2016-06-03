@@ -12,16 +12,33 @@ import org.apache.http.impl.client.HttpClients;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import advswen.team5.travelbutler.api.response.GoogleMapsResponse;
 import advswen.team5.travelbutler.api.response.IAPIResponse;
 import advswen.team5.travelbutler.google.maps.api.support.GoogleGeoCode;
 
-public class APIContainerGoogleMaps implements IAPIResponse {
+public class APIContainerGoogleMaps implements IAPIContainer{
 
 	private boolean missing = false;
 	private final String API_KEY ="AIzaSyDCfERTe9pquhxM38YqEhayDdjemtKBD0c";
 	
-	public GoogleGeoCode getGeoCode(String address, boolean ssl) throws Exception {
-	    // build url
+	@Override
+	public IAPIResponse processSearch(String requestedString) {
+
+		GoogleMapsResponse response = null;
+		try {
+			response = new GoogleMapsResponse(getGeoCode(requestedString));
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+		
+		return response;
+	}
+	
+	public GoogleGeoCode getGeoCode(String requestedString) throws Exception {
+
+		// build url
+		boolean ssl = true;
 	    StringBuilder url = new StringBuilder("http");
 	    if ( ssl ) {
 	        url.append("s");
@@ -35,7 +52,7 @@ public class APIContainerGoogleMaps implements IAPIResponse {
 	        url.append("&");
 	    }
 	    url.append("sensor=false&address=");
-	    url.append( URLEncoder.encode(address) );
+	    url.append( URLEncoder.encode(requestedString) );
 	   
 	    // request url like: http://maps.googleapis.com/maps/api/geocode/json?address=" + URLEncoder.encode(address) + "&sensor=false"
 	    // do request
@@ -63,24 +80,10 @@ public class APIContainerGoogleMaps implements IAPIResponse {
 	                if (geocode.getError_message() != null) {
 	                    throw new Exception(geocode.getError_message());
 	                }
-	                throw new Exception("Can not find geocode for: " + address);
+	                throw new Exception("Can not find geocode for: " + requestedString);
 	            }
 	            return geocode;
 	        }
 	    }
 	}
-	
-	@Override
-	public void setMissing(boolean missing) {
-		
-		this.missing=missing;
-		
-	}
-
-	@Override
-	public boolean isMissing() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 }

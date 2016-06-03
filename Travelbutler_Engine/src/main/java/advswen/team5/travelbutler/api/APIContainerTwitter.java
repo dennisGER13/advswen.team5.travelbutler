@@ -39,7 +39,9 @@ public class APIContainerTwitter implements IAPIContainer{
 		List <Status> tweets = null;
 		List <Status> usedTweets = new ArrayList<Status>();
 		
-		String [] users ={"TripAdvisor", "LonelyPlanet", "NatGeoTravel"};	
+		String [] users ={"TripAdvisor", "LonelyPlanet", "NatGeoTravel", "TravelLeisure",
+				"fodorstravel", "travelchannel", "travelgov", "TheWorldStories", "travel",
+				"Holiday_ideas_", "DTW_Holidays", "Hisuitesorlando", "HolidayInn"};	
 		
 		try {
 	    	  for(String u : users){
