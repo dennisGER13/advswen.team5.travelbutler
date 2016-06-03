@@ -22,7 +22,9 @@ import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
+import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -57,7 +59,7 @@ public class PDFGenerator {
 
 	public void generate() throws Exception {
 		Document document = new Document();
-		PdfWriter.getInstance(document, new FileOutputStream(response.getDestination() + ".pdf"));
+		PdfWriter.getInstance(document, new FileOutputStream("output/" + response.getDestination() + ".pdf"));
 		document.open();
 		document.addTitle("Ihre Reise nach " + response.getDestination());
 
@@ -84,7 +86,7 @@ public class PDFGenerator {
 		document.add(wikipedia);
 	}
 
-	private void addTweets(Document document, int numOfTweets) throws DocumentException, MalformedURLException, IOException {
+	private void addTweets(Document document, int numOfTweets) throws Exception {
 		if (response.getTwitterResponse() == null || response.getTwitterResponse().isMissing()){
 			System.out.println("No Tweets");
 			return;
@@ -92,7 +94,7 @@ public class PDFGenerator {
 
 		Paragraph twitter = new Paragraph();
 		addEmptyLine(twitter, 1);
-		twitter.add(new Paragraph("Viele unserer Kunden genießen bereits ihren Urlaub in " + response.getDestination(), subcatFont));
+		twitter.add(generateSubCategory("Viele unserer Kunden genießen bereits ihren Urlaub in " + response.getDestination(), "src/main/resources/icons/twitter.png"));
 		List<Status> tweets = response.getTwitterResponse().getTweets();
 
 		float[] columnWidths = { 1, 2, 8 };
@@ -141,6 +143,19 @@ public class PDFGenerator {
 	private static void addEmptyLine(Paragraph paragraph, int number) {
 		for (int i = 0; i < number; i++) {
 			paragraph.add(new Paragraph(" "));
+		}
+	}
+	
+	private static Paragraph generateSubCategory(String text, String icon) throws Exception {
+		if(icon == null){
+			return new Paragraph(text, subcatFont);
+		}else{
+			Paragraph paragraph = new Paragraph();
+			Image image = Image.getInstance(icon);
+			image.scaleToFit(15, 15);
+			paragraph.add(new Chunk(image, 0, 0));
+			paragraph.add(new Phrase(" " + text));
+			return paragraph;
 		}
 	}
 
