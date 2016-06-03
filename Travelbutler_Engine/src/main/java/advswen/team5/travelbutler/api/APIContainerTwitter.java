@@ -28,7 +28,6 @@ public class APIContainerTwitter implements IAPIContainer{
 		
 		ConfigurationBuilder cb = new ConfigurationBuilder();
 		
-		//Twitter-API-Keys müssen anstelle der "null" eingesetzt werden!!!
 		cb.setDebugEnabled(true)
 			.setOAuthConsumerKey("cwIHzbPZzoe097AeWe7w5PnA2")
 			.setOAuthConsumerSecret("HwCns5LD0NbvspTunsyEr0E4UJvXcuC0Qomh7SXiDfdi5dB59v")
@@ -37,35 +36,54 @@ public class APIContainerTwitter implements IAPIContainer{
 		
 		Twitter twitter = new TwitterFactory(cb.build()).getInstance();
 	    
-		List<Status> tweets = null;
-		List<Status> usedTweets = new ArrayList<Status>();
+		List <Status> tweets = null;
+		List <Status> usedTweets = new ArrayList<Status>();
+		
+		String [] users ={"TripAdvisor", "LonelyPlanet", "NatGeoTravel"};	
 		
 		try {
-	    	  String queryString = requestedString + " travel OR holiday " + requestedString + " -filter:links"; 
-	          Query query = new Query(queryString);
-	          query.setLang("en");
-	          QueryResult result;
-	          
-	          do {
-	              result = twitter.search(query);
-	              tweets = result.getTweets();
-	             
-	              for (Status tweet : tweets) {
-	                  if(!tweet.isRetweet())
-	                	  usedTweets.add(tweet);
-	                  
-	            	  System.out.println(tweet.getUser().getScreenName() + " ------ " + tweet.getText());
-	              }
+	    	  for(String u : users){
+	    		  
+	    		  String queryString = requestedString + " from:" + u;
+	    		  Query query = new Query(queryString);
+	    		  QueryResult result;
+	    		  do {
+		              result = twitter.search(query);
+		              tweets = result.getTweets();
+		             
+		              for (Status tweet : tweets) {
+		                  if(!tweet.isRetweet())
+		                	  usedTweets.add(tweet);
+		                  System.out.println(tweet.getUser().getScreenName() + " ------ " + tweet.getText());
+		              }
+	    		  
 	         
 	          } while ((query = result.nextQuery()) != null);
-	     
-	      } catch (TwitterException te) {
+	    
+	      }
+		}catch (TwitterException te) {
 	          te.printStackTrace();
 	          System.out.println("Failed to search tweets: " + te.getMessage());
 	      }
-		
+	   
 		return  usedTweets;
 		
 	}
+	
+//	  String queryString = requestedString + " travel OR holiday " + requestedString + " -filter:links"; 
+//    Query query = new Query(queryString);
+//    query.setLang("en");
+//    QueryResult result;
+//    
+//    do {
+//        result = twitter.search(query);
+//        tweets = result.getTweets();
+//       
+//        for (Status tweet : tweets) {
+//            if(!tweet.isRetweet())
+//          	  usedTweets.add(tweet);
+//            
+//      	  System.out.println(tweet.getUser().getScreenName() + " ------ " + tweet.getText());
+//        }
 
 }
