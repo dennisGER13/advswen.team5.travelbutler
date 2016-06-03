@@ -76,12 +76,12 @@ public class PDFGenerator {
 		System.out.println("Finished");
 	}
 
-	private void addWikipediaInfo(Document document) throws DocumentException {
+	private void addWikipediaInfo(Document document) throws Exception {
 		if (response.getWikipediaResponse() == null || response.getWikipediaResponse().isMissing())
 			return;
 
 		Paragraph wikipedia = new Paragraph();
-		wikipedia.add(new Paragraph("Das erwartet Sie vor Ort", subcatFont));
+		wikipedia.add(generateSubCategory("Das erwartet Sie vor Ort", "src/main/resources/icons/map.png"));
 		wikipedia.add(new Paragraph(response.getWikipediaResponse().getExtract(), normalFont));
 		document.add(wikipedia);
 	}
@@ -154,7 +154,7 @@ public class PDFGenerator {
 			Image image = Image.getInstance(icon);
 			image.scaleToFit(15, 15);
 			paragraph.add(new Chunk(image, 0, 0));
-			paragraph.add(new Phrase(" " + text));
+			paragraph.add(new Phrase(" " + text, subcatFont));
 			return paragraph;
 		}
 	}
