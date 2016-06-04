@@ -4,7 +4,9 @@ public class Response {
 	private String destination = null;
 	private WikipediaResponse wikipediaResponse = null;
 	private TwitterResponse twitterResponse = null;
+	private GoogleMapsResponse googlemapsResponse = null;
 	
+	//Konstruktor, welcher das Reiseziel angibt
 	public Response(String destination) {
 		super();
 		this.destination = destination;
@@ -38,9 +40,18 @@ public class Response {
 	public String getDestination() {
 		return destination;
 	}
-	
-	
-	
-	
 
+	public void setGoogleMapsResponse(GoogleMapsResponse googlemaps) {
+		this.googlemapsResponse = googlemapsResponse;
+		
+	}
+	
+	public GoogleMapsResponse getGoogleMapsResponse(){
+		
+		if(googlemapsResponse.isMissing()){
+			return null;
+		}else{
+			return googlemapsResponse;
+		}
+	}
 }

@@ -44,6 +44,7 @@ public class APIContainerTwitter implements IAPIContainer{
 				"Holiday_ideas_", "DTW_Holidays", "Hisuitesorlando", "HolidayInn"};	
 		
 		try {
+			  //Pruefe fuer jedes Element des Arrays USERS, welche Tweets genutzt werden sollen
 	    	  for(String u : users){
 	    		  
 	    		  String queryString = requestedString + " from:" + u;
@@ -54,12 +55,14 @@ public class APIContainerTwitter implements IAPIContainer{
 		              tweets = result.getTweets();
 		             
 		              for (Status tweet : tweets) {
-		                  if(!tweet.isRetweet())
+		                  //Speichere die zu nutzenden Tweets in die Liste usedTweets ab
+		            	  if(!tweet.isRetweet())
 		                	  usedTweets.add(tweet);
 		                  System.out.println(tweet.getUser().getScreenName() + " ------ " + tweet.getText());
 		              }
 	    		  
 	         
+		        //Falls das Ergebnis null ist, soll eine Fehlermeldung ausgegeben werden
 	          } while ((query = result.nextQuery()) != null);
 	    
 	      }
@@ -71,21 +74,5 @@ public class APIContainerTwitter implements IAPIContainer{
 		return  usedTweets;
 		
 	}
-	
-//	  String queryString = requestedString + " travel OR holiday " + requestedString + " -filter:links"; 
-//    Query query = new Query(queryString);
-//    query.setLang("en");
-//    QueryResult result;
-//    
-//    do {
-//        result = twitter.search(query);
-//        tweets = result.getTweets();
-//       
-//        for (Status tweet : tweets) {
-//            if(!tweet.isRetweet())
-//          	  usedTweets.add(tweet);
-//            
-//      	  System.out.println(tweet.getUser().getScreenName() + " ------ " + tweet.getText());
-//        }
 
 }

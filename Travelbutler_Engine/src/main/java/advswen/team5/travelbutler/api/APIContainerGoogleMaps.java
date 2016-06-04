@@ -22,7 +22,7 @@ public class APIContainerGoogleMaps implements IAPIContainer{
 	private final String API_KEY ="AIzaSyDCfERTe9pquhxM38YqEhayDdjemtKBD0c";
 	
 	@Override
-	public IAPIResponse processSearch(String requestedString) {
+	public GoogleMapsResponse processSearch(String requestedString) {
 
 		GoogleMapsResponse response = null;
 		try {
@@ -37,7 +37,7 @@ public class APIContainerGoogleMaps implements IAPIContainer{
 	
 	public GoogleGeoCode getGeoCode(String requestedString) throws Exception {
 
-		// build url
+		// Erzeugen der URL für die Anfrage der geocoding-GoogleMaps API
 		boolean ssl = true;
 	    StringBuilder url = new StringBuilder("http");
 	    if ( ssl ) {
@@ -53,16 +53,14 @@ public class APIContainerGoogleMaps implements IAPIContainer{
 	    }
 	    url.append("sensor=false&address=");
 	    url.append( URLEncoder.encode(requestedString) );
-	   
-	    // request url like: http://maps.googleapis.com/maps/api/geocode/json?address=" + URLEncoder.encode(address) + "&sensor=false"
-	    // do request
+	  
+	    // Führe die Anfrage an die API aus
 	    try (CloseableHttpClient httpclient = HttpClients.createDefault();) {
 	        HttpGet request = new HttpGet(url.toString());
 
 	        try (CloseableHttpResponse response = httpclient.execute(request)) {
 	            HttpEntity entity = response.getEntity();
 
-	            // recover String response (for debug purposes)
 	            StringBuilder result = new StringBuilder();
 	            try (BufferedReader in = new BufferedReader(new InputStreamReader(entity.getContent()))) {
 	                String inputLine;
@@ -72,7 +70,7 @@ public class APIContainerGoogleMaps implements IAPIContainer{
 	                }
 	            }
 
-	            // parse result
+	            // Mappen des Ergebnisses der Anfrage
 	            ObjectMapper mapper = new ObjectMapper();
 	            GoogleGeoCode geocode = mapper.readValue(result.toString(), GoogleGeoCode.class);
 
@@ -82,6 +80,7 @@ public class APIContainerGoogleMaps implements IAPIContainer{
 	                }
 	                throw new Exception("Can not find geocode for: " + requestedString);
 	            }
+	            //Gebe das Ergbnisobjekt zurueck
 	            return geocode;
 	        }
 	    }
