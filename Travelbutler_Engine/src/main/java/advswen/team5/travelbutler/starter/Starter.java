@@ -34,7 +34,6 @@ public class Starter {
 		try {
 			new PDFGenerator(response).generate();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	

@@ -10,12 +10,7 @@ public class GoogleMapsResponse implements IAPIResponse{
 	public GoogleMapsResponse(GoogleGeoCode geoCode) {
 		
 		this.geocode = geocode;
-		
-		//Bei leerer Liste keine Ergebnisse zu Tweets
-		if(geocode.equals(null)){
-				
-			this.missing = true;
-		}
+
 	}
 
 	@Override

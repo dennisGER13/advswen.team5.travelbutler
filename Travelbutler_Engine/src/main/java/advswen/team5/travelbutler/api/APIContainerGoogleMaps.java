@@ -24,15 +24,17 @@ public class APIContainerGoogleMaps implements IAPIContainer{
 	@Override
 	public GoogleMapsResponse processSearch(String requestedString) {
 
-		GoogleMapsResponse response = null;
 		try {
-			response = new GoogleMapsResponse(getGeoCode(requestedString));
+			GoogleMapsResponse response = new GoogleMapsResponse(getGeoCode(requestedString));
+			
+			return response;
+			
 		} catch (Exception e) {
 
 			e.printStackTrace();
 		}
 		
-		return response;
+		return null;
 	}
 	
 	public GoogleGeoCode getGeoCode(String requestedString) throws Exception {
