@@ -50,5 +50,11 @@ public class WikipediaResponse implements IAPIResponse {
 	public void setMissing(boolean missing) {
 		this.missing = missing;
 	}
+	
+	public String getShortExtract(int maxChars){
+		String shortExtract = extract.substring(0, maxChars+1);
+		int cutPosition = shortExtract.lastIndexOf(".");
+		return shortExtract.substring(0, cutPosition+1);
+	}
 
 }

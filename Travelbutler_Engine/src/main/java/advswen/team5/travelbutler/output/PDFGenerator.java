@@ -86,7 +86,7 @@ public class PDFGenerator {
 
 		Paragraph wikipedia = new Paragraph();
 		wikipedia.add(generateSubCategory("About your destination", "src/main/resources/icons/map.png"));
-		wikipedia.add(new Paragraph(response.getWikipediaResponse().getExtract(), normalFont));
+		wikipedia.add(new Paragraph(response.getWikipediaResponse().getShortExtract(1500), normalFont));
 		document.add(wikipedia);
 	}
 

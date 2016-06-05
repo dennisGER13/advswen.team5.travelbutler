@@ -52,12 +52,16 @@ public class TravelbriefingAdviseList {
 	}
 
 	private void pepareData() {
-		UA.setSource("Australian Department of Foreign Affairs and Trade");
-		US.setSource("U.S. Department of State");
-		CA.setSource("Global Affairs Canada");
+		if (UA != null)
+			UA.setSource("Australian Department of Foreign Affairs and Trade");
+		if (US != null)
+			US.setSource("U.S. Department of State");
+		if (CA != null) {
+			CA.setSource("Global Affairs Canada");
 
-		// Workaround to remove HTML comments
-		CA.setAdvise(CA.getAdvise().replaceAll("<.*?>", ""));
+			// Workaround to remove HTML comments
+			CA.setAdvise(CA.getAdvise().replaceAll("<.*?>", ""));
+		}
 
 		prepared = true;
 	}

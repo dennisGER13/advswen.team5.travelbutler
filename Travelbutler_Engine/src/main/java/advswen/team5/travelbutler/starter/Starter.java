@@ -24,7 +24,7 @@ public class Starter {
 //		InputDialogue inputdialogue = new InputDialogue();
 //		inputdialogue.run();
 		
-		Response response = new Response("Syria");
+		Response response = new Response("Spain");
 		WikipediaResponse wiki = new APIContainerWikipedia().processSearch(response.getDestination());
 		TwitterResponse twitter = new APIContainerTwitter().processSearch(response.getDestination());
 		GoogleMapsResponse googlemaps = new APIContainerGoogleMaps().processSearch(response.getDestination());
