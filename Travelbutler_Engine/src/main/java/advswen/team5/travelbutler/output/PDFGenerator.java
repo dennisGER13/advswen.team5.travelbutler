@@ -41,6 +41,7 @@ import advswen.team5.travelbutler.api.response.Response;
 import advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdvise;
 import advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdviseList;
 import advswen.team5.travelbutler.api.travelbriefing.TravelbriefingElectricity;
+import advswen.team5.travelbutler.api.travelbriefing.TravelbriefingLanguage;
 import twitter4j.Status;
 
 public class PDFGenerator {
@@ -186,22 +187,87 @@ public class PDFGenerator {
 		document.add(travelAdvise);
 
 	}
-	
+
 	private void addGoodToKnow(Document document) throws Exception {
 		if (response.getTravelbriefingResponse() == null || response.getTravelbriefingResponse().isMissing()) {
 			return;
 		}
-		
-		float[] columnWidths = { 1, 1, 1, 1, 1, 1};
+
+		float[] columnWidths = { 1, 1, 1, 1, 1, 1 };
 		PdfPTable table = new PdfPTable(columnWidths);
 		table.setWidthPercentage(100);
-		
-		PdfPCell cell = new PdfPCell(new Phrase("Electricity", highlightFont));
+		PdfPCell cell;
+
+		// ##############
+		// ## Language ##
+		// ##############
+
+		cell = new PdfPCell(new Phrase("Language", highlightFont));
 		cell.setPadding(5);
 		cell.setBorderWidth(3);
 		cell.setBorderColor(BaseColor.WHITE);
 		table.addCell(cell);
-		
+
+		TravelbriefingLanguage[] languages = response.getTravelbriefingResponse().getLanguage();
+		String languagePhrase = "";
+		for (TravelbriefingLanguage language : languages) {
+			languagePhrase += language.getLanguage();
+			if (language.getOfficial().equals("Yes"))
+				languagePhrase += " (official)";
+			languagePhrase += ", ";
+		}
+
+		cell = new PdfPCell(new Phrase(languagePhrase.substring(0, languagePhrase.length() - 2), normalFont));
+		cell.setPadding(5);
+		cell.setBorderWidth(3);
+		cell.setColspan(5);
+		cell.setBorderColor(BaseColor.WHITE);
+		table.addCell(cell);
+
+		// ##############
+		// ## Timezone ##
+		// ##############
+
+		cell = new PdfPCell(new Phrase("Timezone", highlightFont));
+		cell.setPadding(5);
+		cell.setBorderWidth(3);
+		cell.setBorderColor(BaseColor.WHITE);
+		table.addCell(cell);
+
+		cell = new PdfPCell(new Phrase(response.getTravelbriefingResponse().getTimezone().getName(), normalFont));
+		cell.setPadding(5);
+		cell.setBorderWidth(3);
+		cell.setColspan(5);
+		cell.setBorderColor(BaseColor.WHITE);
+		table.addCell(cell);
+
+		// ##############
+		// ## Currency ##
+		// ##############
+
+		cell = new PdfPCell(new Phrase("Currency", highlightFont));
+		cell.setPadding(5);
+		cell.setBorderWidth(3);
+		cell.setBorderColor(BaseColor.WHITE);
+		table.addCell(cell);
+
+		cell = new PdfPCell(new Phrase(response.getTravelbriefingResponse().getCurrency().getName(), normalFont));
+		cell.setPadding(5);
+		cell.setBorderWidth(3);
+		cell.setColspan(5);
+		cell.setBorderColor(BaseColor.WHITE);
+		table.addCell(cell);
+
+		// #################
+		// ## Electricity ##
+		// #################
+
+		cell = new PdfPCell(new Phrase("Electricity", highlightFont));
+		cell.setPadding(5);
+		cell.setBorderWidth(3);
+		cell.setBorderColor(BaseColor.WHITE);
+		table.addCell(cell);
+
 		cell = new PdfPCell();
 		TravelbriefingElectricity electricity = response.getTravelbriefingResponse().getElectricity();
 		Paragraph paragraph = new Paragraph(electricity.getVoltage() + " Volt", largeHighlightFont_invert);
@@ -210,38 +276,36 @@ public class PDFGenerator {
 		paragraph = new Paragraph(electricity.getFrequency() + " Herz", normalFont_invert);
 		paragraph.setAlignment(Element.ALIGN_CENTER);
 		cell.addElement(paragraph);
-		cell.setBackgroundColor(BaseColor.ORANGE);
-		cell.setPadding(5);
+		cell.setBackgroundColor(BaseColor.BLUE);
 		cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-		cell.setBorderWidth(3);
+		cell.setBorderWidth(8);
 		cell.setBorderColor(BaseColor.WHITE);
 		table.addCell(cell);
-		
-		for(int i=0; i<4; i++){
-			if(i < electricity.getPlugs().length){
+
+		for (int i = 0; i < 4; i++) {
+			if (i < electricity.getPlugs().length) {
 				cell = new PdfPCell();
-				Image image = Image.getInstance("src/main/resources/plugs/type_" + electricity.getPlugs()[i].toLowerCase() + ".jpg");
+				Image image = Image.getInstance(
+						"src/main/resources/plugs/type_" + electricity.getPlugs()[i].toLowerCase() + ".jpg");
 				cell = new PdfPCell(image, true);
 				cell.setBorderWidth(3);
 				cell.setPadding(5);
 				cell.setBorderColor(BaseColor.WHITE);
 				table.addCell(cell);
-			}else{
+			} else {
 				cell = new PdfPCell();
 				cell.setBorderWidth(3);
 				cell.setBorderColor(BaseColor.WHITE);
 				table.addCell(cell);
 			}
 		}
-		
-		
+
 		Paragraph goodToKnow = new Paragraph();
 		addEmptyLine(goodToKnow, 1);
-		goodToKnow.add(generateSubCategory("Good to know",
-				"src/main/resources/icons/lightbulb.png"));
+		goodToKnow.add(generateSubCategory("Good to know", "src/main/resources/icons/lightbulb.png"));
 		goodToKnow.add(table);
 		document.add(goodToKnow);
-		
+
 	}
 
 	private static void addEmptyLine(Paragraph paragraph, int number) {
