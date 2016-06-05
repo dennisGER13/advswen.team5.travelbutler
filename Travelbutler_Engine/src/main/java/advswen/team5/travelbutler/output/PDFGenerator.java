@@ -112,7 +112,7 @@ public class PDFGenerator {
 		for (int i = 0; i < counter; i++) {
 			Status tweet = tweets.get(i);
 			
-			Image image=Image.getInstance(tweet.getUser().getProfileImageURL());
+			Image image=Image.getInstance(tweet.getUser().getBiggerProfileImageURL());
 			cell = new PdfPCell(image, true);
 			cell.setBorderWidth(3);
 			cell.setPadding(2);
