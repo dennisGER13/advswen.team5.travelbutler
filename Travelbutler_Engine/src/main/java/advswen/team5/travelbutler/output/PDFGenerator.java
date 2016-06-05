@@ -40,6 +40,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import advswen.team5.travelbutler.api.response.Response;
 import advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdvise;
 import advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdviseList;
+import advswen.team5.travelbutler.api.travelbriefing.TravelbriefingElectricity;
 import twitter4j.Status;
 
 public class PDFGenerator {
@@ -49,9 +50,12 @@ public class PDFGenerator {
 	private static Font catFont = new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD);
 	private static Font subcatFont = new Font(Font.FontFamily.HELVETICA, 13, Font.BOLD);
 	private static Font normalFont = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL);
+	private static Font normalFont_invert = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL, BaseColor.WHITE);
 	private static Font smallFont = new Font(Font.FontFamily.HELVETICA, 8, Font.NORMAL, BaseColor.WHITE);
 	private static Font highlightFont = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD);
 	private static Font highlightFont_invert = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD, BaseColor.WHITE);
+	private static Font largeHighlightFont_invert = new Font(Font.FontFamily.HELVETICA, 15, Font.BOLD, BaseColor.WHITE);
+	private static Font largeFont_invert = new Font(Font.FontFamily.HELVETICA, 15, Font.NORMAL, BaseColor.WHITE);
 
 	private static DateFormat df = DateFormat.getDateTimeInstance( /* dateStyle */ DateFormat.MEDIUM,
 			/* timeStyle */ DateFormat.SHORT);
@@ -74,6 +78,7 @@ public class PDFGenerator {
 
 		addTravelWarnings(document);
 		addWikipediaInfo(document);
+		addGoodToKnow(document);
 		addTweets(document, 10);
 
 		document.close();
@@ -180,6 +185,63 @@ public class PDFGenerator {
 		travelAdvise.add(table);
 		document.add(travelAdvise);
 
+	}
+	
+	private void addGoodToKnow(Document document) throws Exception {
+		if (response.getTravelbriefingResponse() == null || response.getTravelbriefingResponse().isMissing()) {
+			return;
+		}
+		
+		float[] columnWidths = { 1, 1, 1, 1, 1, 1};
+		PdfPTable table = new PdfPTable(columnWidths);
+		table.setWidthPercentage(100);
+		
+		PdfPCell cell = new PdfPCell(new Phrase("Electricity", highlightFont));
+		cell.setPadding(5);
+		cell.setBorderWidth(3);
+		cell.setBorderColor(BaseColor.WHITE);
+		table.addCell(cell);
+		
+		cell = new PdfPCell();
+		TravelbriefingElectricity electricity = response.getTravelbriefingResponse().getElectricity();
+		Paragraph paragraph = new Paragraph(electricity.getVoltage() + " Volt", largeHighlightFont_invert);
+		paragraph.setAlignment(Element.ALIGN_CENTER);
+		cell.addElement(paragraph);
+		paragraph = new Paragraph(electricity.getFrequency() + " Herz", normalFont_invert);
+		paragraph.setAlignment(Element.ALIGN_CENTER);
+		cell.addElement(paragraph);
+		cell.setBackgroundColor(BaseColor.ORANGE);
+		cell.setPadding(5);
+		cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		cell.setBorderWidth(3);
+		cell.setBorderColor(BaseColor.WHITE);
+		table.addCell(cell);
+		
+		for(int i=0; i<4; i++){
+			if(i < electricity.getPlugs().length){
+				cell = new PdfPCell();
+				Image image = Image.getInstance("src/main/resources/plugs/type_" + electricity.getPlugs()[i].toLowerCase() + ".jpg");
+				cell = new PdfPCell(image, true);
+				cell.setBorderWidth(3);
+				cell.setPadding(5);
+				cell.setBorderColor(BaseColor.WHITE);
+				table.addCell(cell);
+			}else{
+				cell = new PdfPCell();
+				cell.setBorderWidth(3);
+				cell.setBorderColor(BaseColor.WHITE);
+				table.addCell(cell);
+			}
+		}
+		
+		
+		Paragraph goodToKnow = new Paragraph();
+		addEmptyLine(goodToKnow, 1);
+		goodToKnow.add(generateSubCategory("Good to know",
+				"src/main/resources/icons/lightbulb.png"));
+		goodToKnow.add(table);
+		document.add(goodToKnow);
+		
 	}
 
 	private static void addEmptyLine(Paragraph paragraph, int number) {
