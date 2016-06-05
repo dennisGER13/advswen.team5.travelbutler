@@ -1,6 +1,7 @@
 package advswen.team5.travelbutler.api.travelbriefing;
 
 public class TravelbriefingAdvise {
+	private String source;
 	private String advise;
 	private String url;
 	
@@ -25,6 +26,16 @@ public class TravelbriefingAdvise {
 	public void setUrl(String url) {
 		this.url = url;
 	}
+
+	public String getSource() {
+		return source;
+	}
+
+	public void setSource(String source) {
+		this.source = source;
+	}
+	
+	
 	
 	
 }
