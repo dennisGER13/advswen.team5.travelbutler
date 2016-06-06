@@ -2,9 +2,12 @@ package advswen.team5.travelbutler.output;
 
 import java.awt.Color;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,113 +22,309 @@ import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
+import com.itextpdf.text.BadElementException;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.GrayColor;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+
 import advswen.team5.travelbutler.api.response.Response;
+import advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdvise;
+import advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdviseList;
+import advswen.team5.travelbutler.api.travelbriefing.TravelbriefingElectricity;
+import advswen.team5.travelbutler.api.travelbriefing.TravelbriefingLanguage;
+import twitter4j.Status;
 
 public class PDFGenerator {
 
 	private Response response;
 
-	private PDRectangle mediabox;
-	private float marginX = 50;
-	private float marginY = 70;
-	private float width;
-	private float startX;
-	private float startY;
+	private static Font catFont = new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD);
+	private static Font subcatFont = new Font(Font.FontFamily.HELVETICA, 13, Font.BOLD);
+	private static Font normalFont = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL);
+	private static Font normalFont_invert = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL, BaseColor.WHITE);
+	private static Font smallFont = new Font(Font.FontFamily.HELVETICA, 8, Font.NORMAL, BaseColor.WHITE);
+	private static Font highlightFont = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD);
+	private static Font highlightFont_invert = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD, BaseColor.WHITE);
+	private static Font largeHighlightFont_invert = new Font(Font.FontFamily.HELVETICA, 15, Font.BOLD, BaseColor.WHITE);
+	private static Font largeFont_invert = new Font(Font.FontFamily.HELVETICA, 15, Font.NORMAL, BaseColor.WHITE);
+
+	private static DateFormat df = DateFormat.getDateTimeInstance( /* dateStyle */ DateFormat.MEDIUM,
+			/* timeStyle */ DateFormat.SHORT);
 
 	public PDFGenerator(Response response) {
 		this.response = response;
 	}
 
 	public void generate() throws Exception {
-		String outputFileName = response.getDestination() + ".pdf";
+		Document document = new Document();
+		PdfWriter.getInstance(document, new FileOutputStream("output/" + response.getDestination() + ".pdf"));
+		document.open();
+		document.addTitle("Traveling to " + response.getDestination());
 
-		// Create a document and add a page to it
-		PDDocument document = new PDDocument();
-		PDPage page1 = new PDPage(PDRectangle.A4);
-	    mediabox = page1.getMediaBox();
-	    width = mediabox.getWidth() - 2*marginX;
-	    startX = mediabox.getLowerLeftX() + marginX;
-	    startY = mediabox.getUpperRightY() - marginX;
-		document.addPage(page1);
+		Paragraph headline = new Paragraph();
+		addEmptyLine(headline, 1);
+		headline.add(new Paragraph("Traveling to " + response.getDestination(), catFont));
+		addEmptyLine(headline, 1);
+		document.add(headline);
 
-		// Create a new font object selecting one of the PDF base fonts
-		PDType0Font fontPlain = PDType0Font.load(document, new File("src/main/resources/arial.ttf"));
-		
-		// Start a new content stream which will "hold" the to be created
-		// content
-		PDPageContentStream cos = new PDPageContentStream(document, page1);
+		addTravelWarnings(document);
+		addWikipediaInfo(document);
+		addGoodToKnow(document);
+		addTweets(document, 10);
 
-		int line = 0;
+		document.close();
+		System.out.println("Finished");
+	}
 
-		cos.beginText();
-		cos.setFont(fontPlain, 18);
-		cos.newLineAtOffset(marginX, mediabox.getHeight() - marginY);
-		cos.showText("Ihre Reise nach " + response.getDestination());
-		cos.endText();
-		line++;
+	private void addWikipediaInfo(Document document) throws Exception {
+		if (response.getWikipediaResponse() == null || response.getWikipediaResponse().isMissing())
+			return;
 
-		if (!response.getWikipediaResponse().isMissing()) {
-			List<String> lines = getLines(prepareText(response.getWikipediaResponse().getExtract(), true), 12, fontPlain);
-			cos.beginText();
-			cos.setFont(fontPlain, 12);
-			cos.newLineAtOffset(marginX, mediabox.getHeight() - 50 * (++line));
-			for (String textLine: lines)
-		    {
-				cos.showText(textLine);
-				cos.moveTextPositionByAmount(0, -1.3f*12);
-		    }
-			cos.endText();
+		Paragraph wikipedia = new Paragraph();
+		wikipedia.add(generateSubCategory("About your destination", "src/main/resources/icons/map.png"));
+		wikipedia.add(new Paragraph(response.getWikipediaResponse().getShortExtract(1500), normalFont));
+		document.add(wikipedia);
+	}
+
+	private void addTweets(Document document, int numOfTweets) throws Exception {
+		if (response.getTwitterResponse() == null || response.getTwitterResponse().isMissing()) {
+			return;
 		}
 
-		// Make sure that the content stream is closed:
-		cos.close();
+		Paragraph twitter = new Paragraph();
+		addEmptyLine(twitter, 1);
+		twitter.add(generateSubCategory("Many customers already enjoy their stay in " + response.getDestination(),
+				"src/main/resources/icons/twitter.png"));
+		List<Status> tweets = response.getTwitterResponse().getTweets();
 
-		// Save the results and ensure that the document is properly closed:
-		document.save(outputFileName);
-		document.close();
+		float[] columnWidths = { 1, 2, 8 };
+		PdfPTable table = new PdfPTable(columnWidths);
+		table.setWidthPercentage(100);
+
+		int counter;
+		if (tweets.size() > numOfTweets) {
+			counter = numOfTweets;
+		} else {
+			counter = tweets.size();
+		}
+
+		PdfPCell cell;
+		for (int i = 0; i < counter; i++) {
+			Status tweet = tweets.get(i);
+
+			Image image = Image.getInstance(tweet.getUser().getBiggerProfileImageURL());
+			cell = new PdfPCell(image, true);
+			cell.setBorderWidth(3);
+			cell.setPadding(2);
+			cell.setBorderColor(BaseColor.WHITE);
+			table.addCell(cell);
+
+			cell = new PdfPCell();
+			cell.addElement(new Phrase(tweet.getUser().getScreenName(), highlightFont_invert));
+			cell.addElement(new Phrase(df.format(tweet.getCreatedAt()), smallFont));
+			cell.setBackgroundColor(new BaseColor(64, 153, 255));
+			cell.setPadding(5);
+			cell.setBorderWidth(3);
+			cell.setBorderColor(BaseColor.WHITE);
+			table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase(tweet.getText(), normalFont));
+			cell.setPadding(5);
+			cell.setBorderWidth(3);
+			cell.setBorderColor(BaseColor.WHITE);
+			table.addCell(cell);
+		}
+
+		twitter.add(table);
+		document.add(twitter);
 	}
-	
-	private String prepareText(String text, boolean removeBrackets){
-		text = text.replaceAll("[_[^\\w\\däüöÄÜÖß\\[\\]\\(\\)\\+\\-\\.\\,\\;\\:\\?\\! ]]", "");
-		if(removeBrackets)
-			text = text.replaceAll("\\(.*?\\)","");
-		
-		return text;
+
+	private void addTravelWarnings(Document document) throws Exception {
+		if (response.getTravelbriefingResponse() == null || response.getTravelbriefingResponse().isMissing()) {
+			return;
+		}
+
+		TravelbriefingAdviseList warnings = response.getTravelbriefingResponse().getAdvise();
+
+		// If there are no advises this part of the document is left out
+		if (warnings.getAll().isEmpty())
+			return;
+
+		float[] columnWidths = { 1, 5 };
+		PdfPTable table = new PdfPTable(columnWidths);
+		table.setWidthPercentage(100);
+
+		PdfPCell cell;
+		Image image = Image.getInstance("src/main/resources/icons/warning.png");
+		cell = new PdfPCell(image, true);
+		cell.setBorderWidth(3);
+		cell.setPadding(10);
+		cell.setBorderColor(BaseColor.WHITE);
+		table.addCell(cell);
+
+		cell = new PdfPCell();
+		cell.addElement(generateSubCategory("Safety advises"));
+		for (TravelbriefingAdvise warning : warnings.getAll()) {
+			cell.addElement(new Phrase(warning.getSource() + ": " + warning.getAdvise(), highlightFont));
+			cell.addElement(new Phrase("More details: " + warning.getUrl(), normalFont));
+			cell.addElement(new Phrase(" "));
+		}
+		cell.setBorderWidth(0);
+		table.addCell(cell);
+
+		Paragraph travelAdvise = new Paragraph();
+		travelAdvise.add(table);
+		document.add(travelAdvise);
+
 	}
-	
-	private List<String> getLines (String text, int fontSize, PDType0Font font) throws Exception{
-		List<String> lines = new ArrayList<String>();
-	    int lastSpace = -1;
-	    while (text.length() > 0)
-	    {
-	        int spaceIndex = text.indexOf(' ', lastSpace + 1);
-	        if (spaceIndex < 0)
-	            spaceIndex = text.length();
-	        String subString = text.substring(0, spaceIndex);
-	        float size = fontSize * font.getStringWidth(subString) / 1000;
-	        System.out.printf("'%s' - %f of %f\n", subString, size, width);
-	        if (size > width)
-	        {
-	            if (lastSpace < 0)
-	                lastSpace = spaceIndex;
-	            subString = text.substring(0, lastSpace);
-	            lines.add(subString);
-	            text = text.substring(lastSpace).trim();
-	            System.out.printf("'%s' is line\n", subString);
-	            lastSpace = -1;
-	        }
-	        else if (spaceIndex == text.length())
-	        {
-	            lines.add(text);
-	            System.out.printf("'%s' is line\n", text);
-	            text = "";
-	        }
-	        else
-	        {
-	            lastSpace = spaceIndex;
-	        }
-	    }
-	    return lines;
+
+	private void addGoodToKnow(Document document) throws Exception {
+		if (response.getTravelbriefingResponse() == null || response.getTravelbriefingResponse().isMissing()) {
+			return;
+		}
+
+		float[] columnWidths = { 1, 1, 1, 1, 1, 1 };
+		PdfPTable table = new PdfPTable(columnWidths);
+		table.setWidthPercentage(100);
+		PdfPCell cell;
+
+		// ##############
+		// ## Language ##
+		// ##############
+
+		cell = new PdfPCell(new Phrase("Language", highlightFont));
+		cell.setPadding(5);
+		cell.setBorderWidth(3);
+		cell.setBorderColor(BaseColor.WHITE);
+		table.addCell(cell);
+
+		TravelbriefingLanguage[] languages = response.getTravelbriefingResponse().getLanguage();
+		String languagePhrase = "";
+		for (TravelbriefingLanguage language : languages) {
+			languagePhrase += language.getLanguage();
+			if (language.getOfficial().equals("Yes"))
+				languagePhrase += " (official)";
+			languagePhrase += ", ";
+		}
+
+		cell = new PdfPCell(new Phrase(languagePhrase.substring(0, languagePhrase.length() - 2), normalFont));
+		cell.setPadding(5);
+		cell.setBorderWidth(3);
+		cell.setColspan(5);
+		cell.setBorderColor(BaseColor.WHITE);
+		table.addCell(cell);
+
+		// ##############
+		// ## Timezone ##
+		// ##############
+
+		cell = new PdfPCell(new Phrase("Timezone", highlightFont));
+		cell.setPadding(5);
+		cell.setBorderWidth(3);
+		cell.setBorderColor(BaseColor.WHITE);
+		table.addCell(cell);
+
+		cell = new PdfPCell(new Phrase(response.getTravelbriefingResponse().getTimezone().getName(), normalFont));
+		cell.setPadding(5);
+		cell.setBorderWidth(3);
+		cell.setColspan(5);
+		cell.setBorderColor(BaseColor.WHITE);
+		table.addCell(cell);
+
+		// ##############
+		// ## Currency ##
+		// ##############
+
+		cell = new PdfPCell(new Phrase("Currency", highlightFont));
+		cell.setPadding(5);
+		cell.setBorderWidth(3);
+		cell.setBorderColor(BaseColor.WHITE);
+		table.addCell(cell);
+
+		cell = new PdfPCell(new Phrase(response.getTravelbriefingResponse().getCurrency().getName(), normalFont));
+		cell.setPadding(5);
+		cell.setBorderWidth(3);
+		cell.setColspan(5);
+		cell.setBorderColor(BaseColor.WHITE);
+		table.addCell(cell);
+
+		// #################
+		// ## Electricity ##
+		// #################
+
+		cell = new PdfPCell(new Phrase("Electricity", highlightFont));
+		cell.setPadding(5);
+		cell.setBorderWidth(3);
+		cell.setBorderColor(BaseColor.WHITE);
+		table.addCell(cell);
+
+		cell = new PdfPCell();
+		TravelbriefingElectricity electricity = response.getTravelbriefingResponse().getElectricity();
+		Paragraph paragraph = new Paragraph(electricity.getVoltage() + " Volt", largeHighlightFont_invert);
+		paragraph.setAlignment(Element.ALIGN_CENTER);
+		cell.addElement(paragraph);
+		paragraph = new Paragraph(electricity.getFrequency() + " Herz", normalFont_invert);
+		paragraph.setAlignment(Element.ALIGN_CENTER);
+		cell.addElement(paragraph);
+		cell.setBackgroundColor(BaseColor.BLUE);
+		cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		cell.setBorderWidth(8);
+		cell.setBorderColor(BaseColor.WHITE);
+		table.addCell(cell);
+
+		for (int i = 0; i < 4; i++) {
+			if (i < electricity.getPlugs().length) {
+				cell = new PdfPCell();
+				Image image = Image.getInstance(
+						"src/main/resources/plugs/type_" + electricity.getPlugs()[i].toLowerCase() + ".jpg");
+				cell = new PdfPCell(image, true);
+				cell.setBorderWidth(3);
+				cell.setPadding(5);
+				cell.setBorderColor(BaseColor.WHITE);
+				table.addCell(cell);
+			} else {
+				cell = new PdfPCell();
+				cell.setBorderWidth(3);
+				cell.setBorderColor(BaseColor.WHITE);
+				table.addCell(cell);
+			}
+		}
+
+		Paragraph goodToKnow = new Paragraph();
+		addEmptyLine(goodToKnow, 1);
+		goodToKnow.add(generateSubCategory("Good to know", "src/main/resources/icons/lightbulb.png"));
+		goodToKnow.add(table);
+		document.add(goodToKnow);
+
+	}
+
+	private static void addEmptyLine(Paragraph paragraph, int number) {
+		for (int i = 0; i < number; i++) {
+			paragraph.add(new Paragraph(" "));
+		}
+	}
+
+	private static Paragraph generateSubCategory(String text) {
+		return new Paragraph(text, subcatFont);
+	}
+
+	private static Paragraph generateSubCategory(String text, String icon) throws Exception {
+		Paragraph paragraph = new Paragraph();
+		Image image = Image.getInstance(icon);
+		image.scaleToFit(15, 15);
+		paragraph.add(new Chunk(image, 0, 0));
+		paragraph.add(new Phrase(" " + text, subcatFont));
+		return paragraph;
 	}
 
 }

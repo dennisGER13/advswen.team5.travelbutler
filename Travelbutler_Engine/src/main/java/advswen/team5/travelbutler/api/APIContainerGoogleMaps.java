@@ -12,17 +12,35 @@ import org.apache.http.impl.client.HttpClients;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import advswen.team5.travelbutler.api.response.GoogleMapsResponse;
 import advswen.team5.travelbutler.api.response.IAPIResponse;
-import advswen.team5.travelbutler.google.maps.api.GoogleGeoCode;
+import advswen.team5.travelbutler.google.maps.api.support.GoogleGeoCode;
 
-public class APIContainerGoogleMaps implements IAPIResponse {
+public class APIContainerGoogleMaps implements IAPIContainer{
 
-	private static final String API_KEY = "AIzaSyDCfERTe9pquhxM38YqEhayDdjemtKBD0c";
 	private boolean missing = false;
-	private String address;
+	private final String API_KEY ="AIzaSyDCfERTe9pquhxM38YqEhayDdjemtKBD0c";
 	
-	public GoogleGeoCode getGeoCode(String address, boolean ssl) throws Exception {
-	    // build url
+	@Override
+	public GoogleMapsResponse processSearch(String requestedString) {
+
+		try {
+			GoogleMapsResponse response = new GoogleMapsResponse(getGeoCode(requestedString));
+			
+			return response;
+			
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	public GoogleGeoCode getGeoCode(String requestedString) throws Exception {
+
+		// Erzeugen der URL für die Anfrage der geocoding-GoogleMaps API
+		boolean ssl = true;
 	    StringBuilder url = new StringBuilder("http");
 	    if ( ssl ) {
 	        url.append("s");
@@ -31,30 +49,30 @@ public class APIContainerGoogleMaps implements IAPIResponse {
 	    url.append("://maps.googleapis.com/maps/api/geocode/json?");
 	   
 	    if ( ssl ) {
-	        url.append("key=");;
-			url.append(API_KEY);
+	        url.append("key=");
+	        url.append(API_KEY);
 	        url.append("&");
 	    }
 	    url.append("sensor=false&address=");
-	    url.append( URLEncoder.encode(address) );
-
-	    // do request
+	    url.append( URLEncoder.encode(requestedString) );
+	  
+	    // Führe die Anfrage an die API aus
 	    try (CloseableHttpClient httpclient = HttpClients.createDefault();) {
 	        HttpGet request = new HttpGet(url.toString());
-	    
-	    try (CloseableHttpResponse response = httpclient.execute(request)) {
-            HttpEntity entity = response.getEntity();
-	    
-        // recover String response (for debug purposes)
-        StringBuilder result = new StringBuilder();
-        try (BufferedReader in = new BufferedReader(new InputStreamReader(entity.getContent()))) {
-            String inputLine;
-            while ((inputLine = in.readLine()) != null) {
-                result.append(inputLine);
-                result.append("\n");
-            }
-        }        
-	    		// parse result
+
+	        try (CloseableHttpResponse response = httpclient.execute(request)) {
+	            HttpEntity entity = response.getEntity();
+
+	            StringBuilder result = new StringBuilder();
+	            try (BufferedReader in = new BufferedReader(new InputStreamReader(entity.getContent()))) {
+	                String inputLine;
+	                while ((inputLine = in.readLine()) != null) {
+	                    result.append(inputLine);
+	                    result.append("\n");
+	                }
+	            }
+
+	            // Mappen des Ergebnisses der Anfrage
 	            ObjectMapper mapper = new ObjectMapper();
 	            GoogleGeoCode geocode = mapper.readValue(result.toString(), GoogleGeoCode.class);
 
@@ -62,24 +80,11 @@ public class APIContainerGoogleMaps implements IAPIResponse {
 	                if (geocode.getError_message() != null) {
 	                    throw new Exception(geocode.getError_message());
 	                }
-	                throw new Exception("Can not find geocode for: " + address);
+	                throw new Exception("Can not find geocode for: " + requestedString);
 	            }
+	            //Gebe das Ergbnisobjekt zurueck
 	            return geocode;
-			}
+	        }
 	    }
 	}
-	
-	@Override
-	public void setMissing(boolean missing) {
-		
-		this.missing=missing;
-		
-	}
-
-	@Override
-	public boolean isMissing() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 }

@@ -13,15 +13,16 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import advswen.team5.travelbutler.api.response.IAPIResponse;
+import advswen.team5.travelbutler.api.response.TravelbriefingResponse;
 import advswen.team5.travelbutler.api.response.WikipediaResponse;
 
-public class APIContainerWikipedia implements IAPIContainer {
+public class APIContainerTravelbriefing implements IAPIContainer {
 
 	@Override
-	public WikipediaResponse processSearch(String requestString) {
+	public TravelbriefingResponse processSearch(String requestString) {
 		Gson gson = new Gson();
 		
-		WikipediaResponse response = gson.fromJson(getPageAsJson(requestString), WikipediaResponse.class);
+		TravelbriefingResponse response = gson.fromJson(getPageAsJson(requestString), TravelbriefingResponse.class);
 		return response;
 
 	}
@@ -30,12 +31,9 @@ public class APIContainerWikipedia implements IAPIContainer {
 		InputStream in = null;
 		JsonObject page = null;
 		try {
-			in = new URL("https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&indexpageids=1&titles=" + requestString.replace(" ", "+") + "&utf8=1&exintro=1&explaintext=1").openStream();
+			in = new URL("https://travelbriefing.org/" + requestString + "?format=json").openStream();
 			JsonParser parser = new JsonParser();
-			JsonObject o = parser.parse(IOUtils.toString(in)).getAsJsonObject().getAsJsonObject("query");
-			
-			String pageId = o.getAsJsonArray("pageids").get(0).getAsString();
-			return o.getAsJsonObject("pages").getAsJsonObject(pageId);
+			return parser.parse(IOUtils.toString(in)).getAsJsonObject();
 			
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block

@@ -1,5 +1,6 @@
 package advswen.team5.travelbutler.api;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import advswen.team5.travelbutler.api.response.IAPIResponse;
@@ -16,18 +17,17 @@ import twitter4j.conf.ConfigurationBuilder;
 public class APIContainerTwitter implements IAPIContainer{
 	
 	@Override
-	public IAPIResponse processSearch(String requestedString) {
+	public TwitterResponse processSearch(String requestedString) {
 		
-		TwitterResponse response = new TwitterResponse();
+		TwitterResponse response = new TwitterResponse(twitterFeed(requestedString));
 		
 		return response;
 	}
 	
-	public List twitterFeed(String requestedString){
+	public List<Status> twitterFeed(String requestedString){
 		
 		ConfigurationBuilder cb = new ConfigurationBuilder();
 		
-		//Twitter-API-Keys müssen anstelle der "null" eingesetzt werden!!!
 		cb.setDebugEnabled(true)
 			.setOAuthConsumerKey("cwIHzbPZzoe097AeWe7w5PnA2")
 			.setOAuthConsumerSecret("HwCns5LD0NbvspTunsyEr0E4UJvXcuC0Qomh7SXiDfdi5dB59v")
@@ -36,31 +36,42 @@ public class APIContainerTwitter implements IAPIContainer{
 		
 		Twitter twitter = new TwitterFactory(cb.build()).getInstance();
 	    
-		List<Status> tweets = null;
+		List <Status> tweets = null;
+		List <Status> usedTweets = new ArrayList<Status>();
+		
+		String [] users ={"TripAdvisor", "LonelyPlanet", "NatGeoTravel", "TravelLeisure",
+				"fodorstravel", "travelchannel", "travelgov", "TheWorldStories", "travel",
+				"Holiday_ideas_", "DTW_Holidays", "Hisuitesorlando", "HolidayInn"};	
 		
 		try {
-	    	  
-	          Query query = new Query(requestedString);
-	          QueryResult result;
-	          
-	          do {
-	              result = twitter.search(query);
-	              tweets = result.getTweets();
-	             
-	              for (Status tweet : tweets) {
-	                  System.out.println(tweet.getUser().getScreenName() + " ------ " + tweet.getText());
-	              }
+			  //Pruefe fuer jedes Element des Arrays USERS, welche Tweets genutzt werden sollen
+	    	  for(String u : users){
+	    		  
+	    		  String queryString = requestedString + " from:" + u;
+	    		  Query query = new Query(queryString);
+	    		  QueryResult result;
+	    		  do {
+		              result = twitter.search(query);
+		              tweets = result.getTweets();
+		             
+		              for (Status tweet : tweets) {
+		                  //Speichere die zu nutzenden Tweets in die Liste usedTweets ab
+		            	  if(!tweet.isRetweet())
+		                	  usedTweets.add(tweet);
+		                  System.out.println(tweet.getUser().getScreenName() + " ------ " + tweet.getText());
+		              }
+	    		  
 	         
+		        //Falls das Ergebnis null ist, soll eine Fehlermeldung ausgegeben werden
 	          } while ((query = result.nextQuery()) != null);
-	          System.exit(0);
-	     
-	      } catch (TwitterException te) {
+	    
+	      }
+		}catch (TwitterException te) {
 	          te.printStackTrace();
 	          System.out.println("Failed to search tweets: " + te.getMessage());
-	          System.exit(-1);
 	      }
-		
-		return  tweets;
+	   
+		return  usedTweets;
 		
 	}
 

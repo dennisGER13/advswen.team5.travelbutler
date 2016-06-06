@@ -10,33 +10,29 @@
    
 package advswen.team5.travelbutler.search;
 
+import advswen.team5.travelbutler.strategy.ConcreteStrategyBasic;
 import advswen.team5.travelbutler.strategy.ConcreteStrategyFoo;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class SearchRequest {
+public class SearchRequestFassade {
 	private String requestString;
 	private GrainEnum grain = GrainEnum.foo;
 	private LanguageEnum language;
 	private SearchEngine searchengine;
 	
-	public SearchRequest(String requestString){
+	public SearchRequestFassade(){
 		searchengine  = new SearchEngine();
-		this.requestString = requestString;
-		language = LanguageEnum.english;
-		
-		this.grainDetection();
-		
-		this.search();
-		
+		this.language = LanguageEnum.english;		
 	}
 	//search() f�hrt eine Grain Pr�fung durch. Der Grain wird durch die Nutzereingabe bestimmt. Bsp. "Frankreich" = "Land"
 	//Anschlie�end wird die suche gestartet, der Grain bestimmt welche Strategie gew�hlt wird.
-	public String search(){
-		if(grain == GrainEnum.foo){
-			searchengine.setStrategy(new ConcreteStrategyFoo());
+	public String search(String requestString){
+		this.grainDetection();
+		if(grain == GrainEnum.land){
+			searchengine.setStrategy(new ConcreteStrategyLand());
 		}
 		return searchengine.execute(requestString);
 	}
