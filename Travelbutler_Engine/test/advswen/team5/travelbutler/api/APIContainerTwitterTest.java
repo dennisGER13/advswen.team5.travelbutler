@@ -2,15 +2,20 @@ package advswen.team5.travelbutler.api;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import advswen.team5.travelbutler.api.response.IAPIResponse;
+import advswen.team5.travelbutler.api.response.TwitterResponse;
+import twitter4j.Status;
 
 public class APIContainerTwitterTest {
 	
 	private IAPIContainer iapiContainer;
+	String searchString = "France";
 	
 	@Before
 	public void setup(){
@@ -20,16 +25,17 @@ public class APIContainerTwitterTest {
 	}
 
 	@Test
-	public void testProcessSearch() {
+	public void testProcessSearchNotNull() {
 		System.out.println("testProcessSearch");
-		IAPIResponse processSearch = iapiContainer.processSearch("Frankreich");
+		IAPIResponse processSearch = iapiContainer.processSearch(searchString);
 		assertNotNull(processSearch);
 	}
+	
 	
 	@Test
 	public void isMissingShouldBeFalseForValidInputString() {
 		System.out.println("Test: isMissingShouldBeFalseForValidInputString");
-		IAPIResponse processSearch = iapiContainer.processSearch("Frankreich");
+		IAPIResponse processSearch = iapiContainer.processSearch(searchString);
 		assertFalse(processSearch.isMissing());
 	}
 	
@@ -56,7 +62,18 @@ public class APIContainerTwitterTest {
 
 //	@Test
 //	public void testTwitterFeed() {
-//		fail("Not yet implemented");
-//	}
+//		String requestedString = "France";
+//		TwitterResponse Twitter = new APIContainerTwitter().processSearch(requestedString);
+//		List usedTweets = Twitter.getTweets();
+//		
+////		List<Status> twitterFeed = (List<Status>) iapiContainer.processSearch(requestedString);
+//		for(String str: usedTweets.) {
+//		    if(str.trim().contains(search))
+//		       return true;
+//		}
+//		return false;
+		
+
+	}
 
 }
