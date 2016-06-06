@@ -60,20 +60,20 @@ public class APIContainerTwitterTest {
 		
 	}
 
-//	@Test
-//	public void testTwitterFeed() {
-//		String requestedString = "France";
-//		TwitterResponse Twitter = new APIContainerTwitter().processSearch(requestedString);
-//		List usedTweets = Twitter.getTweets();
-//		
-////		List<Status> twitterFeed = (List<Status>) iapiContainer.processSearch(requestedString);
-//		for(String str: usedTweets.) {
-//		    if(str.trim().contains(search))
-//		       return true;
-//		}
-//		return false;
-//		
-//
-//	}
+	@Test
+	public boolean testTwitterFeed() {
+		String requestedString = "France";
+		TwitterResponse Twitter = new APIContainerTwitter().processSearch(requestedString);
+		List<Status> usedTweets = Twitter.getTweets();
+		
+//		List<Status> twitterFeed = (List<Status>) iapiContainer.processSearch(requestedString);
+		for(Status status: usedTweets) {
+		    if(status.getText().toLowerCase().contains(requestedString.toLowerCase()))
+		       return true;
+		}
+		return false;
+		
+
+	}
 
 }
