@@ -9,12 +9,13 @@ public class TravelbriefingResponse implements IAPIResponse {
 	private TravelbriefingLanguage[] language;
 	private TravelbriefingTimezone timezone;
 	private TravelbriefingVaccination[] vaccinations;
+	private TravelbriefingWater water;
 	
 	private boolean missing = false;
 
 	public TravelbriefingResponse(TravelbriefingAdviseList advise, TravelbriefingCurrency currency,
 			TravelbriefingElectricity electricity, TravelbriefingLanguage[] language, TravelbriefingTimezone timezone,
-			TravelbriefingVaccination[] vaccinations, boolean missing) {
+			TravelbriefingVaccination[] vaccinations, TravelbriefingWater water) {
 		super();
 		this.advise = advise;
 		this.currency = currency;
@@ -22,7 +23,7 @@ public class TravelbriefingResponse implements IAPIResponse {
 		this.language = language;
 		this.timezone = timezone;
 		this.vaccinations = vaccinations;
-		this.missing = missing;
+		this.water = water;
 	}
 
 	public TravelbriefingAdviseList getAdvise() {
@@ -71,6 +72,14 @@ public class TravelbriefingResponse implements IAPIResponse {
 
 	public void setVaccinations(TravelbriefingVaccination[] vaccinations) {
 		this.vaccinations = vaccinations;
+	}
+
+	public TravelbriefingWater getWater() {
+		return water;
+	}
+
+	public void setWater(TravelbriefingWater water) {
+		this.water = water;
 	}
 
 	public boolean isMissing() {
