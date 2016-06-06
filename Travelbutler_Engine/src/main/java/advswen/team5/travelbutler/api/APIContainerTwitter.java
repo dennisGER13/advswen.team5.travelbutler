@@ -41,7 +41,7 @@ public class APIContainerTwitter implements IAPIContainer{
 		
 		String [] users ={"TripAdvisor", "LonelyPlanet", "NatGeoTravel", "TravelLeisure",
 				"fodorstravel", "travelchannel", "travelgov", "TheWorldStories", "travel",
-				"Holiday_ideas_", "DTW_Holidays", "Hisuitesorlando", "HolidayInn"};	
+				"Holiday_ideas_", "DTW_Holidays", "Hisuitesorlando", "HolidayInn", "citythisway"};	
 		
 		try {
 			  //Pruefe fuer jedes Element des Arrays USERS, welche Tweets genutzt werden sollen
