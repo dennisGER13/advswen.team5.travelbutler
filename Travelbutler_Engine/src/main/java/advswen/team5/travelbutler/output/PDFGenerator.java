@@ -1,38 +1,18 @@
 package advswen.team5.travelbutler.output;
 
-import java.awt.Color;
-import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
 import java.text.DateFormat;
-import java.util.ArrayList;
+import java.text.DecimalFormat;
 import java.util.List;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.common.PDRectangle;
-import org.apache.pdfbox.pdmodel.font.PDFont;
-import org.apache.pdfbox.pdmodel.font.PDType0Font;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
-import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
-
-import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
-import com.itextpdf.text.pdf.GrayColor;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -41,7 +21,9 @@ import advswen.team5.travelbutler.api.response.Response;
 import advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdvise;
 import advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdviseList;
 import advswen.team5.travelbutler.api.travelbriefing.TravelbriefingElectricity;
+import advswen.team5.travelbutler.api.travelbriefing.TravelbriefingExchangeRate;
 import advswen.team5.travelbutler.api.travelbriefing.TravelbriefingLanguage;
+import advswen.team5.travelbutler.api.travelbriefing.TravelbriefingVaccination;
 import twitter4j.Status;
 
 public class PDFGenerator {
@@ -56,10 +38,10 @@ public class PDFGenerator {
 	private static Font highlightFont = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD);
 	private static Font highlightFont_invert = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD, BaseColor.WHITE);
 	private static Font largeHighlightFont_invert = new Font(Font.FontFamily.HELVETICA, 15, Font.BOLD, BaseColor.WHITE);
-	private static Font largeFont_invert = new Font(Font.FontFamily.HELVETICA, 15, Font.NORMAL, BaseColor.WHITE);
 
 	private static DateFormat df = DateFormat.getDateTimeInstance( /* dateStyle */ DateFormat.MEDIUM,
 			/* timeStyle */ DateFormat.SHORT);
+	private static DecimalFormat round2 = new DecimalFormat("##0.00");
 
 	public PDFGenerator(Response response) {
 		this.response = response;
@@ -80,6 +62,7 @@ public class PDFGenerator {
 		addTravelWarnings(document);
 		addWikipediaInfo(document);
 		addGoodToKnow(document);
+		addHealth(document);
 		addTweets(document, 10);
 
 		document.close();
@@ -103,7 +86,7 @@ public class PDFGenerator {
 
 		Paragraph twitter = new Paragraph();
 		addEmptyLine(twitter, 1);
-		twitter.add(generateSubCategory("Many customers already enjoy their stay in " + response.getDestination(),
+		twitter.add(generateSubCategory("What our partners recommend for your stay in " + response.getDestination(),
 				"src/main/resources/icons/twitter.png"));
 		List<Status> tweets = response.getTwitterResponse().getTweets();
 
@@ -258,6 +241,33 @@ public class PDFGenerator {
 		cell.setBorderColor(BaseColor.WHITE);
 		table.addCell(cell);
 
+		// ####################
+		// ## Exchange Rates ##
+		// ####################
+
+		cell = new PdfPCell(new Phrase("Rates", highlightFont));
+		cell.setPadding(5);
+		cell.setBorderWidth(3);
+		cell.setBorderColor(BaseColor.WHITE);
+		table.addCell(cell);
+
+		TravelbriefingExchangeRate[] rates = response.getTravelbriefingResponse().getCurrency().getCompare();
+		for (TravelbriefingExchangeRate rate : rates) {
+			if (rate.getName().equals("US Dollar") || rate.getName().equals("Euro")
+					|| rate.getName().equals("Pound Sterling") || rate.getName().equals("Yen")
+					|| rate.getName().equals("Canadian Dollar")) {
+				
+				cell = new PdfPCell();
+				cell.addElement(new Phrase(rate.getName(), normalFont));
+				cell.addElement(new Phrase(String.valueOf(round2.format(rate.getRate())), normalFont));
+				cell.setPadding(5);
+				cell.setBorderWidth(3);
+				cell.setBorderColor(BaseColor.WHITE);
+				table.addCell(cell);
+			}
+
+		}
+
 		// #################
 		// ## Electricity ##
 		// #################
@@ -306,6 +316,57 @@ public class PDFGenerator {
 		goodToKnow.add(table);
 		document.add(goodToKnow);
 
+	}
+
+	private void addHealth(Document document) throws Exception {
+		if (response.getTravelbriefingResponse() == null || response.getTravelbriefingResponse().isMissing()) {
+			return;
+		}
+
+		float[] columnWidths = { 1, 5 };
+		PdfPTable table = new PdfPTable(columnWidths);
+		table.setWidthPercentage(100);
+		PdfPCell cell;
+
+		cell = new PdfPCell(new Phrase("Water", highlightFont));
+		cell.setPadding(5);
+		cell.setBorderWidth(3);
+		cell.setBorderColor(BaseColor.WHITE);
+		table.addCell(cell);
+
+		cell = new PdfPCell(new Phrase("Drinking tap water in " + response.getDestination() + " is "
+				+ response.getTravelbriefingResponse().getWater().getShortDescription(), normalFont));
+		cell.setPadding(5);
+		cell.setBorderWidth(3);
+		cell.setBorderColor(BaseColor.WHITE);
+		table.addCell(cell);
+
+		cell = new PdfPCell(new Phrase("Vaccinations", highlightFont));
+		cell.setPadding(5);
+		cell.setBorderWidth(3);
+		cell.setBorderColor(BaseColor.WHITE);
+		table.addCell(cell);
+
+		TravelbriefingVaccination[] vacs = response.getTravelbriefingResponse().getVaccinations();
+		cell = new PdfPCell();
+		cell.setBorderWidth(3);
+		cell.setBorderColor(BaseColor.WHITE);
+
+		if (vacs.length == 0) {
+			cell.addElement(new Phrase("There are no recommondations for " + response.getDestination(), normalFont));
+		} else {
+			for (TravelbriefingVaccination vac : vacs) {
+				cell.addElement(new Phrase(vac.getName(), highlightFont));
+				cell.addElement(new Phrase(vac.getMessage(), normalFont));
+			}
+		}
+		table.addCell(cell);
+
+		Paragraph health = new Paragraph();
+		addEmptyLine(health, 1);
+		health.add(generateSubCategory("Health and risks", "src/main/resources/icons/health.png"));
+		health.add(table);
+		document.add(health);
 	}
 
 	private static void addEmptyLine(Paragraph paragraph, int number) {
