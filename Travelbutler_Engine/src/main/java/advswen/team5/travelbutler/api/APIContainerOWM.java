@@ -34,17 +34,12 @@ public class APIContainerOWM implements IAPIContainer {
 	// declaring object of "OpenWeatherMap" class
     OpenWeatherMap owm = new OpenWeatherMap(Units.METRIC, Language.GERMAN, "9d67ca64545f5cdd04e72bd82835d104");
 
-    // getting current weather data for the "London" city
+    //Abrufen der Wetterinformationen des Strings
     CurrentWeather cwd = owm.currentWeatherByCityName(requestString);
 
 	
 
-    //printing city name from the retrieved data
-    System.out.println("City: " + cwd.getCityName());
-
-    // printing the max./min. temperature
-    System.out.println("Temperature: " + cwd.getMainInstance().getMaxTemperature()
-                        + "/" + cwd.getMainInstance().getMinTemperature() + "\'F");
+   
 	}
 	
 }
