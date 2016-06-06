@@ -61,17 +61,18 @@ public class APIContainerTwitterTest {
 	}
 
 	@Test
-	public boolean testTwitterFeed() {
-		String requestedString = "France";
+	public void testTwitterFeed() {
+		String requestedString = "Barcelona";
 		TwitterResponse Twitter = new APIContainerTwitter().processSearch(requestedString);
 		List<Status> usedTweets = Twitter.getTweets();
 		
-//		List<Status> twitterFeed = (List<Status>) iapiContainer.processSearch(requestedString);
+		boolean found = true;
 		for(Status status: usedTweets) {
-		    if(status.getText().toLowerCase().contains(requestedString.toLowerCase()))
-		       return true;
+		    if(!status.getText().toLowerCase().contains(requestedString.toLowerCase()))
+		       found = false;
 		}
-		return false;
+
+		assertTrue(found);
 		
 
 	}
