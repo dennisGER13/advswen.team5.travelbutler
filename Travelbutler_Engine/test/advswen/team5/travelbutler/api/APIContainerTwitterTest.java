@@ -8,24 +8,22 @@ import org.junit.Test;
 
 import advswen.team5.travelbutler.api.response.IAPIResponse;
 
-public class APIContainerWikipediaTest {
+public class APIContainerTwitterTest {
 	
 	private IAPIContainer iapiContainer;
-
+	
 	@Before
 	public void setup(){
 		System.out.println("Setup");
-		iapiContainer = new APIContainerWikipedia();
+		iapiContainer = new APIContainerTwitter();
 	
 	}
-	
 
 	@Test
-	public void processSearchShouldNotBeNullForValidInputString() {
-		System.out.println("Test: processSearchShouldNotBeNullForValidInputString");
+	public void testProcessSearch() {
+		System.out.println("testProcessSearch");
 		IAPIResponse processSearch = iapiContainer.processSearch("Frankreich");
 		assertNotNull(processSearch);
-		
 	}
 	
 	@Test
@@ -35,15 +33,15 @@ public class APIContainerWikipediaTest {
 		assertFalse(processSearch.isMissing());
 	}
 	
-	@Test(expected = NullPointerException.class)
-	public void processSearchShouldThrowNullPointerExceptionForNullString() {
+	@Test(expected = AssertionError.class)
+	public void processSearchShouldThrowAssertionErrorForNullString() {
 		System.out.println("Test: processSearchShouldThrowNullPointerExceptionForNullString");
 		IAPIResponse processSearch = iapiContainer.processSearch(null);
 		assertNull(processSearch);
 	}
 	
-	@Test(expected = NullPointerException.class)
-	public void processSearchShouldThrowNullPointerExceptionForBlankString() {
+	@Test(expected = AssertionError.class)
+	public void processSearchShouldThrowAssertionErrorForBlankString() {
 		System.out.println("Test: processSearchShouldThrowNullPointerExceptionForBlankString");
 		IAPIResponse processSearch = iapiContainer.processSearch("");
 		assertNull(processSearch);
@@ -56,5 +54,9 @@ public class APIContainerWikipediaTest {
 		
 	}
 
+//	@Test
+//	public void testTwitterFeed() {
+//		fail("Not yet implemented");
+//	}
 
 }
