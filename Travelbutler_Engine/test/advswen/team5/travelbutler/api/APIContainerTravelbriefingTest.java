@@ -2,11 +2,17 @@ package advswen.team5.travelbutler.api;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import advswen.team5.travelbutler.api.response.IAPIResponse;
+import advswen.team5.travelbutler.api.response.TravelbriefingResponse;
+import advswen.team5.travelbutler.api.response.TwitterResponse;
+import advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdviseList;
+import twitter4j.Status;
 
 
 public class APIContainerTravelbriefingTest {
@@ -64,6 +70,21 @@ public class APIContainerTravelbriefingTest {
 		IAPIResponse processSearch = iapiContainer.processSearch("");
 		assertNotNull(processSearch);
 	}
+	
+//	@Test
+//	public void testIfAdviceContainsCountry() {
+//		System.out.println("Test: testIfTweetsContainsCountry");
+//		TravelbriefingResponse TravelResponse = new APIContainerTravelbriefing().processSearch(searchStringCountry);
+//		TravelbriefingAdviseList usedTweets = TravelResponse.getAdvise();
+//		
+//		boolean found = true;
+//		for(TravelbriefingAdviseList status: usedTweets) {
+//		    if(!status.getText().toLowerCase().contains(searchStringCountry.toLowerCase()))
+//		       found = false;
+//		}
+//
+//		assertTrue(found);
+//	}
 
 	
 	@After

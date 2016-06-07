@@ -16,7 +16,8 @@ import twitter4j.Status;
 public class APIContainerWikipediaTest {
 	
 	private IAPIContainer iapiContainer;
-	String searchString = "Barcelona";
+	String searchStringCity = "Barcelona";
+	String searchStringCountry = "Spain";
 	
 	
 
@@ -31,17 +32,32 @@ public class APIContainerWikipediaTest {
 	
 
 	@Test
-	public void processSearchShouldNotBeNullForValidInputString() {
-		System.out.println("Test: processSearchShouldNotBeNullForValidInputString");
-		IAPIResponse processSearch = iapiContainer.processSearch(searchString);		
+	public void processSearchShouldNotBeNullForValidCityInput() {
+		System.out.println("Test: processSearchShouldNotBeNullForValidCityInput");
+		IAPIResponse processSearch = iapiContainer.processSearch(searchStringCity);		
 		assertNotNull(processSearch);
 		
 	}
 	
 	@Test
-	public void isMissingShouldBeFalseForValidInputString() {
+	public void processSearchShouldNotBeNullForValidCountryInput() {
+		System.out.println("Test: processSearchShouldNotBeNullForValidCountryInput");
+		IAPIResponse processSearch = iapiContainer.processSearch(searchStringCountry);		
+		assertNotNull(processSearch);
+		
+	}
+	
+	@Test
+	public void isMissingShouldBeFalseForValidCityString() {
 		System.out.println("Test: isMissingShouldBeFalseForValidInputString");
-		IAPIResponse processSearch = iapiContainer.processSearch(searchString);
+		IAPIResponse processSearch = iapiContainer.processSearch(searchStringCity);
+		assertFalse(processSearch.isMissing());
+	}
+	
+	@Test
+	public void isMissingShouldBeFalseForValidCountryString() {
+		System.out.println("Test: isMissingShouldBeFalseForValidInputString");
+		IAPIResponse processSearch = iapiContainer.processSearch(searchStringCountry);
 		assertFalse(processSearch.isMissing());
 	}
 	
@@ -58,19 +74,36 @@ public class APIContainerWikipediaTest {
 	}
 	
 	@Test
-	public void checkIfExtractContainsSearchString() {
+	public void checkIfExtractContainsCityString() {
 		
-		WikipediaResponse wikiResponse = new APIContainerWikipedia().processSearch(searchString);
+		WikipediaResponse wikiResponse = new APIContainerWikipedia().processSearch(searchStringCity);
 		String wikiExtract = wikiResponse.getExtract();
-		boolean found = wikiExtract.toLowerCase().contains(searchString.toLowerCase());
+		boolean found = wikiExtract.toLowerCase().contains(searchStringCity.toLowerCase());
 		assertTrue(found);
 	}
 	
-	public void checkIfTitleContainsSearchString() {
+	@Test
+	public void checkIfExtractContainsCountryString() {
 		
-		WikipediaResponse wikiResponse = new APIContainerWikipedia().processSearch(searchString);
+		WikipediaResponse wikiResponse = new APIContainerWikipedia().processSearch(searchStringCountry);
+		String wikiExtract = wikiResponse.getExtract();
+		boolean found = wikiExtract.toLowerCase().contains(searchStringCountry.toLowerCase());
+		assertTrue(found);
+	}
+	
+	public void checkIfTitleContainsCityString() {
+		
+		WikipediaResponse wikiResponse = new APIContainerWikipedia().processSearch(searchStringCity);
 		String wikiTitle = wikiResponse.getTitle();
-		boolean found = wikiTitle.toLowerCase().contains(searchString.toLowerCase());
+		boolean found = wikiTitle.toLowerCase().contains(searchStringCity.toLowerCase());
+		assertTrue(found);
+	}
+	
+	public void checkIfTitleContainsCountryString() {
+		
+		WikipediaResponse wikiResponse = new APIContainerWikipedia().processSearch(searchStringCountry);
+		String wikiTitle = wikiResponse.getTitle();
+		boolean found = wikiTitle.toLowerCase().contains(searchStringCountry.toLowerCase());
 		assertTrue(found);
 	}
 	
