@@ -15,7 +15,7 @@ import twitter4j.Status;
 public class APIContainerTwitterTest {
 	
 	private IAPIContainer iapiContainer;
-	String searchString = "France";
+	String searchString = "Barcelona";
 	
 	@Before
 	public void setup(){
@@ -48,7 +48,7 @@ public class APIContainerTwitterTest {
 	
 	@Test(expected = AssertionError.class)
 	public void processSearchShouldThrowAssertionErrorForBlankString() {
-		System.out.println("Test: processSearchShouldThrowNullPointerExceptionForBlankString");
+		System.out.println("Test: processSearchShouldThrowAssertionErrorForBlankString");
 		IAPIResponse processSearch = iapiContainer.processSearch("");
 		assertNull(processSearch);
 	}
@@ -61,14 +61,14 @@ public class APIContainerTwitterTest {
 	}
 
 	@Test
-	public void testTwitterFeed() {
-		String requestedString = "Barcelona";
-		TwitterResponse Twitter = new APIContainerTwitter().processSearch(requestedString);
+	public void testIfTweetsContainSearchString() {
+		System.out.println("Test: testIfTweetsContainSearchString");
+		TwitterResponse Twitter = new APIContainerTwitter().processSearch(searchString);
 		List<Status> usedTweets = Twitter.getTweets();
 		
 		boolean found = true;
 		for(Status status: usedTweets) {
-		    if(!status.getText().toLowerCase().contains(requestedString.toLowerCase()))
+		    if(!status.getText().toLowerCase().contains(searchString.toLowerCase()))
 		       found = false;
 		}
 
@@ -76,5 +76,8 @@ public class APIContainerTwitterTest {
 		
 
 	}
+	
+
+
 
 }
