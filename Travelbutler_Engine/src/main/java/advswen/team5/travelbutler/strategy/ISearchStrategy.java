@@ -1,11 +1,11 @@
 package advswen.team5.travelbutler.strategy;
 
-
+import advswen.team5.travelbutler.api.response.Response;
 
 public interface ISearchStrategy {
 
 	
-	public String executeSearch(String requestString);
+	public Response executeSearch(String requestString);
 
 
 }

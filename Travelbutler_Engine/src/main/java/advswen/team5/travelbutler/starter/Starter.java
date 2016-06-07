@@ -14,6 +14,7 @@ import advswen.team5.travelbutler.api.response.TwitterResponse;
 import advswen.team5.travelbutler.api.response.WikipediaResponse;
 import advswen.team5.travelbutler.dialogue.*;
 import advswen.team5.travelbutler.output.PDFGenerator;
+import advswen.team5.travelbutler.search.SearchRequestFassade;
 
 public class Starter {
 	
@@ -24,19 +25,22 @@ public class Starter {
 //		InputDialogue inputdialogue = new InputDialogue();
 //		inputdialogue.run();
 		
-		Response response = new Response("Spain");
-		WikipediaResponse wiki = new APIContainerWikipedia().processSearch(response.getDestination());
-		TwitterResponse twitter = new APIContainerTwitter().processSearch(response.getDestination());
-		GoogleMapsResponse googlemaps = new APIContainerGoogleMaps().processSearch(response.getDestination());
-		TravelbriefingResponse travelbriefing = new APIContainerTravelbriefing().processSearch(response.getDestination());
+//		Response response = new Response("Spain");
+//		WikipediaResponse wiki = new APIContainerWikipedia().processSearch(response.getDestination());
+//		TwitterResponse twitter = new APIContainerTwitter().processSearch(response.getDestination());
+//		GoogleMapsResponse googlemaps = new APIContainerGoogleMaps().processSearch(response.getDestination());
+//		TravelbriefingResponse travelbriefing = new APIContainerTravelbriefing().processSearch(response.getDestination());
+//		
+//		response.setWikipediaResponse(wiki);
+//		response.setTwitterResponse(twitter);
+//		response.setGooglemapsResponse(googlemaps);
+//		response.setTravelbriefingResponse(travelbriefing);
 		
-		response.setWikipediaResponse(wiki);
-		response.setTwitterResponse(twitter);
-		response.setGooglemapsResponse(googlemaps);
-		response.setTravelbriefingResponse(travelbriefing);
+		SearchRequestFassade s1 = new SearchRequestFassade();
+		
 		
 		try {
-			new PDFGenerator(response).generate();
+			new PDFGenerator(s1.search("France")).generate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

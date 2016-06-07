@@ -10,8 +10,9 @@
    
 package advswen.team5.travelbutler.search;
 
-import advswen.team5.travelbutler.strategy.ConcreteStrategyBasic;
-import advswen.team5.travelbutler.strategy.ConcreteStrategyFoo;
+import advswen.team5.travelbutler.api.response.*;
+import advswen.team5.travelbutler.strategy.*;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -26,14 +27,19 @@ public class SearchRequestFassade {
 	public SearchRequestFassade(){
 		searchengine  = new SearchEngine();
 		this.language = LanguageEnum.english;		
+		System.out.println("Suche bereit, warte auf Eingabe");
 	}
 	//search() f�hrt eine Grain Pr�fung durch. Der Grain wird durch die Nutzereingabe bestimmt. Bsp. "Frankreich" = "Land"
 	//Anschlie�end wird die suche gestartet, der Grain bestimmt welche Strategie gew�hlt wird.
-	public String search(String requestString){
-		this.grainDetection();
+	public Response search(String requestString){
+		System.out.println("Suche wurde gestartet");
+		this.requestString = requestString;
+		grain = this.grainDetection();
 		if(grain == GrainEnum.land){
+			System.out.println("Suche wird ausgeführt");
 			searchengine.setStrategy(new ConcreteStrategyLand());
 		}
+		System.out.println("Ergebnisse werden geliefert");
 		return searchengine.execute(requestString);
 	}
 	
@@ -47,7 +53,7 @@ public class SearchRequestFassade {
 
 		try {
 
-			br = new BufferedReader(new FileReader("/Travelbutler_Engine/src/main/resources/lands.CSV"));
+			br = new BufferedReader(new FileReader("C:/Users/Alexander/git/advswen.team5.travelbutler/Travelbutler_Engine/src/main/resources/lands.CSV"));
 			while ((line = br.readLine()) != null) {
 
 				String[] country = line.split(cvsSplitBy);
@@ -55,6 +61,7 @@ public class SearchRequestFassade {
 					// System.out.println(foo);
 					if (searchString.equals(foo)) {
 						System.out.println("Done");
+						System.out.println("Grain wurde bestimmt: Land");
 						return GrainEnum.land;
 					}
 				}
@@ -72,7 +79,7 @@ public class SearchRequestFassade {
 				}
 			}
 		}
-		System.out.println("Done");
+		System.out.println("Grain konnte nicht bestimmt werden");
 		return GrainEnum.foo;
 	}
 	
