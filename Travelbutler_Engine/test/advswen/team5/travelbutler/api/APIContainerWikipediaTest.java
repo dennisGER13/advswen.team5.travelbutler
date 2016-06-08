@@ -74,8 +74,8 @@ public class APIContainerWikipediaTest {
 	}
 	
 	@Test
-	public void checkIfExtractContainsCityString() {
-		
+	public void testIfExtractContainsCityString() {
+		System.out.println("Test: checkIfExtractContainsCityString");
 		WikipediaResponse wikiResponse = new APIContainerWikipedia().processSearch(searchStringCity);
 		String wikiExtract = wikiResponse.getExtract();
 		boolean found = wikiExtract.toLowerCase().contains(searchStringCity.toLowerCase());
@@ -83,38 +83,94 @@ public class APIContainerWikipediaTest {
 	}
 	
 	@Test
-	public void checkIfExtractContainsCountryString() {
-		
+	public void testIfExtractContainsCountryString() {
+		System.out.println("Test: checkIfExtractContainsCountryString");
 		WikipediaResponse wikiResponse = new APIContainerWikipedia().processSearch(searchStringCountry);
 		String wikiExtract = wikiResponse.getExtract();
 		boolean found = wikiExtract.toLowerCase().contains(searchStringCountry.toLowerCase());
 		assertTrue(found);
 	}
 	
-	public void checkIfTitleContainsCityString() {
-		
+	@Test
+	public void testIfTitleContainsCityString() {
+		System.out.println("Test: checkIfTitleContainsCityString");		
 		WikipediaResponse wikiResponse = new APIContainerWikipedia().processSearch(searchStringCity);
 		String wikiTitle = wikiResponse.getTitle();
 		boolean found = wikiTitle.toLowerCase().contains(searchStringCity.toLowerCase());
 		assertTrue(found);
 	}
 	
-	public void checkIfTitleContainsCountryString() {
-		
+	@Test
+	public void testIfTitleContainsCountryString() {
+		System.out.println("Test: checkIfTitleContainsCountryString");	
 		WikipediaResponse wikiResponse = new APIContainerWikipedia().processSearch(searchStringCountry);
 		String wikiTitle = wikiResponse.getTitle();
 		boolean found = wikiTitle.toLowerCase().contains(searchStringCountry.toLowerCase());
 		assertTrue(found);
 	}
 	
-//	public void checkIfShortExtractContainsSearchString() {
-//		
-//		WikipediaResponse wikiResponse = new APIContainerWikipedia().processSearch("Barcelona");
-//		String wikiShortExtract = wikiResponse.getShortExtract(20);
-//		boolean found = wikiShortExtract.toLowerCase().contains("Barcelona".toLowerCase());
-//		assertTrue(found);
-//	}
+	@Test
+	public void testTitleGetter() {
+		System.out.println("Test: checkTitleGetter");	
+		WikipediaResponse wikiResponse = new WikipediaResponse("12", "title", "extract");
+		assertEquals("title", wikiResponse.getTitle());
+	}
 	
+	@Test
+	public void testTitleSetter() {
+		System.out.println("Test: checkTitleSetter");	
+		WikipediaResponse wikiResponse = new WikipediaResponse("12", "title", "extract");
+		wikiResponse.setTitle("Title");
+		assertEquals("Title", wikiResponse.getTitle());
+	}
+	
+	@Test
+	public void testPageidGetter() {
+		System.out.println("Test: checkPageidGetter");	
+		WikipediaResponse wikiResponse = new WikipediaResponse("12", "title", "extract");
+		assertEquals("12", wikiResponse.getPageid());
+	}
+	
+	@Test
+	public void testPageidSetter() {
+		System.out.println("Test: checkPageidSetter");	
+		WikipediaResponse wikiResponse = new WikipediaResponse("12", "title", "extract");
+		wikiResponse.setPageid("13");
+		assertEquals("13", wikiResponse.getPageid());
+	}
+	
+	@Test
+	public void testExtractGetter() {
+		System.out.println("Test: checkPageidGetter");	
+		WikipediaResponse wikiResponse = new WikipediaResponse("12", "title", "extract");
+		assertEquals("extract", wikiResponse.getExtract());
+	}
+	
+	@Test
+	public void testExtractSetter() {
+		System.out.println("Test: checkPageidGetter");	
+		WikipediaResponse wikiResponse = new WikipediaResponse("12", "title", "extract");
+		wikiResponse.setExtract("new extract");
+		assertEquals("new extract", wikiResponse.getExtract());
+	}
+	
+	@Test
+	public void testMissingGetter() {
+		System.out.println("Test: checkPageidGetter");	
+		WikipediaResponse wikiResponse = new WikipediaResponse("12", "title", "extract");
+		wikiResponse.setMissing(false);
+		assertFalse(wikiResponse.isMissing());
+	}
+	
+	@Test
+	public void testMissingSetter() {
+		System.out.println("Test: checkPageidGetter");	
+		WikipediaResponse wikiResponse = new WikipediaResponse("12", "title", "extract");
+		wikiResponse.setMissing(true);
+		assertTrue(wikiResponse.isMissing());
+	}
+	
+
 	
 	@After
 	public void cleanup() {

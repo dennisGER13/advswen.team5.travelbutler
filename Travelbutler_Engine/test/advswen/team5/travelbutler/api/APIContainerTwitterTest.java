@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import advswen.team5.travelbutler.api.response.IAPIResponse;
 import advswen.team5.travelbutler.api.response.TwitterResponse;
+import advswen.team5.travelbutler.api.response.WikipediaResponse;
 import twitter4j.Status;
 
 public class APIContainerTwitterTest {
@@ -98,6 +99,19 @@ public class APIContainerTwitterTest {
 
 		assertTrue(found);
 	}
+	
+
+	
+	@Test
+	public void testSetMissing() {
+		System.out.println("Test: testSetMissing");
+		IAPIResponse processSearch = iapiContainer.processSearch(searchStringCity);
+		TwitterResponse Twitter = new APIContainerTwitter().processSearch(searchStringCity);
+		Twitter.setMissing(false);
+		assertFalse(Twitter.isMissing());
+	}
+	
+
 	
 	@After
 	public void cleanup() {
