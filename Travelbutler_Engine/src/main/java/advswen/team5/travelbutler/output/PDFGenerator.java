@@ -1,5 +1,9 @@
 package advswen.team5.travelbutler.output;
 
+/*
+ * Andreas Tauscher
+ */
+
 import java.io.FileOutputStream;
 import java.text.DateFormat;
 import java.text.DecimalFormat;

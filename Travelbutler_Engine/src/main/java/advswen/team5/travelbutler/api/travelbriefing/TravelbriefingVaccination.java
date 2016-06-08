@@ -1,5 +1,9 @@
 package advswen.team5.travelbutler.api.travelbriefing;
 
+/*
+ * Andreas Tauscher
+ */
+
 public class TravelbriefingVaccination {
 	private String name;
 	private String message;

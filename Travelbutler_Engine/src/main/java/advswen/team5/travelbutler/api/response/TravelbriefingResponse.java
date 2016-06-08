@@ -1,5 +1,9 @@
 package advswen.team5.travelbutler.api.response;
 
+/*
+ * Andreas Tauscher
+ */
+
 import advswen.team5.travelbutler.api.travelbriefing.*;
 
 public class TravelbriefingResponse implements IAPIResponse {

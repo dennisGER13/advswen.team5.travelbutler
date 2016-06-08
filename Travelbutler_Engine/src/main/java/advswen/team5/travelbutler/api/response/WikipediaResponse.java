@@ -1,5 +1,9 @@
 package advswen.team5.travelbutler.api.response;
 
+/*
+ * Andreas Tauscher
+ */
+
 public class WikipediaResponse implements IAPIResponse {
 	private String pageid;
 	private String title;

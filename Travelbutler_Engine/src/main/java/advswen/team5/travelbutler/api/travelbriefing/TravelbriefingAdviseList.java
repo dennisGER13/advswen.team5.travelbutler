@@ -1,5 +1,9 @@
 package advswen.team5.travelbutler.api.travelbriefing;
 
+/*
+ * Andreas Tauscher
+ */
+
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,5 +1,9 @@
 package advswen.team5.travelbutler.api.response;
 
+/*
+ * Andreas Tauscher
+ */
+
 public class Response {
 	private String destination = null;
 	private WikipediaResponse wikipediaResponse = null;

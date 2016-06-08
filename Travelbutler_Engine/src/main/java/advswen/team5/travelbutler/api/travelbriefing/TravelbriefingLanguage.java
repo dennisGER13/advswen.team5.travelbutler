@@ -1,5 +1,9 @@
 package advswen.team5.travelbutler.api.travelbriefing;
 
+/*
+ * Andreas Tauscher
+ */
+
 public class TravelbriefingLanguage {
 	private String language;
 	private String official;

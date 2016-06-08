@@ -1,5 +1,9 @@
 package advswen.team5.travelbutler.api.travelbriefing;
 
+/*
+ * Andreas Tauscher
+ */
+
 import com.google.gson.annotations.SerializedName;
 
 public class TravelbriefingWater {

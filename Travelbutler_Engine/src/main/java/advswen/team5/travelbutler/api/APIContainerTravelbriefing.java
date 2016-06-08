@@ -1,5 +1,9 @@
 package advswen.team5.travelbutler.api;
 
+/*
+ * Andreas Tauscher
+ */
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;

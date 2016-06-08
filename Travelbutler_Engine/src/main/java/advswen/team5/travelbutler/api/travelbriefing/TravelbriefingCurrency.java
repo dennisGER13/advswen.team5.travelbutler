@@ -1,5 +1,9 @@
 package advswen.team5.travelbutler.api.travelbriefing;
 
+/*
+ * Andreas Tauscher
+ */
+
 public class TravelbriefingCurrency {
 	private String name;
 	private String symbol;
