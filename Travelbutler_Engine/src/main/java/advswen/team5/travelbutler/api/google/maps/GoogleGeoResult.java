@@ -1,4 +1,4 @@
-package advswen.team5.travelbutler.google.maps.api.support;
+package advswen.team5.travelbutler.api.google.maps;
 
 /*
  * Author: Dennis Wagenblast

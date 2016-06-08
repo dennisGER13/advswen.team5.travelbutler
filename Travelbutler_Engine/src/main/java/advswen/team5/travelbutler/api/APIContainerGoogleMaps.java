@@ -16,9 +16,9 @@ import org.apache.http.impl.client.HttpClients;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import advswen.team5.travelbutler.api.google.maps.GoogleGeoCode;
 import advswen.team5.travelbutler.api.response.GoogleMapsResponse;
 import advswen.team5.travelbutler.api.response.IAPIResponse;
-import advswen.team5.travelbutler.google.maps.api.support.GoogleGeoCode;
 
 public class APIContainerGoogleMaps implements IAPIContainer{
 

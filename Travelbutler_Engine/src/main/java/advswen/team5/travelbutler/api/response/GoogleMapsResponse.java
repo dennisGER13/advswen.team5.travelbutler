@@ -1,6 +1,6 @@
 package advswen.team5.travelbutler.api.response;
 
-import advswen.team5.travelbutler.google.maps.api.support.GoogleGeoCode;
+import advswen.team5.travelbutler.api.google.maps.GoogleGeoCode;
 
 public class GoogleMapsResponse implements IAPIResponse{
 
