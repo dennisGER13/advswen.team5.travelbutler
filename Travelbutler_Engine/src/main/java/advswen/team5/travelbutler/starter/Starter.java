@@ -40,7 +40,7 @@ public class Starter {
 		
 		
 		try {
-			new PDFGenerator(s1.search("France")).generate();
+			new PDFGenerator(s1.search("Colombia")).generate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

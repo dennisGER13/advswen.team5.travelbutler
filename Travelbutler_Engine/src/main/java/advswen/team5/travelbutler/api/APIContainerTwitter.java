@@ -1,5 +1,9 @@
 package advswen.team5.travelbutler.api;
 
+/*
+ * Author: Dennis Wagenblast
+ */
+
 import java.util.ArrayList;
 import java.util.List;
 

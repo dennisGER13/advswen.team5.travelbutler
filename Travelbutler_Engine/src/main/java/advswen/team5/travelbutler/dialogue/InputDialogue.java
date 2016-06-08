@@ -1,5 +1,10 @@
 package advswen.team5.travelbutler.dialogue;
 
+/*
+ * Author: Dennis Wagenblast
+ */
+
+
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
@@ -41,9 +46,6 @@ public class InputDialogue extends JFrame implements ActionListener {
 	private Date startDate;
 	private Date endDate;
 	private String travelDestination;
-	
-	//Aufruf des OutputFensters
-	private OutputDialogue outputDialogue;
 	
 	//Aufruf der SearchRequest mit �bergabe des InputString 
 	private SearchRequestFassade request;
@@ -162,11 +164,7 @@ public class InputDialogue extends JFrame implements ActionListener {
 			
 			//Fenster nach Sucheingabe schlie�en!!
 			frmInputWindow.dispose();
-			
-			//Neues Fenster mit Suchergebnissen �ffnen!!
-//			outputDialogue = new OutputDialogue();
-//			outputDialogue.run();
-//		
+
 		}else if(e.getActionCommand().equals("CANCEL")){
 			
 			//Bei "Abbrechen" endet das Programm!

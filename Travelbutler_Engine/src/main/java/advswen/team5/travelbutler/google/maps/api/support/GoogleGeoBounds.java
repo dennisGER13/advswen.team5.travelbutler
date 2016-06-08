@@ -1,5 +1,9 @@
 package advswen.team5.travelbutler.google.maps.api.support;
 
+/*
+ * Author: Dennis Wagenblast
+ */
+
 public class GoogleGeoBounds {
 
     private GoogleGeoLatLng northeast;

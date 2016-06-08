@@ -1,5 +1,9 @@
 package advswen.team5.travelbutler.api;
 
+/*
+ * Dennis Wagenblast
+ */
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URLEncoder;

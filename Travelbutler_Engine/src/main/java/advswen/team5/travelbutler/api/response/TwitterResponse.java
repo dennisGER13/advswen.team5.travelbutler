@@ -1,5 +1,9 @@
 package advswen.team5.travelbutler.api.response;
 
+/*
+ * Author: Dennis Wagenblast
+ */
+
 import java.util.List;
 
 import twitter4j.Status;
