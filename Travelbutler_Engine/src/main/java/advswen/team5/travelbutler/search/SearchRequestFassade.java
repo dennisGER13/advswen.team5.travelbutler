@@ -20,7 +20,7 @@ import java.io.IOException;
 
 public class SearchRequestFassade {
 	private String requestString;
-	private GrainEnum grain = GrainEnum.foo;
+	private GrainEnum grain = GrainEnum.basic;
 	private LanguageEnum language;
 	private SearchEngine searchengine;
 	
@@ -53,7 +53,7 @@ public class SearchRequestFassade {
 
 		try {
 
-			br = new BufferedReader(new FileReader("C:/Users/Alexander/git/advswen.team5.travelbutler/Travelbutler_Engine/src/main/resources/lands.CSV"));
+			br = new BufferedReader(new FileReader("C:/Users/super/git/advswen.team5.travelbutler/Travelbutler_Engine/src/main/resources/lands.CSV"));
 			while ((line = br.readLine()) != null) {
 
 				String[] country = line.split(cvsSplitBy);
@@ -80,7 +80,7 @@ public class SearchRequestFassade {
 			}
 		}
 		System.out.println("Grain konnte nicht bestimmt werden");
-		return GrainEnum.foo;
+		return GrainEnum.basic;
 	}
 	
 	public void languageDetection(){
