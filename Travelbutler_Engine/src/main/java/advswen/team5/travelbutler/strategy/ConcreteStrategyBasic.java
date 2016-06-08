@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import advswen.team5.travelbutler.api.*;
-import advswen.team5.travelbutler.api.response.Response;
 import advswen.team5.travelbutler.api.response.*;
 
 
@@ -22,7 +21,14 @@ public class ConcreteStrategyBasic implements ISearchStrategy {
 		public Response executeSearch(String requestString) {
 		Response response = new Response(requestString);
 		WikipediaResponse wiki = new APIContainerWikipedia().processSearch(response.getDestination());
+		TwitterResponse twitter = new APIContainerTwitter().processSearch(response.getDestination());
+		GoogleMapsResponse googlemaps = new APIContainerGoogleMaps().processSearch(response.getDestination());
+		TravelbriefingResponse travelbriefing = new APIContainerTravelbriefing().processSearch(response.getDestination());
+		
 		response.setWikipediaResponse(wiki);
+		response.setTwitterResponse(twitter);
+		response.setGooglemapsResponse(googlemaps);
+		response.setTravelbriefingResponse(travelbriefing);
 			
 		return response;
 	}
