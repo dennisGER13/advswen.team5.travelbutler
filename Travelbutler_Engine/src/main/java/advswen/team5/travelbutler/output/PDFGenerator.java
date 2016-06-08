@@ -24,6 +24,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import advswen.team5.travelbutler.api.response.Response;
 import advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdvise;
 import advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdviseList;
+import advswen.team5.travelbutler.api.travelbriefing.TravelbriefingCurrency;
 import advswen.team5.travelbutler.api.travelbriefing.TravelbriefingElectricity;
 import advswen.team5.travelbutler.api.travelbriefing.TravelbriefingExchangeRate;
 import advswen.team5.travelbutler.api.travelbriefing.TravelbriefingLanguage;
@@ -45,7 +46,9 @@ public class PDFGenerator {
 
 	private static DateFormat df = DateFormat.getDateTimeInstance( /* dateStyle */ DateFormat.MEDIUM,
 			/* timeStyle */ DateFormat.SHORT);
-	private static DecimalFormat round2 = new DecimalFormat("##0.00");
+	private static DecimalFormat round3 = new DecimalFormat("##0.000");
+	
+	private static String[] exchangeRates = {"US Dollar", "Euro", "Pound Sterling", "Yen", "Canadian Dollar"};
 
 	public PDFGenerator(Response response) {
 		this.response = response;
@@ -254,23 +257,19 @@ public class PDFGenerator {
 		cell.setBorderWidth(3);
 		cell.setBorderColor(BaseColor.WHITE);
 		table.addCell(cell);
-
-		TravelbriefingExchangeRate[] rates = response.getTravelbriefingResponse().getCurrency().getCompare();
-		for (TravelbriefingExchangeRate rate : rates) {
-			if (rate.getName().equals("US Dollar") || rate.getName().equals("Euro")
-					|| rate.getName().equals("Pound Sterling") || rate.getName().equals("Yen")
-					|| rate.getName().equals("Canadian Dollar")) {
-				
-				cell = new PdfPCell();
-				cell.addElement(new Phrase(rate.getName(), normalFont));
-				cell.addElement(new Phrase(String.valueOf(round2.format(rate.getRate())), normalFont));
-				cell.setPadding(5);
-				cell.setBorderWidth(3);
-				cell.setBorderColor(BaseColor.WHITE);
-				table.addCell(cell);
-			}
-
+		
+		TravelbriefingCurrency currency = response.getTravelbriefingResponse().getCurrency();
+		
+		for(String exchangeRate : exchangeRates){
+			cell = new PdfPCell();
+			cell.addElement(new Phrase(exchangeRate, normalFont));
+			cell.addElement(new Phrase(String.valueOf(round3.format(currency.getExchangeRate(exchangeRate))), normalFont));
+			cell.setPadding(5);
+			cell.setBorderWidth(3);
+			cell.setBorderColor(BaseColor.WHITE);
+			table.addCell(cell);
 		}
+
 
 		// #################
 		// ## Electricity ##
