@@ -1,20 +1,25 @@
+// *************************************************************************************
+// File:         [APIContainerWikipediaTest.java]
+// Created:      [2016/06/07 Tuesday]
+// Last Changed: $Date: 2016/06/08 18:19:00 $
+// Author:       <A HREF="mailto:[ma-152478@hs-weingarten.de]">[Michael Aulbach]</A>
+//**************************************************************************************
+//Description: 	Test-Klasse für APIContainerWikipedia
+//				
+//**************************************************************************************
 package advswen.team5.travelbutler.api;
 
 import static org.junit.Assert.*;
-
-import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import advswen.team5.travelbutler.api.response.IAPIResponse;
-import advswen.team5.travelbutler.api.response.TwitterResponse;
 import advswen.team5.travelbutler.api.response.WikipediaResponse;
-import twitter4j.Status;
 
 public class APIContainerWikipediaTest {
-	
+
 	private IAPIContainer iapiContainer;
 	String searchStringCity = "Barcelona";
 	String searchStringCountry = "Spain";
@@ -29,11 +34,12 @@ public class APIContainerWikipediaTest {
 		
 	
 	}
-	
-
+	/**
+	 * Test method for {@link advswen.team5.travelbutler.api.APIContainerWikipedia#processSearch(java.lang.String)}.
+	 */
 	@Test
-	public void processSearchShouldNotBeNullForValidCityInput() {
-		System.out.println("Test: processSearchShouldNotBeNullForValidCityInput");
+	public void testProcessSearch() {
+		System.out.println("Test: testProcessSearch");
 		IAPIResponse processSearch = iapiContainer.processSearch(searchStringCity);		
 		assertNotNull(processSearch);
 		
@@ -56,7 +62,7 @@ public class APIContainerWikipediaTest {
 	
 	@Test
 	public void isMissingShouldBeFalseForValidCountryString() {
-		System.out.println("Test: isMissingShouldBeFalseForValidInputString");
+		System.out.println("Test: isMissingShouldBeFalseForValidCountryString");
 		IAPIResponse processSearch = iapiContainer.processSearch(searchStringCountry);
 		assertFalse(processSearch.isMissing());
 	}
@@ -109,67 +115,6 @@ public class APIContainerWikipediaTest {
 		assertTrue(found);
 	}
 	
-	@Test
-	public void testTitleGetter() {
-		System.out.println("Test: checkTitleGetter");	
-		WikipediaResponse wikiResponse = new WikipediaResponse("12", "title", "extract");
-		assertEquals("title", wikiResponse.getTitle());
-	}
-	
-	@Test
-	public void testTitleSetter() {
-		System.out.println("Test: checkTitleSetter");	
-		WikipediaResponse wikiResponse = new WikipediaResponse("12", "title", "extract");
-		wikiResponse.setTitle("Title");
-		assertEquals("Title", wikiResponse.getTitle());
-	}
-	
-	@Test
-	public void testPageidGetter() {
-		System.out.println("Test: checkPageidGetter");	
-		WikipediaResponse wikiResponse = new WikipediaResponse("12", "title", "extract");
-		assertEquals("12", wikiResponse.getPageid());
-	}
-	
-	@Test
-	public void testPageidSetter() {
-		System.out.println("Test: checkPageidSetter");	
-		WikipediaResponse wikiResponse = new WikipediaResponse("12", "title", "extract");
-		wikiResponse.setPageid("13");
-		assertEquals("13", wikiResponse.getPageid());
-	}
-	
-	@Test
-	public void testExtractGetter() {
-		System.out.println("Test: checkPageidGetter");	
-		WikipediaResponse wikiResponse = new WikipediaResponse("12", "title", "extract");
-		assertEquals("extract", wikiResponse.getExtract());
-	}
-	
-	@Test
-	public void testExtractSetter() {
-		System.out.println("Test: checkPageidGetter");	
-		WikipediaResponse wikiResponse = new WikipediaResponse("12", "title", "extract");
-		wikiResponse.setExtract("new extract");
-		assertEquals("new extract", wikiResponse.getExtract());
-	}
-	
-	@Test
-	public void testMissingGetter() {
-		System.out.println("Test: checkPageidGetter");	
-		WikipediaResponse wikiResponse = new WikipediaResponse("12", "title", "extract");
-		wikiResponse.setMissing(false);
-		assertFalse(wikiResponse.isMissing());
-	}
-	
-	@Test
-	public void testMissingSetter() {
-		System.out.println("Test: checkPageidGetter");	
-		WikipediaResponse wikiResponse = new WikipediaResponse("12", "title", "extract");
-		wikiResponse.setMissing(true);
-		assertTrue(wikiResponse.isMissing());
-	}
-	
 
 	
 	@After
@@ -178,6 +123,5 @@ public class APIContainerWikipediaTest {
 		iapiContainer = null;
 		
 	}
-
 
 }
