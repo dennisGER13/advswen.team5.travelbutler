@@ -35,7 +35,7 @@ public class APIContainerTravelbriefing implements IAPIContainer {
 		InputStream in = null;
 		JsonObject page = null;
 		try {
-			in = new URL("https://travelbriefing.org/" + requestString + "?format=json").openStream();
+			in = new URL("https://travelbriefing.org/" + requestString.replace(" ", "_") + "?format=json").openStream();
 			JsonParser parser = new JsonParser();
 			return parser.parse(IOUtils.toString(in)).getAsJsonObject();
 			
