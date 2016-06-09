@@ -25,12 +25,15 @@ public class APIContainerTravelbriefing implements IAPIContainer {
 	@Override
 	public TravelbriefingResponse processSearch(String requestString) {
 		Gson gson = new Gson();
-		
+
+		//Transform the JSON into a POJO and return it
 		TravelbriefingResponse response = gson.fromJson(getPageAsJson(requestString), TravelbriefingResponse.class);
 		return response;
 
 	}
-	
+
+	// Returns the Wikipedia API result as GSON JsonObject
+	// TODO Error handling
 	private JsonObject getPageAsJson(String requestString) {
 		InputStream in = null;
 		JsonObject page = null;
@@ -38,7 +41,7 @@ public class APIContainerTravelbriefing implements IAPIContainer {
 			in = new URL("https://travelbriefing.org/" + requestString.replace(" ", "_") + "?format=json").openStream();
 			JsonParser parser = new JsonParser();
 			return parser.parse(IOUtils.toString(in)).getAsJsonObject();
-			
+
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -48,7 +51,7 @@ public class APIContainerTravelbriefing implements IAPIContainer {
 		} finally {
 			IOUtils.closeQuietly(in);
 		}
-		
+
 		return page;
 	}
 }

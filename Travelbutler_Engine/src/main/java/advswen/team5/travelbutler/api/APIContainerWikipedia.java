@@ -25,11 +25,14 @@ public class APIContainerWikipedia implements IAPIContainer {
 	public WikipediaResponse processSearch(String requestString) {
 		Gson gson = new Gson();
 		
+		//Transform the JSON into a POJO and return it
 		WikipediaResponse response = gson.fromJson(getPageAsJson(requestString), WikipediaResponse.class);
 		return response;
 
 	}
 	
+	// Returns the Wikipedia API result as GSON JsonObject
+	// TODO Error handling
 	private JsonObject getPageAsJson(String requestString) {
 		InputStream in = null;
 		JsonObject page = null;

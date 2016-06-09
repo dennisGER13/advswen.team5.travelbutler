@@ -8,9 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TravelbriefingAdviseList {
+	// Australian Department of Foreign Affairs and Trade
 	private TravelbriefingAdvise UA;
+	
+	// U.S. Department of State
 	private TravelbriefingAdvise US;
+	
+	// Global Affairs Canada
 	private TravelbriefingAdvise CA;
+	
 	private boolean prepared = false;
 
 	public TravelbriefingAdviseList(TravelbriefingAdvise uA, TravelbriefingAdvise uS, TravelbriefingAdvise cA) {
