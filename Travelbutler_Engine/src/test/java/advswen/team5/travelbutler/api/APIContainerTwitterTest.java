@@ -18,8 +18,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import advswen.team5.travelbutler.api.response.IAPIResponse;
+import advswen.team5.travelbutler.api.response.TwitterResponse;
 import twitter4j.Status;
-import twitter4j.TwitterResponse;
+
 
 
 public class APIContainerTwitterTest {
@@ -27,6 +28,13 @@ public class APIContainerTwitterTest {
 	private IAPIContainer iapiContainer;
 	String searchStringCity = "Barcelona";
 	String searchStringCountry = "Spain";
+	
+	IAPIResponse iapiRespCity = iapiContainer.processSearch(searchStringCity);
+	TwitterResponse TwitterCity = new APIContainerTwitter().processSearch(searchStringCity);
+	List<Status> usedTweetsCity = TwitterCity.getTweets();
+	TwitterResponse TwitterCountry = new APIContainerTwitter().processSearch(searchStringCountry);
+	List<Status> usedTweetsCountry = TwitterCity.getTweets();
+	
 	
 	@Before
 	public void setup(){
@@ -41,13 +49,13 @@ public class APIContainerTwitterTest {
 	@Test
 	public void testProcessSearch() {
 		System.out.println("Test: testProcessSearchForValidCityNotNull");
-		IAPIResponse iapiResp = iapiContainer.processSearch(searchStringCity);
-		assertNotNull(iapiResp);
+//		IAPIResponse iapiResp = iapiContainer.processSearch(searchStringCity);
+		assertNotNull(iapiRespCity);
 	}
 
-//	/**
-//	 * Test method for {@link advswen.team5.travelbutler.api.APIContainerTwitter#twitterFeed(java.lang.String)}.
-//	 */
+	/**
+	 * Test method for {@link advswen.team5.travelbutler.api.APIContainerTwitter#twitterFeed(java.lang.String)}.
+	 */
 //	@Test
 //	public void testTwitterFeed() {
 //		System.out.println("Test: testIfTweetsContainsCity");
@@ -62,6 +70,36 @@ public class APIContainerTwitterTest {
 //
 //		assertTrue(found);
 //	}
+	
+	@Test
+	public void testIfTweetsContainsCity() {
+		System.out.println("Test: testIfTweetsContainsCity");
+//		TwitterResponse Twitter = new APIContainerTwitter().processSearch(searchStringCity);
+//		List<Status> usedTweets = Twitter.getTweets();
+		
+		boolean found = true;
+		for(Status status: usedTweetsCity) {
+		    if(!status.getText().toLowerCase().contains(searchStringCity.toLowerCase()))
+		       found = false;
+		}
+
+		assertTrue(found);
+	}
+	
+	@Test
+	public void testIfTweetsContainsCountry() {
+		System.out.println("Test: testIfTweetsContainsCountry");
+//		TwitterResponse Twitter = new APIContainerTwitter().processSearch(searchStringCountry);
+//		List<Status> usedTweets = Twitter.getTweets();
+		
+		boolean found = true;
+		for(Status status: usedTweetsCountry) {
+		    if(!status.getText().toLowerCase().contains(searchStringCountry.toLowerCase()))
+		       found = false;
+		}
+
+		assertTrue(found);
+	}
 	
 
 	

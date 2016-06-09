@@ -1,10 +1,10 @@
 // *************************************************************************************
-// File:         [APIContainerTravelbriefingTest.java]
+// File:         [WikipediaResponseTest.java]
 // Created:      [2016/06/07 Tuesday]
 // Last Changed: $Date: 2016/06/08 18:19:00 $
 // Author:       <A HREF="mailto:[ma-152478@hs-weingarten.de]">[Michael Aulbach]</A>
 //**************************************************************************************
-//Description: 	Test-Klasse für APIContainerTravelbriefing
+//Description: 	Test-Klasse für WikipediaResponse
 //				
 //**************************************************************************************
 package advswen.team5.travelbutler.api.response;
