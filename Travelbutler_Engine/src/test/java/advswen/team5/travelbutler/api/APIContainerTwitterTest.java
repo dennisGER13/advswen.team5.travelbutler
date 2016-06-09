@@ -19,47 +19,53 @@ import org.junit.Test;
 
 import advswen.team5.travelbutler.api.response.IAPIResponse;
 import advswen.team5.travelbutler.api.response.TwitterResponse;
+import advswen.team5.travelbutler.api.response.WikipediaResponse;
 import twitter4j.Status;
 
 public class APIContainerTwitterTest {
 	
-	private IAPIContainer iapiContainer;
+	
+	
 	String searchString = "France";
+	private IAPIContainer iapiContainer = new APIContainerTwitter();
+	IAPIResponse iapiResp = iapiContainer.processSearch(searchString);
+	TwitterResponse TwitterResp = new APIContainerTwitter().processSearch(searchString);
+
 	
 	@Before
 	public void setup(){
 		System.out.println("Setup");
-		iapiContainer = new APIContainerTwitter();
+		
 	
 	}
 
 	@Test
 	public void testProcessSearchNotNull() {
 		System.out.println("testProcessSearch");
-		IAPIResponse processSearch = iapiContainer.processSearch(searchString);
-		assertNotNull(processSearch);
+//		IAPIResponse processSearch = iapiContainer.processSearch(searchString);
+		assertNotNull(iapiResp);
 	}
 	
 	
 	@Test
 	public void isMissingShouldBeFalseForValidInputString() {
 		System.out.println("Test: isMissingShouldBeFalseForValidInputString");
-		IAPIResponse processSearch = iapiContainer.processSearch(searchString);
-		assertFalse(processSearch.isMissing());
+//		IAPIResponse processSearch = iapiContainer.processSearch(searchString);
+		assertFalse(iapiResp.isMissing());
 	}
 	
 	@Test(expected = AssertionError.class)
 	public void processSearchShouldThrowAssertionErrorForNullString() {
 		System.out.println("Test: processSearchShouldThrowNullPointerExceptionForNullString");
-		IAPIResponse processSearch = iapiContainer.processSearch(null);
-		assertNull(processSearch);
+//		IAPIResponse processSearch = iapiContainer.processSearch(null);
+		assertNull(iapiResp);
 	}
 	
 	@Test(expected = AssertionError.class)
 	public void processSearchShouldThrowAssertionErrorForBlankString() {
 		System.out.println("Test: processSearchShouldThrowNullPointerExceptionForBlankString");
-		IAPIResponse processSearch = iapiContainer.processSearch("");
-		assertNull(processSearch);
+//		IAPIResponse processSearch = iapiContainer.processSearch("");
+		assertNull(iapiResp);
 	}
 	
 	@After
@@ -69,11 +75,17 @@ public class APIContainerTwitterTest {
 		
 	}
 
-	@Test
-	public void testTwitterFeed() {
+//	@Test
+//	public void testTwitterFeed() {
+//		List<Status> twitterContainer = new APIContainerTwitter().twitterFeed(searchString);
+//		
+//
+//	}
+	
+	public void testIfTweetsContainSearchString() {
 		String requestedString = "Barcelona";
-		TwitterResponse Twitter = new APIContainerTwitter().processSearch(requestedString);
-		List<Status> usedTweets = Twitter.getTweets();
+//		TwitterResponse Twitter = new APIContainerTwitter().processSearch(requestedString);
+		List<Status> usedTweets = TwitterResp.getTweets();
 		
 		boolean found = true;
 		for(Status status: usedTweets) {

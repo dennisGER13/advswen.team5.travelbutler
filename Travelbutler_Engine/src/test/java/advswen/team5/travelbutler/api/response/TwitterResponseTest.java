@@ -26,14 +26,15 @@ import twitter4j.Status;
 
 public class TwitterResponseTest {
 	
-	private IAPIContainer iapiContainer;
+	private IAPIContainer iapiContainer = new APIContainerTwitter();
 	String searchStringCity = "Barcelona";
 	String searchStringCountry = "Spain";
-	
+	TwitterResponse TwitterRespCountry = new APIContainerTwitter().processSearch(searchStringCountry);
+	TwitterResponse TwitterRespCity = new APIContainerTwitter().processSearch(searchStringCity);
 	@Before
 	public void setup(){
 		System.out.println("Setup");
-		iapiContainer = new APIContainerTwitter();
+		
 	
 	}
 
@@ -43,8 +44,8 @@ public class TwitterResponseTest {
 	@Test
 	public void testTwitterResponse() {
 		System.out.println("Test: testTwitterResponse");
-		TwitterResponse TwitterResp = new APIContainerTwitter().processSearch(searchStringCountry);
-		assertNotNull(TwitterResp);
+//		TwitterResponse TwitterResp = new APIContainerTwitter().processSearch(searchStringCountry);
+		assertNotNull(TwitterRespCountry);
 
 	}
 
@@ -55,8 +56,8 @@ public class TwitterResponseTest {
 	public void testGetTweets() {
 		System.out.println("Test: testGetTweets");
 		
-		TwitterResponse Twitter = new APIContainerTwitter().processSearch(searchStringCountry);
-		assertNotNull(Twitter.getTweets());
+//		TwitterResponse Twitter = new APIContainerTwitter().processSearch(searchStringCountry);
+		assertNotNull(TwitterRespCity.getTweets());
 
 	}
 
@@ -67,12 +68,12 @@ public class TwitterResponseTest {
 	public void testSetTweets() {
 		System.out.println("Test: testGetTweets");
 		
-		TwitterResponse Twitter1 = new APIContainerTwitter().processSearch(searchStringCountry);
-		TwitterResponse Twitter2 = new APIContainerTwitter().processSearch(searchStringCity);
-		List<Status> tweets1 = Twitter1.getTweets();
-		List<Status> tweets2 = Twitter2.getTweets();
-		Twitter1.setTweets(tweets2);
-		assertEquals(tweets2, Twitter1.getTweets());
+//		TwitterResponse Twitter1 = new APIContainerTwitter().processSearch(searchStringCountry);
+//		TwitterResponse Twitter2 = new APIContainerTwitter().processSearch(searchStringCity);
+		List<Status> tweetsCity = TwitterRespCity.getTweets();
+		List<Status> tweetsCountry = TwitterRespCountry.getTweets();
+		TwitterRespCity.setTweets(tweetsCountry);
+		assertEquals(tweetsCountry, TwitterRespCity.getTweets());
 	}
 
 	/**
@@ -81,10 +82,10 @@ public class TwitterResponseTest {
 	@Test
 	public void testSetMissing() {
 		System.out.println("Test: testSetMissing");
-		IAPIResponse processSearch = iapiContainer.processSearch(searchStringCity);
-		TwitterResponse Twitter = new APIContainerTwitter().processSearch(searchStringCity);
-		Twitter.setMissing(false);
-		assertFalse(Twitter.isMissing());
+//		IAPIResponse processSearch = iapiContainer.processSearch(searchStringCity);
+//		TwitterResponse Twitter = new APIContainerTwitter().processSearch(searchStringCity);
+		TwitterRespCity.setMissing(false);
+		assertFalse(TwitterRespCity.isMissing());
 	}
 
 	/**
@@ -93,10 +94,10 @@ public class TwitterResponseTest {
 	@Test
 	public void testIsMissing() {
 		System.out.println("Test: testIsMissing");
-		IAPIResponse processSearch = iapiContainer.processSearch(searchStringCity);
-		TwitterResponse Twitter = new APIContainerTwitter().processSearch(searchStringCity);
-		Twitter.setMissing(true);
-		assertTrue(Twitter.isMissing());
+//		IAPIResponse processSearch = iapiContainer.processSearch(searchStringCity);
+//		TwitterResponse Twitter = new APIContainerTwitter().processSearch(searchStringCity);
+		TwitterRespCity.setMissing(true);
+		assertTrue(TwitterRespCity.isMissing());
 	}
 	
 	@After
