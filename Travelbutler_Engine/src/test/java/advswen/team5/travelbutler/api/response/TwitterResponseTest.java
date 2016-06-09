@@ -65,7 +65,14 @@ public class TwitterResponseTest {
 	 */
 	@Test
 	public void testSetTweets() {
-		fail("Not yet implemented");
+		System.out.println("Test: testGetTweets");
+		
+		TwitterResponse Twitter1 = new APIContainerTwitter().processSearch(searchStringCountry);
+		TwitterResponse Twitter2 = new APIContainerTwitter().processSearch(searchStringCity);
+		List<Status> tweets1 = Twitter1.getTweets();
+		List<Status> tweets2 = Twitter2.getTweets();
+		Twitter1.setTweets(tweets2);
+		assertEquals(tweets2, Twitter1.getTweets());
 	}
 
 	/**
