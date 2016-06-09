@@ -38,11 +38,13 @@ public class APIContainerTwitter implements IAPIContainer{
 			.setOAuthAccessToken("3040667098-r6eZUatWvdaiF618uVUxVPTSsRmyTjw5ewOsJgh")
 			.setOAuthAccessTokenSecret("el1ZH6dEhniERoCCjhFIO6mCzM5ucYGLApUE7mAR29U9T");
 		
+		//Initialisieren der TwitterFactory, um die Anfrage zu starten, anhand der zuvor gewählten Keys
 		Twitter twitter = new TwitterFactory(cb.build()).getInstance();
 	    
 		List <Status> tweets = null;
 		List <Status> usedTweets = new ArrayList<Status>();
 		
+		//Liste der durchsuchten Twitter-Accounts
 		String [] users ={"TripAdvisor", "LonelyPlanet", "NatGeoTravel", "TravelLeisure",
 				"fodorstravel", "travelchannel", "travelgov", "TheWorldStories", "travel",
 				"Holiday_ideas_", "DTW_Holidays", "Hisuitesorlando", "HolidayInn", "citythisway"};	

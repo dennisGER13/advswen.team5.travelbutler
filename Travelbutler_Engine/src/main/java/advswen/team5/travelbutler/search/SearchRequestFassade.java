@@ -55,6 +55,7 @@ public class SearchRequestFassade {
 
 		try {
 
+			//CSV-Datei laden und für die Grain-Detection nutzbar machen!
 			ClassLoader classLoader = getClass().getClassLoader();
 			File file = new File(classLoader.getResource("lands.CSV").getFile());
 			Properties properties = new Properties();
