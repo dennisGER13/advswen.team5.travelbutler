@@ -131,10 +131,11 @@ public class WikipediaResponseTest {
 	/**
 	 * Test method for {@link advswen.team5.travelbutler.api.response.WikipediaResponse#getShortExtract(int)}.
 	 */
-//	@Test
-//	public void testGetShortExtract() {
-//		fail("Not yet implemented");
-//	}
+	@Test
+	public void testGetShortExtract() {
+		WikipediaResponse wikiResponse = new WikipediaResponse("12", "title", "this is an extract. It's generated for test purposes");
+		assertEquals("this is an extract.", wikiResponse.getShortExtract(18));
+	}
 	
 	@After
 	public void cleanup() {
