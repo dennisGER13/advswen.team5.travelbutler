@@ -55,7 +55,7 @@ public class APIContainerTravelbriefingTest {
 	 */
 	@Test
 	public void isMissingShouldBeFalseForValidCity() {
-		System.out.println("Test: isMissingShouldBeFalseForValidInputString");
+		System.out.println("Test: isMissingShouldBeFalseForValidCity");
 		IAPIResponse processSearch = iapiContainer.processSearch(searchStringCity);
 		assertFalse(processSearch.isMissing());
 	}
@@ -64,7 +64,7 @@ public class APIContainerTravelbriefingTest {
 	 */
 	@Test
 	public void isMissingShouldBeFalseForValidCountry() {
-		System.out.println("Test: isMissingShouldBeFalseForValidInputString");
+		System.out.println("Test: isMissingShouldBeFalseForValidCountry");
 		IAPIResponse processSearch = iapiContainer.processSearch(searchStringCountry);
 		assertFalse(processSearch.isMissing());
 	}

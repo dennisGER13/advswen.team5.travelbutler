@@ -1,6 +1,6 @@
 // *************************************************************************************
 // File:         [APIContainerTwitterTest.java]
-// Created:      [2016/06/06 Monday]
+// Created:      [2016/06/08 Wednesday]
 // Last Changed: $Date: 2016/06/08 18:19:00 $
 // Author:       <A HREF="mailto:[ma-152478@hs-weingarten.de]">[Michael Aulbach]</A>
 //**************************************************************************************
@@ -21,20 +21,10 @@ import advswen.team5.travelbutler.api.response.IAPIResponse;
 import advswen.team5.travelbutler.api.response.TwitterResponse;
 import twitter4j.Status;
 
-
-
 public class APIContainerTwitterTest {
 	
 	private IAPIContainer iapiContainer;
-	String searchStringCity = "Barcelona";
-	String searchStringCountry = "Spain";
-	
-	IAPIResponse iapiRespCity = iapiContainer.processSearch(searchStringCity);
-	TwitterResponse TwitterCity = new APIContainerTwitter().processSearch(searchStringCity);
-	List<Status> usedTweetsCity = TwitterCity.getTweets();
-	TwitterResponse TwitterCountry = new APIContainerTwitter().processSearch(searchStringCountry);
-	List<Status> usedTweetsCountry = TwitterCity.getTweets();
-	
+	String searchString = "France";
 	
 	@Before
 	public void setup(){
@@ -43,71 +33,57 @@ public class APIContainerTwitterTest {
 	
 	}
 
-	/**
-	 * Test method for {@link advswen.team5.travelbutler.api.APIContainerTwitter#processSearch(java.lang.String)}.
-	 */
 	@Test
-	public void testProcessSearch() {
-		System.out.println("Test: testProcessSearchForValidCityNotNull");
-//		IAPIResponse iapiResp = iapiContainer.processSearch(searchStringCity);
-		assertNotNull(iapiRespCity);
-	}
-
-	/**
-	 * Test method for {@link advswen.team5.travelbutler.api.APIContainerTwitter#twitterFeed(java.lang.String)}.
-	 */
-//	@Test
-//	public void testTwitterFeed() {
-//		System.out.println("Test: testIfTweetsContainsCity");
-//		TwitterResponse Twitter = new APIContainerTwitter().processSearch(searchStringCity);
-//		List<Status> usedTweets = Twitter.getTweets();
-//		
-//		boolean found = true;
-//		for(Status status: usedTweets) {
-//		    if(!status.getText().toLowerCase().contains(searchStringCity.toLowerCase()))
-//		       found = false;
-//		}
-//
-//		assertTrue(found);
-//	}
-	
-	@Test
-	public void testIfTweetsContainsCity() {
-		System.out.println("Test: testIfTweetsContainsCity");
-//		TwitterResponse Twitter = new APIContainerTwitter().processSearch(searchStringCity);
-//		List<Status> usedTweets = Twitter.getTweets();
-		
-		boolean found = true;
-		for(Status status: usedTweetsCity) {
-		    if(!status.getText().toLowerCase().contains(searchStringCity.toLowerCase()))
-		       found = false;
-		}
-
-		assertTrue(found);
+	public void testProcessSearchNotNull() {
+		System.out.println("testProcessSearch");
+		IAPIResponse processSearch = iapiContainer.processSearch(searchString);
+		assertNotNull(processSearch);
 	}
 	
+	
 	@Test
-	public void testIfTweetsContainsCountry() {
-		System.out.println("Test: testIfTweetsContainsCountry");
-//		TwitterResponse Twitter = new APIContainerTwitter().processSearch(searchStringCountry);
-//		List<Status> usedTweets = Twitter.getTweets();
-		
-		boolean found = true;
-		for(Status status: usedTweetsCountry) {
-		    if(!status.getText().toLowerCase().contains(searchStringCountry.toLowerCase()))
-		       found = false;
-		}
-
-		assertTrue(found);
+	public void isMissingShouldBeFalseForValidInputString() {
+		System.out.println("Test: isMissingShouldBeFalseForValidInputString");
+		IAPIResponse processSearch = iapiContainer.processSearch(searchString);
+		assertFalse(processSearch.isMissing());
 	}
 	
-
+	@Test(expected = AssertionError.class)
+	public void processSearchShouldThrowAssertionErrorForNullString() {
+		System.out.println("Test: processSearchShouldThrowNullPointerExceptionForNullString");
+		IAPIResponse processSearch = iapiContainer.processSearch(null);
+		assertNull(processSearch);
+	}
+	
+	@Test(expected = AssertionError.class)
+	public void processSearchShouldThrowAssertionErrorForBlankString() {
+		System.out.println("Test: processSearchShouldThrowNullPointerExceptionForBlankString");
+		IAPIResponse processSearch = iapiContainer.processSearch("");
+		assertNull(processSearch);
+	}
 	
 	@After
 	public void cleanup() {
 		System.out.println("Cleanup");
 		iapiContainer = null;
 		
+	}
+
+	@Test
+	public void testTwitterFeed() {
+		String requestedString = "Barcelona";
+		TwitterResponse Twitter = new APIContainerTwitter().processSearch(requestedString);
+		List<Status> usedTweets = Twitter.getTweets();
+		
+		boolean found = true;
+		for(Status status: usedTweets) {
+		    if(!status.getText().toLowerCase().contains(requestedString.toLowerCase()))
+		       found = false;
+		}
+
+		assertTrue(found);
+		
+
 	}
 
 }
