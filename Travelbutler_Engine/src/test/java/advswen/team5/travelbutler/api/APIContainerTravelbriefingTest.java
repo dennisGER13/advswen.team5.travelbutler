@@ -72,8 +72,8 @@ public class APIContainerTravelbriefingTest {
 	/**
 	 * Test method for {@link advswen.team5.travelbutler.api.APIContainerTravelbriefing#processSearch(java.lang.String)}.
 	 */
-	@Test(expected = AssertionError.class)
-	public void processSearchShouldThrowAssertionErrorForNullString() {
+	@Test(expected = NullPointerException.class)
+	public void processSearchShouldThrowNullPointerExceptionForNullString() {
 		System.out.println("Test: processSearchShouldThrowNullPointerExceptionForNullString");
 		IAPIResponse processSearch = iapiContainer.processSearch(null);
 		assertNull(processSearch);
