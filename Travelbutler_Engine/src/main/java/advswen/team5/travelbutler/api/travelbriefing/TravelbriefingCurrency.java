@@ -69,6 +69,7 @@ public class TravelbriefingCurrency {
 		this.prepared = false;
 	}
 
+	// Creates an HashMap for all exchange rates
 	private void pepareData() {
 		exchangeRates = new HashMap<String, TravelbriefingExchangeRate>();
 		for (TravelbriefingExchangeRate rate : compare) {
@@ -76,13 +77,15 @@ public class TravelbriefingCurrency {
 		}
 	}
 
+	// As the exchange rates returned by the API are always based on US Dollars
+	// this method calculates the exchange rates for other currencies
 	public double getExchangeRate(String currency) {
 		if (!prepared)
 			pepareData();
 
 		if (!exchangeRates.containsKey(name) || !exchangeRates.containsKey(currency))
 			return -1;
-		
+
 		return exchangeRates.get(currency).getRate() / exchangeRates.get(name).getRate();
 	}
 

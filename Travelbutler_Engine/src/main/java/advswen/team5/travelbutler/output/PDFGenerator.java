@@ -26,15 +26,16 @@ import advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdvise;
 import advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdviseList;
 import advswen.team5.travelbutler.api.travelbriefing.TravelbriefingCurrency;
 import advswen.team5.travelbutler.api.travelbriefing.TravelbriefingElectricity;
-import advswen.team5.travelbutler.api.travelbriefing.TravelbriefingExchangeRate;
 import advswen.team5.travelbutler.api.travelbriefing.TravelbriefingLanguage;
 import advswen.team5.travelbutler.api.travelbriefing.TravelbriefingVaccination;
 import twitter4j.Status;
 
+// Generates a PDF file based on the response object and the used APIs
 public class PDFGenerator {
 
 	private Response response;
 
+	// Define all fonts used in the PDF
 	private static Font catFont = new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD);
 	private static Font subcatFont = new Font(Font.FontFamily.HELVETICA, 13, Font.BOLD);
 	private static Font normalFont = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL);
@@ -44,28 +45,33 @@ public class PDFGenerator {
 	private static Font highlightFont_invert = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD, BaseColor.WHITE);
 	private static Font largeHighlightFont_invert = new Font(Font.FontFamily.HELVETICA, 15, Font.BOLD, BaseColor.WHITE);
 
+	// Formats for dates, time and exchange rates
 	private static DateFormat df = DateFormat.getDateTimeInstance( /* dateStyle */ DateFormat.MEDIUM,
 			/* timeStyle */ DateFormat.SHORT);
 	private static DecimalFormat round3 = new DecimalFormat("##0.000");
-	
-	private static String[] exchangeRates = {"US Dollar", "Euro", "Pound Sterling", "Yen", "Canadian Dollar"};
+
+	// Exchange rates to be displayed in the PDF
+	private static String[] exchangeRates = { "US Dollar", "Euro", "Pound Sterling", "Yen", "Canadian Dollar" };
 
 	public PDFGenerator(Response response) {
 		this.response = response;
 	}
 
 	public void generate() throws Exception {
+		// Create a new document in the output folder
 		Document document = new Document();
 		PdfWriter.getInstance(document, new FileOutputStream("output/" + response.getDestination() + ".pdf"));
 		document.open();
 		document.addTitle("Traveling to " + response.getDestination());
 
+		// Add the main headline
 		Paragraph headline = new Paragraph();
 		addEmptyLine(headline, 1);
 		headline.add(new Paragraph("Traveling to " + response.getDestination(), catFont));
 		addEmptyLine(headline, 1);
 		document.add(headline);
 
+		// Chapters are added by separate methods
 		addTravelWarnings(document);
 		addWikipediaInfo(document);
 		addGoodToKnow(document);
@@ -73,10 +79,13 @@ public class PDFGenerator {
 		addTweets(document, 10);
 
 		document.close();
-		System.out.println("Finished");
+		System.out.println("Finished documtent generation");
 	}
 
 	private void addWikipediaInfo(Document document) throws Exception {
+		// If there is no WikipediaResponse (= Wikipedia API not used in this
+		// search) or the response does not contain a suitable result this
+		// chapter is skipped
 		if (response.getWikipediaResponse() == null || response.getWikipediaResponse().isMissing())
 			return;
 
@@ -87,6 +96,9 @@ public class PDFGenerator {
 	}
 
 	private void addTweets(Document document, int numOfTweets) throws Exception {
+		// If there is no TwitterResponse (= Twitter API not used in this
+		// search) or the response does not contain a suitable result this
+		// chapter is skipped
 		if (response.getTwitterResponse() == null || response.getTwitterResponse().isMissing()) {
 			return;
 		}
@@ -97,6 +109,7 @@ public class PDFGenerator {
 				"src/main/resources/icons/twitter.png"));
 		List<Status> tweets = response.getTwitterResponse().getTweets();
 
+		// Create a table for the tweets
 		float[] columnWidths = { 1, 2, 8 };
 		PdfPTable table = new PdfPTable(columnWidths);
 		table.setWidthPercentage(100);
@@ -140,6 +153,9 @@ public class PDFGenerator {
 	}
 
 	private void addTravelWarnings(Document document) throws Exception {
+		// If there is no TravelbriefingResponse (= Travelbriefing.org API not
+		// used in this search) or the response does not contain a suitable
+		// result this chapter is skipped
 		if (response.getTravelbriefingResponse() == null || response.getTravelbriefingResponse().isMissing()) {
 			return;
 		}
@@ -179,6 +195,9 @@ public class PDFGenerator {
 	}
 
 	private void addGoodToKnow(Document document) throws Exception {
+		// If there is no TravelbriefingResponse (= Travelbriefing.org API not
+		// used in this search) or the response does not contain a suitable
+		// result this chapter is skipped
 		if (response.getTravelbriefingResponse() == null || response.getTravelbriefingResponse().isMissing()) {
 			return;
 		}
@@ -257,19 +276,19 @@ public class PDFGenerator {
 		cell.setBorderWidth(3);
 		cell.setBorderColor(BaseColor.WHITE);
 		table.addCell(cell);
-		
+
 		TravelbriefingCurrency currency = response.getTravelbriefingResponse().getCurrency();
-		
-		for(String exchangeRate : exchangeRates){
+
+		for (String exchangeRate : exchangeRates) {
 			cell = new PdfPCell();
 			cell.addElement(new Phrase(exchangeRate, normalFont));
-			cell.addElement(new Phrase(String.valueOf(round3.format(currency.getExchangeRate(exchangeRate))), normalFont));
+			cell.addElement(
+					new Phrase(String.valueOf(round3.format(currency.getExchangeRate(exchangeRate))), normalFont));
 			cell.setPadding(5);
 			cell.setBorderWidth(3);
 			cell.setBorderColor(BaseColor.WHITE);
 			table.addCell(cell);
 		}
-
 
 		// #################
 		// ## Electricity ##
@@ -298,8 +317,15 @@ public class PDFGenerator {
 		for (int i = 0; i < 4; i++) {
 			if (i < electricity.getPlugs().length) {
 				cell = new PdfPCell();
-				Image image = Image.getInstance(
-						"src/main/resources/plugs/type_" + electricity.getPlugs()[i].toLowerCase() + ".jpg");
+
+				Image image;
+				try {
+					image = Image.getInstance(
+							"src/main/resources/plugs/type_" + electricity.getPlugs()[i].toLowerCase() + ".jpg");
+				} catch (Exception e) {
+					image = Image.getInstance("src/main/resources/plugs/type_unknown.jpg");
+				}
+
 				cell = new PdfPCell(image, true);
 				cell.setBorderWidth(3);
 				cell.setPadding(5);
@@ -322,6 +348,9 @@ public class PDFGenerator {
 	}
 
 	private void addHealth(Document document) throws Exception {
+		// If there is no TravelbriefingResponse (= Travelbriefing.org API not
+		// used in this search) or the response does not contain a suitable
+		// result this chapter is skipped
 		if (response.getTravelbriefingResponse() == null || response.getTravelbriefingResponse().isMissing()) {
 			return;
 		}

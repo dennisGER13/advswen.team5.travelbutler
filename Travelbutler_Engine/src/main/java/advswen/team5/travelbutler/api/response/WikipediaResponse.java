@@ -17,7 +17,6 @@ public class WikipediaResponse implements IAPIResponse {
 		this.extract = extract;
 
 		// If no content is returend the page is not existing
-		// TODO: Check for "Missing"-Attribute in response
 		if (extract == null || extract.length() > 1) {
 			this.missing = true;
 		}

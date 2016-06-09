@@ -4,6 +4,7 @@ package advswen.team5.travelbutler.api.response;
  * Andreas Tauscher
  */
 
+// Wrapper for all response objects
 public class Response {
 	private String destination = null;
 	private WikipediaResponse wikipediaResponse = null;
@@ -11,7 +12,6 @@ public class Response {
 	private GoogleMapsResponse googlemapsResponse = null;
 	private TravelbriefingResponse travelbriefingResponse = null;
 	
-	//Konstruktor, welcher das Reiseziel angibt
 	public Response(String destination) {
 		super();
 		this.destination = destination;
