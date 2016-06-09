@@ -29,19 +29,16 @@ public class SearchRequestFassade {
 	public SearchRequestFassade(){
 		searchengine  = new SearchEngine();
 		this.language = LanguageEnum.english;		
-		System.out.println("Suche bereit, warte auf Eingabe");
 	}
 	//search() f�hrt eine Grain Pr�fung durch. Der Grain wird durch die Nutzereingabe bestimmt. Bsp. "Frankreich" = "Land"
 	//Anschlie�end wird die suche gestartet, der Grain bestimmt welche Strategie gew�hlt wird.
 	public Response search(String requestString){
-		System.out.println("Suche wurde gestartet");
+		System.out.println("Starting search");
 		this.requestString = requestString;
 		grain = this.grainDetection();
 		if(grain == GrainEnum.land){
-			System.out.println("Suche wird ausgeführt");
 			searchengine.setStrategy(new ConcreteStrategyLand());
 		}
-		System.out.println("Ergebnisse werden geliefert");
 		return searchengine.execute(requestString);
 	}
 	
@@ -68,8 +65,6 @@ public class SearchRequestFassade {
 				for (String foo : country) {
 					// System.out.println(foo);
 					if (searchString.equals(foo)) {
-						System.out.println("Done");
-						System.out.println("Grain wurde bestimmt: Land");
 						return GrainEnum.land;
 					}
 				}
@@ -87,7 +82,6 @@ public class SearchRequestFassade {
 				}
 			}
 		}
-		System.out.println("Grain konnte nicht bestimmt werden");
 		return GrainEnum.basic;
 	}
 	

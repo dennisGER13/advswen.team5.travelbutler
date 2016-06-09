@@ -24,7 +24,6 @@ public class ConcreteStrategyLand implements ISearchStrategy {
 		response.setTwitterResponse(twitter);
 		response.setGooglemapsResponse(googlemaps);
 		response.setTravelbriefingResponse(travelbriefing);
-		System.out.println("Suche wurde durchgeführt");
 		return response;
 	}
 
