@@ -14,9 +14,11 @@ import advswen.team5.travelbutler.api.response.*;
 import advswen.team5.travelbutler.strategy.*;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Properties;
 
 public class SearchRequestFassade {
 	private String requestString;
@@ -53,7 +55,12 @@ public class SearchRequestFassade {
 
 		try {
 
-			br = new BufferedReader(new FileReader("C:/Users/super/git/advswen.team5.travelbutler/Travelbutler_Engine/src/main/resources/lands.CSV"));
+			ClassLoader classLoader = getClass().getClassLoader();
+			File file = new File(classLoader.getResource("lands.CSV").getFile());
+			Properties properties = new Properties();
+			properties.load(new FileReader(file));
+			
+			br = new BufferedReader(new FileReader(file));
 			while ((line = br.readLine()) != null) {
 
 				String[] country = line.split(cvsSplitBy);
