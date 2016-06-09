@@ -11,6 +11,7 @@ public class Response {
 	private TwitterResponse twitterResponse = null;
 	private GoogleMapsResponse googlemapsResponse = null;
 	private TravelbriefingResponse travelbriefingResponse = null;
+	private GoogleImagesResponse googleImagesResponse = null;
 	
 	public Response(String destination) {
 		super();
@@ -52,6 +53,16 @@ public class Response {
 	public void setTravelbriefingResponse(TravelbriefingResponse travelbriefingResponse) {
 		this.travelbriefingResponse = travelbriefingResponse;
 	}
+
+	public GoogleImagesResponse getGoogleImagesResponse() {
+		return googleImagesResponse;
+	}
+
+	public void setGoogleImagesResponse(GoogleImagesResponse googleImagesResponse) {
+		this.googleImagesResponse = googleImagesResponse;
+	}
+	
+	
 	
 	
 }

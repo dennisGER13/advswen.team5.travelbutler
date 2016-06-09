@@ -11,7 +11,7 @@ public class Starter {
 		
 		
 		try {
-			new PDFGenerator(s1.search("Colombia")).generate();
+			new PDFGenerator(s1.search("France")).generate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
