@@ -35,13 +35,12 @@ public class APIContainerGoogleImages implements IAPIContainer {
 	
 	// Returns the Google Custom Search API result as GSON JsonObject
 	// TODO Error handling
-	private JsonObject getPageAsJson(String requestString) {
+	private JsonArray getPageAsJson(String requestString) {
 		InputStream in = null;
-		JsonObject page = null;
 		try {
 			in = new URL("https://www.googleapis.com/customsearch/v1?key=AIzaSyA5Fo9hzLVtie6kO8eQhQNCLXbL-QMtnQs&cx=011637653227000124025:pphpnrmqqlu&q=" + requestString.replace(" ", "+") + "+panorama&searchType=image&fileType=%22png,jpg%22").openStream();
 			JsonParser parser = new JsonParser();
-			return parser.parse(IOUtils.toString(in)).getAsJsonObject().getAsJsonObject("items");
+			return parser.parse(IOUtils.toString(in)).getAsJsonObject().getAsJsonArray("items");
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -52,6 +51,6 @@ public class APIContainerGoogleImages implements IAPIContainer {
 			IOUtils.closeQuietly(in);
 		}
 		
-		return page;
+		return null;
 	}
 }
