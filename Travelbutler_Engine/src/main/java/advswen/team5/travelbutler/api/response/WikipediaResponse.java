@@ -55,6 +55,12 @@ public class WikipediaResponse implements IAPIResponse {
 	}
 	
 	public String getShortExtract(int maxChars){
+		if(extract.length() < 1)
+			return "";
+		
+		if(extract.length() < maxChars)
+			maxChars = extract.length() - 1;
+		
 		String shortExtract = extract.substring(0, maxChars+1);
 		int cutPosition = shortExtract.lastIndexOf(".");
 		return shortExtract.substring(0, cutPosition+1);

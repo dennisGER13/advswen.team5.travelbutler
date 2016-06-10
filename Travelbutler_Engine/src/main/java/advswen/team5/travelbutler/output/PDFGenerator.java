@@ -1,5 +1,7 @@
 package advswen.team5.travelbutler.output;
 
+import java.io.File;
+
 /*
  * Andreas Tauscher
  */
@@ -57,7 +59,7 @@ public class PDFGenerator {
 		this.response = response;
 	}
 
-	public void generate() throws Exception {
+	public File generate() throws Exception {
 		// Create a new document in the output folder
 		Document document = new Document();
 		PdfWriter.getInstance(document, new FileOutputStream("output/" + response.getDestination() + ".pdf"));
@@ -66,6 +68,15 @@ public class PDFGenerator {
 
 		// Add the main headline
 		Paragraph headline = new Paragraph();
+
+		if (response.getGoogleImagesResponse() != null && response.getGoogleImagesResponse().getBannerImage() != null) {
+			Image banner = Image.getInstance(response.getGoogleImagesResponse().getBannerImage());
+			banner.scaleToFit(document.getPageSize().getWidth(),
+					document.getPageSize().getHeight());
+			banner.setAbsolutePosition(0, document.getPageSize().getHeight() - banner.getScaledHeight());
+			document.add(banner);
+			addEmptyLine(headline, Math.round((banner.getScaledHeight() - document.topMargin()) / 15));
+		}
 		addEmptyLine(headline, 1);
 		headline.add(new Paragraph("Traveling to " + response.getDestination(), catFont));
 		addEmptyLine(headline, 1);
@@ -80,6 +91,8 @@ public class PDFGenerator {
 
 		document.close();
 		System.out.println("Finished documtent generation");
+		
+		return new File("output/" + response.getDestination() + ".pdf");
 	}
 
 	private void addWikipediaInfo(Document document) throws Exception {

@@ -30,6 +30,15 @@ public class GoogleImagesResponse implements IAPIResponse {
 	public void setItems(GoogleSearchItem[] items) {
 		this.items = items;
 	}
+	
+	public String getBannerImage() {
+		for(GoogleSearchItem item : items){
+			if(item.getImage().getWidth() >= 1000 && item.getImage().getWidth() <= 4000)
+				return item.getLink();
+		}
+		
+		return null;
+	}
 
 	
 

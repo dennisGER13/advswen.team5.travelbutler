@@ -24,11 +24,13 @@ public class ConcreteStrategyBasic implements ISearchStrategy {
 		TwitterResponse twitter = new APIContainerTwitter().processSearch(response.getDestination());
 		GoogleMapsResponse googlemaps = new APIContainerGoogleMaps().processSearch(response.getDestination());
 		TravelbriefingResponse travelbriefing = new APIContainerTravelbriefing().processSearch(response.getDestination());
+		GoogleImagesResponse googleImages = new APIContainerGoogleImages().processSearch(response.getDestination());
 		
 		response.setWikipediaResponse(wiki);
 		response.setTwitterResponse(twitter);
 		response.setGooglemapsResponse(googlemaps);
 		response.setTravelbriefingResponse(travelbriefing);
+		response.setGoogleImagesResponse(googleImages);
 			
 		return response;
 	}
