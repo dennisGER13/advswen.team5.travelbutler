@@ -8,7 +8,7 @@ import advswen.team5.travelbutler.search.SearchRequestFassade;
 
 public class Starter {
 	
-	private static final String _destination = "North Korea";
+	private static final String _destination = "Berlin";
 	
 	public static void main(String[] args){
 		

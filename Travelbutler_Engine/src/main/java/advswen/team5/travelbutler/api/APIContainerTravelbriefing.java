@@ -28,6 +28,11 @@ public class APIContainerTravelbriefing implements IAPIContainer {
 
 		//Transform the JSON into a POJO and return it
 		TravelbriefingResponse response = gson.fromJson(getPageAsJson(requestString), TravelbriefingResponse.class);
+		
+		//Travelbriefing returns information about the Netherlands as default values
+		if(response.getTimezone().getName().equals("Europe/Amsterdam") && !requestString.toLowerCase().contains("netherlands"))
+			response.setMissing(true);
+		
 		return response;
 
 	}

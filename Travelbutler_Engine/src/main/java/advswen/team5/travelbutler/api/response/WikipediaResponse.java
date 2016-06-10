@@ -55,7 +55,7 @@ public class WikipediaResponse implements IAPIResponse {
 	}
 	
 	public String getShortExtract(int maxChars){
-		if(extract.length() < 1)
+		if(extract == null || extract.length() < 1)
 			return "";
 		
 		if(extract.length() < maxChars)

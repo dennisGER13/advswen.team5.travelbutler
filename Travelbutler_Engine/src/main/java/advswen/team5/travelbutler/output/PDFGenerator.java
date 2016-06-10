@@ -71,8 +71,7 @@ public class PDFGenerator {
 
 		if (response.getGoogleImagesResponse() != null && response.getGoogleImagesResponse().getBannerImage() != null) {
 			Image banner = Image.getInstance(response.getGoogleImagesResponse().getBannerImage());
-			banner.scaleToFit(document.getPageSize().getWidth(),
-					document.getPageSize().getHeight());
+			banner.scaleToFit(document.getPageSize().getWidth(), document.getPageSize().getHeight());
 			banner.setAbsolutePosition(0, document.getPageSize().getHeight() - banner.getScaledHeight());
 			document.add(banner);
 			addEmptyLine(headline, Math.round((banner.getScaledHeight() - document.topMargin()) / 15));
@@ -91,7 +90,7 @@ public class PDFGenerator {
 
 		document.close();
 		System.out.println("Finished documtent generation");
-		
+
 		return new File("output/" + response.getDestination() + ".pdf");
 	}
 
@@ -224,131 +223,141 @@ public class PDFGenerator {
 		// ## Language ##
 		// ##############
 
-		cell = new PdfPCell(new Phrase("Language", highlightFont));
-		cell.setPadding(5);
-		cell.setBorderWidth(3);
-		cell.setBorderColor(BaseColor.WHITE);
-		table.addCell(cell);
-
 		TravelbriefingLanguage[] languages = response.getTravelbriefingResponse().getLanguage();
-		String languagePhrase = "";
-		for (TravelbriefingLanguage language : languages) {
-			languagePhrase += language.getLanguage();
-			if (language.getOfficial().equals("Yes"))
-				languagePhrase += " (official)";
-			languagePhrase += ", ";
-		}
+		if (languages.length > 0) {
+			cell = new PdfPCell(new Phrase("Language", highlightFont));
+			cell.setPadding(5);
+			cell.setBorderWidth(3);
+			cell.setBorderColor(BaseColor.WHITE);
+			table.addCell(cell);
 
-		cell = new PdfPCell(new Phrase(languagePhrase.substring(0, languagePhrase.length() - 2), normalFont));
-		cell.setPadding(5);
-		cell.setBorderWidth(3);
-		cell.setColspan(5);
-		cell.setBorderColor(BaseColor.WHITE);
-		table.addCell(cell);
+			String languagePhrase = "";
+			for (TravelbriefingLanguage language : languages) {
+				languagePhrase += language.getLanguage();
+				if (language.getOfficial().equals("Yes"))
+					languagePhrase += " (official)";
+				languagePhrase += ", ";
+			}
+
+			cell = new PdfPCell(new Phrase(languagePhrase.substring(0, languagePhrase.length() - 2), normalFont));
+			cell.setPadding(5);
+			cell.setBorderWidth(3);
+			cell.setColspan(5);
+			cell.setBorderColor(BaseColor.WHITE);
+			table.addCell(cell);
+		}
 
 		// ##############
 		// ## Timezone ##
 		// ##############
 
-		cell = new PdfPCell(new Phrase("Timezone", highlightFont));
-		cell.setPadding(5);
-		cell.setBorderWidth(3);
-		cell.setBorderColor(BaseColor.WHITE);
-		table.addCell(cell);
+		if (response.getTravelbriefingResponse().getTimezone() != null) {
+			cell = new PdfPCell(new Phrase("Timezone", highlightFont));
+			cell.setPadding(5);
+			cell.setBorderWidth(3);
+			cell.setBorderColor(BaseColor.WHITE);
+			table.addCell(cell);
 
-		cell = new PdfPCell(new Phrase(response.getTravelbriefingResponse().getTimezone().getName(), normalFont));
-		cell.setPadding(5);
-		cell.setBorderWidth(3);
-		cell.setColspan(5);
-		cell.setBorderColor(BaseColor.WHITE);
-		table.addCell(cell);
+			cell = new PdfPCell(new Phrase(response.getTravelbriefingResponse().getTimezone().getName(), normalFont));
+			cell.setPadding(5);
+			cell.setBorderWidth(3);
+			cell.setColspan(5);
+			cell.setBorderColor(BaseColor.WHITE);
+			table.addCell(cell);
+		}
 
 		// ##############
 		// ## Currency ##
 		// ##############
 
-		cell = new PdfPCell(new Phrase("Currency", highlightFont));
-		cell.setPadding(5);
-		cell.setBorderWidth(3);
-		cell.setBorderColor(BaseColor.WHITE);
-		table.addCell(cell);
+		if (response.getTravelbriefingResponse().getCurrency() != null) {
+			cell = new PdfPCell(new Phrase("Currency", highlightFont));
+			cell.setPadding(5);
+			cell.setBorderWidth(3);
+			cell.setBorderColor(BaseColor.WHITE);
+			table.addCell(cell);
 
-		cell = new PdfPCell(new Phrase(response.getTravelbriefingResponse().getCurrency().getName(), normalFont));
-		cell.setPadding(5);
-		cell.setBorderWidth(3);
-		cell.setColspan(5);
-		cell.setBorderColor(BaseColor.WHITE);
-		table.addCell(cell);
+			cell = new PdfPCell(new Phrase(response.getTravelbriefingResponse().getCurrency().getName(), normalFont));
+			cell.setPadding(5);
+			cell.setBorderWidth(3);
+			cell.setColspan(5);
+			cell.setBorderColor(BaseColor.WHITE);
+			table.addCell(cell);
+		}
 
 		// ####################
 		// ## Exchange Rates ##
 		// ####################
 
-		cell = new PdfPCell(new Phrase("Rates", highlightFont));
-		cell.setPadding(5);
-		cell.setBorderWidth(3);
-		cell.setBorderColor(BaseColor.WHITE);
-		table.addCell(cell);
-
-		TravelbriefingCurrency currency = response.getTravelbriefingResponse().getCurrency();
-
-		for (String exchangeRate : exchangeRates) {
-			cell = new PdfPCell();
-			cell.addElement(new Phrase(exchangeRate, normalFont));
-			cell.addElement(
-					new Phrase(String.valueOf(round3.format(currency.getExchangeRate(exchangeRate))), normalFont));
+		if (response.getTravelbriefingResponse().getCurrency() != null) {
+			cell = new PdfPCell(new Phrase("Rates", highlightFont));
 			cell.setPadding(5);
 			cell.setBorderWidth(3);
 			cell.setBorderColor(BaseColor.WHITE);
 			table.addCell(cell);
+
+			TravelbriefingCurrency currency = response.getTravelbriefingResponse().getCurrency();
+
+			for (String exchangeRate : exchangeRates) {
+				cell = new PdfPCell();
+				cell.addElement(new Phrase(exchangeRate, normalFont));
+				cell.addElement(
+						new Phrase(String.valueOf(round3.format(currency.getExchangeRate(exchangeRate))), normalFont));
+				cell.setPadding(5);
+				cell.setBorderWidth(3);
+				cell.setBorderColor(BaseColor.WHITE);
+				table.addCell(cell);
+			}
 		}
 
 		// #################
 		// ## Electricity ##
 		// #################
 
-		cell = new PdfPCell(new Phrase("Electricity", highlightFont));
-		cell.setPadding(5);
-		cell.setBorderWidth(3);
-		cell.setBorderColor(BaseColor.WHITE);
-		table.addCell(cell);
+		if (response.getTravelbriefingResponse().getElectricity() != null) {
+			cell = new PdfPCell(new Phrase("Electricity", highlightFont));
+			cell.setPadding(5);
+			cell.setBorderWidth(3);
+			cell.setBorderColor(BaseColor.WHITE);
+			table.addCell(cell);
 
-		cell = new PdfPCell();
-		TravelbriefingElectricity electricity = response.getTravelbriefingResponse().getElectricity();
-		Paragraph paragraph = new Paragraph(electricity.getVoltage() + " Volt", largeHighlightFont_invert);
-		paragraph.setAlignment(Element.ALIGN_CENTER);
-		cell.addElement(paragraph);
-		paragraph = new Paragraph(electricity.getFrequency() + " Herz", normalFont_invert);
-		paragraph.setAlignment(Element.ALIGN_CENTER);
-		cell.addElement(paragraph);
-		cell.setBackgroundColor(BaseColor.BLUE);
-		cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-		cell.setBorderWidth(8);
-		cell.setBorderColor(BaseColor.WHITE);
-		table.addCell(cell);
+			cell = new PdfPCell();
+			TravelbriefingElectricity electricity = response.getTravelbriefingResponse().getElectricity();
+			Paragraph paragraph = new Paragraph(electricity.getVoltage() + " Volt", largeHighlightFont_invert);
+			paragraph.setAlignment(Element.ALIGN_CENTER);
+			cell.addElement(paragraph);
+			paragraph = new Paragraph(electricity.getFrequency() + " Herz", normalFont_invert);
+			paragraph.setAlignment(Element.ALIGN_CENTER);
+			cell.addElement(paragraph);
+			cell.setBackgroundColor(BaseColor.BLUE);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setBorderWidth(8);
+			cell.setBorderColor(BaseColor.WHITE);
+			table.addCell(cell);
 
-		for (int i = 0; i < 4; i++) {
-			if (i < electricity.getPlugs().length) {
-				cell = new PdfPCell();
+			for (int i = 0; i < 4; i++) {
+				if (i < electricity.getPlugs().length) {
+					cell = new PdfPCell();
 
-				Image image;
-				try {
-					image = Image.getInstance(
-							"src/main/resources/plugs/type_" + electricity.getPlugs()[i].toLowerCase() + ".jpg");
-				} catch (Exception e) {
-					image = Image.getInstance("src/main/resources/plugs/type_unknown.jpg");
+					Image image;
+					try {
+						image = Image.getInstance(
+								"src/main/resources/plugs/type_" + electricity.getPlugs()[i].toLowerCase() + ".jpg");
+					} catch (Exception e) {
+						image = Image.getInstance("src/main/resources/plugs/type_unknown.jpg");
+					}
+
+					cell = new PdfPCell(image, true);
+					cell.setBorderWidth(3);
+					cell.setPadding(5);
+					cell.setBorderColor(BaseColor.WHITE);
+					table.addCell(cell);
+				} else {
+					cell = new PdfPCell();
+					cell.setBorderWidth(3);
+					cell.setBorderColor(BaseColor.WHITE);
+					table.addCell(cell);
 				}
-
-				cell = new PdfPCell(image, true);
-				cell.setBorderWidth(3);
-				cell.setPadding(5);
-				cell.setBorderColor(BaseColor.WHITE);
-				table.addCell(cell);
-			} else {
-				cell = new PdfPCell();
-				cell.setBorderWidth(3);
-				cell.setBorderColor(BaseColor.WHITE);
-				table.addCell(cell);
 			}
 		}
 
