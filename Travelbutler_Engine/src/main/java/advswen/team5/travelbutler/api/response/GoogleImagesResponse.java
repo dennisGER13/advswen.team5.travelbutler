@@ -39,9 +39,9 @@ public class GoogleImagesResponse implements IAPIResponse {
 
 	public Image getBannerImage() {
 		for (GoogleSearchItem item : items) {
-			if (item.getImage().getWidth() >= 1000 && item.getImage().getWidth() <= 4000
+			if (item.getImage().getWidth() >= 1000 && item.getImage().getWidth() <= 8000
 					&& (item.getImage().getWidth() / item.getImage().getHeight()) >= 1
-					&& (item.getImage().getWidth() / item.getImage().getHeight()) <= 3){
+					&& (item.getImage().getWidth() / item.getImage().getHeight()) <= 4){
 				
 				try {
 					return Image.getInstance(item.getLink());
