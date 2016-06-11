@@ -46,22 +46,22 @@ public class InputDialogue extends JFrame implements ActionListener {
 	private JXDatePicker pickerStartDate;
 	private JXDatePicker pickerEndDate;
 	
-	//Attribute mit Getter und Setter, um Eingaben verwenden zu k�nnen
+	//Attribute mit Getter und Setter, um Eingaben verwenden zu koennen
 	private Date startDate;
 	private Date endDate;
 	private String travelDestination;
 	
-	//Aufruf der SearchRequest mit �bergabe des InputString 
-	private SearchRequestFassade request;
+	//Aufruf der SearchRequest mit Uebergabe des InputString 
+	private SearchRequestFassade searchRequestFassade;
 	
-	//Constructor, der die GUI initialisiert �ber die Methode inizializeWindow();
+	//Constructor, der die GUI initialisiert ueber die Methode inizializeWindow();
 	public InputDialogue(){
 		
 		initializeInputWindow();
 		
 	}
 
-	//Bauplan f�r die GUI mit Anordnung der Button, Label und Eingabefelder
+	//Bauplan fuer die GUI mit Anordnung der Button, Label und Eingabefelder
 	private void initializeInputWindow() {
 
 		frmInputWindow = new JFrame();
@@ -91,7 +91,6 @@ public class InputDialogue extends JFrame implements ActionListener {
 		frmInputWindow.getContentPane().add(lblInput);
 		
 		txtInputString = new JTextField();
-		txtInputString.setText("Type in your travel destination");
 		txtInputString.setBounds(160, 45, 180, 30);
 		frmInputWindow.add(txtInputString);
 	
@@ -119,7 +118,7 @@ public class InputDialogue extends JFrame implements ActionListener {
 		
 	}
 	
-	//Auf�hren des Programms
+	//Aufuehren des Programms
 	public void run() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -148,32 +147,27 @@ public class InputDialogue extends JFrame implements ActionListener {
 
 		if(e.getActionCommand().equals("SEARCH")){
 			
-//			Methode, die nach der Suchbet�tigung weitere Operationen in die Wege leiten soll
-//			doSomething();
-			
 			//Attribute setzen, um keine null-Werte zu bekommen
 			setTravelDestination();
 //			setStartDate();
 //			setEndDate();
 			
-			//String travelDestination an SearchRequest �bergeben!!			
-			request = new SearchRequestFassade();
-			
-			SearchRequestFassade s1 = new SearchRequestFassade();
+			//String travelDestination an SearchRequest uebergeben!!			
+			searchRequestFassade = new SearchRequestFassade();
 			
 			try {
-				File pdf = new PDFGenerator(s1.search(travelDestination)).generate();
+				File pdf = new PDFGenerator(searchRequestFassade.search(travelDestination)).generate();
 				Desktop.getDesktop().open(pdf);
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
 			
-			//Fenster nach Sucheingabe schlie�en!!
+			//Fenster nach Sucheingabe schliessen!!
 			frmInputWindow.dispose();
 
 		}else if(e.getActionCommand().equals("CANCEL")){
 			
-			//Bei "Abbrechen" endet das Programm!
+			//Bei "Cancel" endet das Programm!
 			System.exit(0);
 			
 		}
