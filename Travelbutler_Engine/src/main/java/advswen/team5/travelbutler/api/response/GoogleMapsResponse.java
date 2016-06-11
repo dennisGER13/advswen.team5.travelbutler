@@ -1,16 +1,26 @@
 package advswen.team5.travelbutler.api.response;
 
+import java.util.Map;
+
 import advswen.team5.travelbutler.api.google.maps.GoogleGeoCode;
 
 public class GoogleMapsResponse implements IAPIResponse{
 
-	private GoogleGeoCode geocode;
-	private boolean missing = true;
+	private GoogleGeoCode [] geocodes;
+	private boolean missing = false;
 	
-	public GoogleMapsResponse(GoogleGeoCode geoCode) {
-		
-		this.geocode = geocode;
+	public GoogleMapsResponse(GoogleGeoCode[] geocodes) {
+		super();
+		this.geocodes = geocodes;
 
+	}
+
+	public GoogleGeoCode[] getGeocodes() {
+		return geocodes;
+	}
+
+	public void setGeocodes(GoogleGeoCode[] geocodes) {
+		this.geocodes = geocodes;
 	}
 
 	@Override
@@ -23,7 +33,7 @@ public class GoogleMapsResponse implements IAPIResponse{
 	@Override
 	public boolean isMissing() {
 
-		return false;
+		return missing;
 	}
-
+		
 }

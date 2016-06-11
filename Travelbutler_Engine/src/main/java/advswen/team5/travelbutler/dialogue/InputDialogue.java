@@ -1,5 +1,7 @@
 package advswen.team5.travelbutler.dialogue;
 
+import java.awt.Desktop;
+
 /*
  * Author: Dennis Wagenblast
  */
@@ -13,6 +15,7 @@ import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -27,6 +30,7 @@ import javax.swing.JTextField;
 
 import org.jdesktop.swingx.JXDatePicker;
 
+import advswen.team5.travelbutler.output.PDFGenerator;
 import advswen.team5.travelbutler.search.SearchRequestFassade;
 
 public class InputDialogue extends JFrame implements ActionListener {
@@ -63,32 +67,32 @@ public class InputDialogue extends JFrame implements ActionListener {
 		frmInputWindow = new JFrame();
 		frmInputWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmInputWindow.setTitle("Travelbutler");
-		frmInputWindow.setBounds(100, 100, 350, 300);
+		frmInputWindow.setBounds(100, 100, 400, 200);
 		frmInputWindow.getContentPane().setLayout(null);
 		centreWindow(frmInputWindow);
 		
 		btnSearch = new JButton();
-		btnSearch.setText("Suche");
+		btnSearch.setText("Search");
 		btnSearch.addActionListener(this);
 		btnSearch.setActionCommand("SEARCH");
-		btnSearch.setBounds(180, 200, 125, 30);
+		btnSearch.setBounds(230, 110, 125, 30);
 		frmInputWindow.getContentPane().add(btnSearch);
 		
 		btnCancel = new JButton();
-		btnCancel.setText("Abbrechen");
+		btnCancel.setText("Cancel");
 		btnCancel.addActionListener(this);
 		btnCancel.setActionCommand("CANCEL");
-		btnCancel.setBounds(25, 200, 125, 30);
+		btnCancel.setBounds(25, 110, 125, 30);
 		frmInputWindow.getContentPane().add(btnCancel);
 		
 		lblInput = new JLabel();
-		lblInput.setText("Reiseziel: ");
+		lblInput.setText("Travel destination: ");
 		lblInput.setBounds(40, 45, 125, 30);
 		frmInputWindow.getContentPane().add(lblInput);
 		
 		txtInputString = new JTextField();
-		txtInputString.setText("Reiseziel eingeben");
-		txtInputString.setBounds(160, 45, 125, 30);
+		txtInputString.setText("Type in your travel destination");
+		txtInputString.setBounds(160, 45, 180, 30);
 		frmInputWindow.add(txtInputString);
 	
 //		lblStartDate = new JLabel();
@@ -154,13 +158,15 @@ public class InputDialogue extends JFrame implements ActionListener {
 			
 			//String travelDestination an SearchRequest �bergeben!!			
 			request = new SearchRequestFassade();
-			System.out.println(request.search(travelDestination));
-
-//			System.out.println("Sie haben die Suche gestartet!");
-//			System.out.println("Sucheingaben:");
-			System.out.println("Reiseziel: " + travelDestination);
-//			System.out.println("Check-In: " + startDate);
-//			System.out.println("Check-Out: " + endDate);	
+			
+			SearchRequestFassade s1 = new SearchRequestFassade();
+			
+			try {
+				File pdf = new PDFGenerator(s1.search(travelDestination)).generate();
+				Desktop.getDesktop().open(pdf);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 			
 			//Fenster nach Sucheingabe schlie�en!!
 			frmInputWindow.dispose();

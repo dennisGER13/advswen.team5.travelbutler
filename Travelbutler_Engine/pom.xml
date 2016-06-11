@@ -149,6 +149,14 @@
 			<artifactId>owm-japis</artifactId>
 			<version>2.5.0.3</version>
 		</dependency>
+		
+		<!-- http://mvnrepository.com/artifact/com.google.code.geocoder-java/geocoder-java -->
+		<dependency>
+		    <groupId>com.google.code.geocoder-java</groupId>
+		    <artifactId>geocoder-java</artifactId>
+		    <version>0.16</version>
+		</dependency>
+		
 
 	</dependencies>
 
