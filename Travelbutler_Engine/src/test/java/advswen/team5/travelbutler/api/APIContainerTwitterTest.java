@@ -16,6 +16,7 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.internal.matchers.Null;
 
 import advswen.team5.travelbutler.api.response.IAPIResponse;
 import advswen.team5.travelbutler.api.response.TwitterResponse;
@@ -26,10 +27,17 @@ public class APIContainerTwitterTest {
 	
 	
 	
-	String searchString = "France";
+	String searchStringCountry = "France";
+	String searchStringCity = "Paris";
 	private IAPIContainer iapiContainer = new APIContainerTwitter();
-	IAPIResponse iapiResp = iapiContainer.processSearch(searchString);
-	TwitterResponse TwitterResp = new APIContainerTwitter().processSearch(searchString);
+	IAPIResponse iapiRespCountry = iapiContainer.processSearch(searchStringCountry);
+	TwitterResponse TwitterRespCountry = new APIContainerTwitter().processSearch(searchStringCountry);
+	IAPIResponse iapiRespCity = iapiContainer.processSearch(searchStringCity);
+	TwitterResponse TwitterRespCity = new APIContainerTwitter().processSearch(searchStringCity);
+	IAPIResponse iapiRespNull = iapiContainer.processSearch(null);
+	TwitterResponse TwitterRespNull = new APIContainerTwitter().processSearch(null);
+	IAPIResponse iapiRespBlank = iapiContainer.processSearch("");
+	TwitterResponse TwitterRespBlank = new APIContainerTwitter().processSearch("");
 
 	
 	@Before
@@ -39,11 +47,27 @@ public class APIContainerTwitterTest {
 	
 	}
 
+	/**
+	 * Test method for {@link advswen.team5.travelbutler.api.APIContainerTwitter#processSearch(java.lang.String)}.
+	 * The returned TwitterResponse should not be Null, if a valid city is entered/provided.
+	 */
 	@Test
-	public void testProcessSearchNotNull() {
-		System.out.println("testProcessSearch");
+	public void testProcessSearchShouldNotBeNullForValidCity() {
+		System.out.println("Test: testProcessSearchShouldNotBeNullForValidCity");
 //		IAPIResponse processSearch = iapiContainer.processSearch(searchString);
-		assertNotNull(iapiResp);
+		assertNotNull(iapiRespCity);
+	}
+	
+	
+	/**
+	 * Test method for {@link advswen.team5.travelbutler.api.APIContainerTwitter#processSearch(java.lang.String)}.
+	 * The returned TwitterResponse should not be Null, if a valid country is entered/provided.
+	 */
+	@Test
+	public void testProcessSearchShouldNotBeNullForValidCountry() {
+		System.out.println("Test: testProcessSearchShouldNotBeNullForValidCountry");
+//		IAPIResponse processSearch = iapiContainer.processSearch(searchString);
+		assertNotNull(iapiRespCountry);
 	}
 	
 	
@@ -51,21 +75,29 @@ public class APIContainerTwitterTest {
 	public void isMissingShouldBeFalseForValidInputString() {
 		System.out.println("Test: isMissingShouldBeFalseForValidInputString");
 //		IAPIResponse processSearch = iapiContainer.processSearch(searchString);
-		assertFalse(iapiResp.isMissing());
+		assertFalse(iapiRespCity.isMissing());
 	}
 	
+	/**
+	 * Test method for {@link advswen.team5.travelbutler.api.APIContainerTwitter#processSearch(java.lang.String)}.
+	 * The method processSearch should throw an AssertionError, if Null is provided
+	 */
 	@Test(expected = AssertionError.class)
 	public void processSearchShouldThrowAssertionErrorForNullString() {
 		System.out.println("Test: processSearchShouldThrowNullPointerExceptionForNullString");
-//		IAPIResponse processSearch = iapiContainer.processSearch(null);
-		assertNull(iapiResp);
+//		IAPIResponse processSearchNull = iapiContainer.processSearch(null);
+		assertNull(iapiRespNull);
 	}
 	
+	/**
+	 * Test method for {@link advswen.team5.travelbutler.api.APIContainerTwitter#processSearch(java.lang.String)}.
+	 * The method processSearch should throw an AssertionError, if a blank string is provided
+	 */
 	@Test(expected = AssertionError.class)
 	public void processSearchShouldThrowAssertionErrorForBlankString() {
-		System.out.println("Test: processSearchShouldThrowNullPointerExceptionForBlankString");
+		System.out.println("Test: processSearchShouldThrowAssertionErrorForBlankString");
 //		IAPIResponse processSearch = iapiContainer.processSearch("");
-		assertNull(iapiResp);
+		assertNull(iapiRespBlank);
 	}
 	
 	@After
@@ -82,14 +114,38 @@ public class APIContainerTwitterTest {
 //
 //	}
 	
-	public void testIfTweetsContainSearchString() {
-		String requestedString = "Barcelona";
+	/**
+	 * Test if the tweets contain the provided search-string. In this case a city
+	 */
+	@Test
+	public void testIfTweetsContainSearchStringCity() {
+		
 //		TwitterResponse Twitter = new APIContainerTwitter().processSearch(requestedString);
-		List<Status> usedTweets = TwitterResp.getTweets();
+		List<Status> usedTweets = TwitterRespCity.getTweets();
 		
 		boolean found = true;
 		for(Status status: usedTweets) {
-		    if(!status.getText().toLowerCase().contains(requestedString.toLowerCase()))
+		    if(!status.getText().toLowerCase().contains(searchStringCity.toLowerCase()))
+		       found = false;
+		}
+
+		assertTrue(found);
+		
+
+	}
+	
+	/**
+	 * Test if the tweets contain the provided search-string. In this case a country
+	 */
+	@Test
+	public void testIfTweetsContainSearchStringCountry() {
+		
+//		TwitterResponse Twitter = new APIContainerTwitter().processSearch(requestedString);
+		List<Status> usedTweets = TwitterRespCountry.getTweets();
+		
+		boolean found = true;
+		for(Status status: usedTweets) {
+		    if(!status.getText().toLowerCase().contains(searchStringCountry.toLowerCase()))
 		       found = false;
 		}
 
