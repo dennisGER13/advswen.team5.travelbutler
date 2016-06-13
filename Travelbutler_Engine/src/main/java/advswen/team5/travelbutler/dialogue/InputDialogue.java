@@ -1,11 +1,10 @@
 package advswen.team5.travelbutler.dialogue;
 
-import java.awt.Desktop;
-
 /*
  * Author: Dennis Wagenblast
  */
 
+import java.awt.Desktop;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -147,6 +146,11 @@ public class InputDialogue extends JFrame implements ActionListener {
 
 		if(e.getActionCommand().equals("SEARCH")){
 			
+			System.out.println("Search request is being processed!");
+			
+			//Fenster nach Sucheingabe schliessen!!
+			frmInputWindow.dispose();
+			
 			//Attribute setzen, um keine null-Werte zu bekommen
 			setTravelDestination();
 //			setStartDate();
@@ -161,9 +165,6 @@ public class InputDialogue extends JFrame implements ActionListener {
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
-			
-			//Fenster nach Sucheingabe schliessen!!
-			frmInputWindow.dispose();
 
 		}else if(e.getActionCommand().equals("CANCEL")){
 			

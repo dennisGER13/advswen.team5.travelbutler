@@ -1,4 +1,4 @@
-package advswen.team5.travelbutler.api.google.maps;
+package advswen.team5.travelbutler.api.google.gecoding;
 
 /*
  * Author: Dennis Wagenblast

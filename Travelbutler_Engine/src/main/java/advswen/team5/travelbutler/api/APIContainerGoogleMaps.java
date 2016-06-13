@@ -1,58 +1,48 @@
 package advswen.team5.travelbutler.api;
 
-import java.io.IOException;
-
 /*
- * Dennis Wagenblast
+ * Author: Dennis Wagenblast
  */
 
-import java.io.InputStream;
-import java.net.MalformedURLException;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.net.URL;
 
-import org.apache.commons.io.IOUtils;
+import javax.imageio.ImageIO;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonParser;
-
-import advswen.team5.travelbutler.api.google.maps.GoogleGeoCode;
 import advswen.team5.travelbutler.api.response.GoogleMapsResponse;
+
+import advswen.team5.travelbutler.api.response.IAPIResponse;
 
 public class APIContainerGoogleMaps implements IAPIContainer{
 
-	private final String API_KEY ="AIzaSyDCfERTe9pquhxM38YqEhayDdjemtKBD0c";
-	
 	@Override
 	public GoogleMapsResponse processSearch(String requestString) {
-
-		Gson gson = new Gson();
-		GoogleMapsResponse response = new GoogleMapsResponse(gson.fromJson(getGeoCode(requestString), GoogleGeoCode[].class));
+		
+		APIContainerGoogleMaps googleMaps = new APIContainerGoogleMaps();
+		
+		//Das Responseobjekt holt sich das Bild 
+		GoogleMapsResponse response = new GoogleMapsResponse(googleMaps.getGoogleMapsImage(requestString));
 		
 		return response;
-		
 	}
-	
-	private JsonArray getGeoCode(String requestString){
 
-		InputStream in = null;
-			
-			try {
-				
-				in = new URL("https://maps.googleapis.com/maps/api/geocode/json?key=" + API_KEY + "&sensor=false&address=" + requestString).openStream();
-				JsonParser parser = new JsonParser();
-				return parser.parse(IOUtils.toString(in)).getAsJsonObject().getAsJsonArray("geocodes");
-			
-			} catch (MalformedURLException e) {
-				
-				e.printStackTrace();
-				
-			} catch (IOException e) {
-				
-				e.printStackTrace();
-			}
-			
+	//Anfrage an GoogleMaps mit RequestString und der Groesse (500x500) des Bildes/der Karte
+	public File getGoogleMapsImage(String requestString){
+		try {
+		   BufferedImage img = ImageIO.read(new URL("https://maps.googleapis.com/maps/api/staticmap?center="
+				   + requestString + "&language=en&size=500x500"));
+		    
+		   File outputfile = new File("map.png");
+		   ImageIO.write(img, "png", outputfile);
+		   
+		   return outputfile;
+		   
+		    } catch (Exception ex) {
+		         System.out.println("Error uccured at processing Google Maps API request!" + ex);
+		    }
 		return null;
-		
 	}
 }
+

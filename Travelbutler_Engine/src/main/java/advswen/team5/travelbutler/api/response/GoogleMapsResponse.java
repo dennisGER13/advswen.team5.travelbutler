@@ -1,26 +1,22 @@
 package advswen.team5.travelbutler.api.response;
 
+import java.io.File;
 import java.util.Map;
 
-import advswen.team5.travelbutler.api.google.maps.GoogleGeoCode;
+import advswen.team5.travelbutler.api.APIContainerGoogleMaps;
+import advswen.team5.travelbutler.api.google.gecoding.GoogleGeoCode;
 
 public class GoogleMapsResponse implements IAPIResponse{
 
-	private GoogleGeoCode [] geocodes;
-	private boolean missing = false;
+private boolean missing = false;
+private File file;
+
 	
-	public GoogleMapsResponse(GoogleGeoCode[] geocodes) {
+	//GoogleMapsResponse enthält das Bild mit der Karte
+	public GoogleMapsResponse(File file) {
 		super();
-		this.geocodes = geocodes;
-
-	}
-
-	public GoogleGeoCode[] getGeocodes() {
-		return geocodes;
-	}
-
-	public void setGeocodes(GoogleGeoCode[] geocodes) {
-		this.geocodes = geocodes;
+		this.missing = missing;
+		this.file = file;
 	}
 
 	@Override
@@ -34,6 +30,14 @@ public class GoogleMapsResponse implements IAPIResponse{
 	public boolean isMissing() {
 
 		return missing;
+	}
+
+	public File getFile() {
+		return file;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
 	}
 		
 }
