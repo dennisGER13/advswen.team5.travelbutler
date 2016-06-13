@@ -1,7 +1,7 @@
 // *************************************************************************************
 // File:         [APIContainerTravelbriefingTest.java]
 // Created:      [2016/06/07 Tuesday]
-// Last Changed: $Date: 2016/06/08 18:19:00 $
+// Last Changed: $Date: 2016/06/13 16:08:00 $
 // Author:       <A HREF="mailto:[ma-152478@hs-weingarten.de]">[Michael Aulbach]</A>
 //**************************************************************************************
 //Description: 	Test-Klasse für APIContainerTravelbriefing
@@ -32,9 +32,10 @@ public class APIContainerTravelbriefingTest {
 	
 	/**
 	 * Test method for {@link advswen.team5.travelbutler.api.APIContainerTravelbriefing#processSearch(java.lang.String)}.
+	 * The returned TravelbriefingResponse should not be Null, if a valid city is entered.
 	 */
 	@Test
-	public void testProcessSearch() {
+	public void testProcessSearchWithValidCitySearchString() {
 		System.out.println("testProcessSearch");
 		IAPIResponse processSearch = iapiContainer.processSearch(searchStringCity);
 		assertNotNull(processSearch);
@@ -42,9 +43,10 @@ public class APIContainerTravelbriefingTest {
 	
 	/**
 	 * Test method for {@link advswen.team5.travelbutler.api.APIContainerTravelbriefing#processSearch(java.lang.String)}.
+	 * The returned TravelbriefingResponse should not be Null, if a valid country is entered.
 	 */
 	@Test
-	public void testProcessSearchForCountryNotNull() {
+	public void testProcessSearchWithValidCountrySearchString() {
 		System.out.println("testProcessSearch");
 		IAPIResponse processSearch = iapiContainer.processSearch(searchStringCountry);
 		assertNotNull(processSearch);
@@ -52,6 +54,7 @@ public class APIContainerTravelbriefingTest {
 	
 	/**
 	 * Test method for {@link advswen.team5.travelbutler.api.APIContainerTravelbriefing#processSearch(java.lang.String)}.
+	 * The method isMissing should be false, if a valid city is entered.
 	 */
 	@Test
 	public void isMissingShouldBeFalseForValidCity() {
@@ -61,6 +64,7 @@ public class APIContainerTravelbriefingTest {
 	}
 	/**
 	 * Test method for {@link advswen.team5.travelbutler.api.APIContainerTravelbriefing#processSearch(java.lang.String)}.
+	 * The method isMissing should be false, if a valid country is entered.
 	 */
 	@Test
 	public void isMissingShouldBeFalseForValidCountry() {
@@ -71,6 +75,7 @@ public class APIContainerTravelbriefingTest {
 	
 	/**
 	 * Test method for {@link advswen.team5.travelbutler.api.APIContainerTravelbriefing#processSearch(java.lang.String)}.
+	 * The method processSearch should throw a NullPointerException, if Null is provided.
 	 */
 	@Test(expected = NullPointerException.class)
 	public void processSearchShouldThrowNullPointerExceptionForNullString() {
@@ -80,6 +85,7 @@ public class APIContainerTravelbriefingTest {
 	}
 	/**
 	 * Test method for {@link advswen.team5.travelbutler.api.APIContainerTravelbriefing#processSearch(java.lang.String)}.
+	 * Travelbriefing returns information about the Netherlands as default values, so the method processSearch should not be Null, if a blank string is provided
 	 */
 	@Test
 	public void processSearchWithBlankInputString() {
