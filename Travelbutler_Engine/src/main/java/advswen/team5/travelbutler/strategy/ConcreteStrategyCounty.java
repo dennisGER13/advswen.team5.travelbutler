@@ -13,7 +13,7 @@ import advswen.team5.travelbutler.api.response.TravelbriefingResponse;
 import advswen.team5.travelbutler.api.response.TwitterResponse;
 import advswen.team5.travelbutler.api.response.WikipediaResponse;
 
-public class ConcreteStrategyLand implements ISearchStrategy {
+public class ConcreteStrategyCounty implements ISearchStrategy {
 
 	@Override
 	public Response executeSearch(String requestString) {

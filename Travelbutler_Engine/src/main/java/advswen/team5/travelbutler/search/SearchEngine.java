@@ -12,6 +12,7 @@ package advswen.team5.travelbutler.search;
 
 import advswen.team5.travelbutler.api.response.*;
 import advswen.team5.travelbutler.strategy.ConcreteStrategyBasic;
+import advswen.team5.travelbutler.strategy.ConcreteStrategyCity;
 import advswen.team5.travelbutler.strategy.ISearchStrategy;
 
 public class SearchEngine {
@@ -19,7 +20,7 @@ public class SearchEngine {
 	
 	//Die SearchEngine wird Standardm��ig mit der Basic Strategie instanziert. (Kann Beispielswei�e Google sein)
 	public SearchEngine(){
-		_searchstrategy = new ConcreteStrategyBasic();
+		_searchstrategy = new ConcreteStrategyCity();
 	}
 	
 	

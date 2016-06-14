@@ -47,6 +47,6 @@ public class APIContainerGoogleMaps implements IAPIContainer {
 
 	private String getBaseUrl(String requestString){
 		return "https://maps.googleapis.com/maps/api/staticmap?center="
-				   + requestString + "&language=en";
+				   + requestString.replace(" ", "+") + "&language=en";
 	}
 }

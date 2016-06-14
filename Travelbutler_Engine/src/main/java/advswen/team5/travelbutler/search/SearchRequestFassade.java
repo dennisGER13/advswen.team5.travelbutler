@@ -37,7 +37,7 @@ public class SearchRequestFassade {
 		this.requestString = requestString;
 		grain = this.grainDetection();
 		if(grain == GrainEnum.land){
-			searchengine.setStrategy(new ConcreteStrategyLand());
+			searchengine.setStrategy(new ConcreteStrategyCounty());
 		}
 		return searchengine.execute(requestString);
 	}
@@ -54,7 +54,7 @@ public class SearchRequestFassade {
 
 			//CSV-Datei laden und für die Grain-Detection nutzbar machen!
 			ClassLoader classLoader = getClass().getClassLoader();
-			File file = new File(classLoader.getResource("lands.CSV").getFile());
+			File file = new File(classLoader.getResource("countries.CSV").getFile());
 			Properties properties = new Properties();
 			properties.load(new FileReader(file));
 			
@@ -64,7 +64,7 @@ public class SearchRequestFassade {
 				String[] country = line.split(cvsSplitBy);
 				for (String foo : country) {
 					// System.out.println(foo);
-					if (searchString.equals(foo)) {
+					if (searchString.toLowerCase().equals(foo.toLowerCase())) {
 						return GrainEnum.land;
 					}
 				}
