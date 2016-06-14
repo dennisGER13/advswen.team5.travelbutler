@@ -38,11 +38,11 @@ public class Response {
 		return destination;
 	}
 
-	public GoogleMapsResponse getGooglemapsResponse() {
+	public GoogleMapsResponse getGoogleMapsResponse() {
 		return googlemapsResponse;
 	}
 
-	public void setGooglemapsResponse(GoogleMapsResponse googlemapsResponse) {
+	public void setGoogleMapsResponse(GoogleMapsResponse googlemapsResponse) {
 		this.googlemapsResponse = googlemapsResponse;
 	}
 

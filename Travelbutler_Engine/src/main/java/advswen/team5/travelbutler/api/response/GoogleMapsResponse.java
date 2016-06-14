@@ -10,13 +10,14 @@ public class GoogleMapsResponse implements IAPIResponse{
 
 private boolean missing = false;
 private File file;
+private String baseUrl;
 
 	
 	//GoogleMapsResponse enthält das Bild mit der Karte
-	public GoogleMapsResponse(File file) {
+	public GoogleMapsResponse(File file, String url) {
 		super();
-		this.missing = missing;
 		this.file = file;
+		this.baseUrl = url;
 	}
 
 	@Override
@@ -36,8 +37,13 @@ private File file;
 		return file;
 	}
 
-	public void setFile(File file) {
-		this.file = file;
+	public String getBaseUrl() {
+		return baseUrl;
 	}
+	
+	public String getUrl(int dimX, int dimY){
+		return baseUrl + "&size=" + dimX + "x" + dimY;
+	}
+
 		
 }

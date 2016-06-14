@@ -7,10 +7,13 @@ import java.io.File;
  */
 
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.util.List;
 
+import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
@@ -62,7 +65,8 @@ public class PDFGenerator {
 	public File generate() throws Exception {
 		// Create a new document in the output folder
 		Document document = new Document();
-		PdfWriter.getInstance(document, new FileOutputStream("output/" + response.getDestination() + ".pdf"));
+		PdfWriter writer = PdfWriter.getInstance(document,
+				new FileOutputStream("output/" + response.getDestination() + ".pdf"));
 		document.open();
 		document.addTitle("Traveling to " + response.getDestination());
 
@@ -84,6 +88,7 @@ public class PDFGenerator {
 		// Chapters are added by separate methods
 		addTravelWarnings(document);
 		addWikipediaInfo(document);
+		addMap(document, writer);
 		addGoodToKnow(document);
 		addHealth(document);
 		addTweets(document, 10);
@@ -421,6 +426,27 @@ public class PDFGenerator {
 		health.add(generateSubCategory("Health and risks", "src/main/resources/icons/health.png"));
 		health.add(table);
 		document.add(health);
+	}
+
+	private void addMap(Document document, PdfWriter writer) throws Exception {
+		// If there is no GoogleMapsResponse (= Google Maps not
+		// used in this search) or the response does not contain a suitable
+		// result this chapter is skipped
+		if (response.getGoogleMapsResponse() == null || response.getGoogleMapsResponse().isMissing()) {
+			return;
+		}
+		
+		Paragraph distance = new Paragraph();
+		addEmptyLine(distance, 1);
+		document.add(distance);
+		
+		int height = Math.round(writer.getVerticalPosition(true) - document.bottomMargin() - document.getPageSize().getBottom());
+		float factor = (float) ((document.getPageSize().getWidth() - (document.left() * 2)) / 640.0);
+		Image image = Image.getInstance(response.getGoogleMapsResponse().getUrl(640, Math.round(height / factor) - 5));
+		image.scaleToFit(document.getPageSize().getWidth() - ((document.left() * 2)), height);
+		// image.setAbsolutePosition(0, 0);
+		document.add(image);
+		document.newPage();
 	}
 
 	private static void addEmptyLine(Paragraph paragraph, int number) {
