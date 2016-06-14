@@ -14,12 +14,20 @@ import java.util.List;
 
 import advswen.team5.travelbutler.api.*;
 import advswen.team5.travelbutler.api.response.*;
+import advswen.team5.travelbutler.dialogue.InvalidRequestDialogue;
 
 
 public class ConcreteStrategyBasic implements ISearchStrategy {
 
+		private InvalidRequestDialogue invalid;
+
 		public Response executeSearch(String requestString) {
-		Response response = new Response(requestString);
-		return response;
+			
+		//Wenn ConcreteStrategyBasic ausgewaehlt, dann zeige InvalidRequestDialogue
+		//mit der Moeglichkeit die Suche neu zu starten!
+		invalid = new InvalidRequestDialogue();
+		invalid.run();
+		
+		return null;
 	}
 }

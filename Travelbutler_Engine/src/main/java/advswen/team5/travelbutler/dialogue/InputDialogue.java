@@ -1,5 +1,8 @@
 package advswen.team5.travelbutler.dialogue;
 
+import java.awt.Component;
+import java.awt.Cursor;
+
 /*
  * Author: Dennis Wagenblast
  */
@@ -145,7 +148,7 @@ public class InputDialogue extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		if(e.getActionCommand().equals("SEARCH")){
-			
+				
 			System.out.println("Search request is being processed!");
 			
 			//Fenster nach Sucheingabe schliessen!!
