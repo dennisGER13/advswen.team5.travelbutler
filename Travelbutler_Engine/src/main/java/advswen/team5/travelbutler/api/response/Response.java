@@ -13,6 +13,7 @@ public class Response {
 	private TravelbriefingResponse travelbriefingResponse = null;
 	private GoogleImagesResponse googleImagesResponse = null;
 	private GooglePlacesResponse googlePlacesResponse = null;
+	private OWMResponse openWeatherMapResponse = null;
 	
 	public Response(String destination) {
 		super();
