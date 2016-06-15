@@ -7,13 +7,10 @@ import java.io.File;
  */
 
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.util.List;
 
-import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
@@ -30,7 +27,6 @@ import advswen.team5.travelbutler.api.APIContainerGoogleImages;
 import advswen.team5.travelbutler.api.google.places.GooglePlace;
 import advswen.team5.travelbutler.api.google.places.StarRating;
 import advswen.team5.travelbutler.api.response.GoogleImagesResponse;
-import advswen.team5.travelbutler.api.response.GooglePlacesResponse;
 import advswen.team5.travelbutler.api.response.Response;
 import advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdvise;
 import advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdviseList;

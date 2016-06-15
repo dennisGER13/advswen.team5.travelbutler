@@ -1,5 +1,9 @@
 package advswen.team5.travelbutler.strategy;
 
+/*
+ * Andreas Tauscher
+ */
+
 import advswen.team5.travelbutler.api.APIContainerGoogleImages;
 import advswen.team5.travelbutler.api.APIContainerGoogleMaps;
 import advswen.team5.travelbutler.api.APIContainerGoogleGeoCoding;

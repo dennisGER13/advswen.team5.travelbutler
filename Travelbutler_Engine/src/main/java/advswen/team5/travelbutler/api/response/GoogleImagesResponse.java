@@ -1,9 +1,5 @@
 package advswen.team5.travelbutler.api.response;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-
-import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.Image;
 
 import advswen.team5.travelbutler.api.google.images.GoogleSearchItem;

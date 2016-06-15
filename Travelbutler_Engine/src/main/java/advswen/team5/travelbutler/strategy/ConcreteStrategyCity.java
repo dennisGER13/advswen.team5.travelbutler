@@ -10,7 +10,7 @@ import advswen.team5.travelbutler.api.response.GoogleMapsResponse;
 import advswen.team5.travelbutler.api.response.GooglePlacesResponse;
 
 /*
- * Author: any author
+ * Author: Andreas Tauscher
  */
 
 import advswen.team5.travelbutler.api.response.Response;

@@ -6,6 +6,10 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+/*
+ * Andreas Tauscher
+ */
+
 public class StarRating {
 
 	private static BufferedImage[] sprites = null;
