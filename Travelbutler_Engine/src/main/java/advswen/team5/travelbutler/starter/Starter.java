@@ -7,10 +7,7 @@ public class Starter {
 	
 	public static void main(String[] args){
 		
-//		InputDialogue in = new InputDialogue();
-//		in.run();
-		
-		InvalidRequestDialogue in = new InvalidRequestDialogue();
+		InputDialogue in = new InputDialogue();
 		in.run();
 
 	}
