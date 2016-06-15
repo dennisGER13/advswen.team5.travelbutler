@@ -1,10 +1,10 @@
 package advswen.team5.travelbutler.api;
 
-import java.io.IOException;
-
 /*
  * Dennis Wagenblast
  */
+
+import java.io.IOException;
 
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -30,6 +30,7 @@ public class APIContainerGoogleGeoCoding implements IAPIContainer{
 		Gson gson = new Gson();
 		GoogleGeoCodingResponse response = new GoogleGeoCodingResponse(gson.fromJson(getGeoCode(requestString), GoogleGeoCode[].class));
 		
+		//Giving back response object including geocodes array
 		return response;
 		
 	}
@@ -41,7 +42,9 @@ public class APIContainerGoogleGeoCoding implements IAPIContainer{
 			
 			try {
 				
-				in = new URL("https://maps.googleapis.com/maps/api/geocode/json?key=" + API_KEY + "&sensor=false&address=" + requestString).openStream();
+				in = new URL("https://maps.googleapis.com/maps/api/geocode/json?key="
+				+ API_KEY + "&sensor=false&address=" + requestString).openStream();
+				
 				JsonParser parser = new JsonParser();
 				return parser.parse(IOUtils.toString(in)).getAsJsonObject().getAsJsonArray("geocodes");
 			

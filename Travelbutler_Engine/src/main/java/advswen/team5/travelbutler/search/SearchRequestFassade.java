@@ -38,11 +38,16 @@ public class SearchRequestFassade {
 		System.out.println("Starting search");
 		this.requestString = requestString;
 		grain = this.grainDetection();
+		
 		if(grain == GrainEnum.country){
 			searchengine.setStrategy(new ConcreteStrategyCounty());
-		} else if (grain == GrainEnum.city){
+		}
+		
+		if (grain == GrainEnum.city){
 			searchengine.setStrategy(new ConcreteStrategyCity());
-		} else if (grain == GrainEnum.unknown) {
+		}
+		
+		if (grain == GrainEnum.unknown) {
 			
 			//If grain unknown is detected, there will open GUI to redirect user to search dialogue
 			invalid = new InvalidRequestDialogue();
@@ -93,7 +98,7 @@ public class SearchRequestFassade {
 			}
 		}
 		
-//		if()){
+//		if(){
 		//TODO GrainDetection City to be implemented here!
 		
 		
