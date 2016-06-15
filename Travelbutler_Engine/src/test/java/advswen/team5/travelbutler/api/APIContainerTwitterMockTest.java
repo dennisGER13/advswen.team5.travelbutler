@@ -8,7 +8,10 @@ import org.mockito.Mockito;
 
 import static org.mockito.Mockito.*;
 
+import java.util.List;
+
 import advswen.team5.travelbutler.api.response.IAPIResponse;
+import twitter4j.Status;
 
 
 
@@ -17,9 +20,12 @@ public class APIContainerTwitterMockTest {
 	String searchStringCountry = "France";
 	String searchStringCity = "Paris";
 			
+	public List <Status>  status = new List <Status>;
+	
 	
 	
 	IAPIContainer container;
+	
 	@Before
 	public void setUp(){
 		// mock erstellen
