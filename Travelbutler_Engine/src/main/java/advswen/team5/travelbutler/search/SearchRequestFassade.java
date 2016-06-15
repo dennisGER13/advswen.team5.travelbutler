@@ -93,7 +93,13 @@ public class SearchRequestFassade {
 			}
 		}
 		
+//		if()){
 		//TODO GrainDetection City to be implemented here!
+		
+		
+		
+//		return GrainEnum.city;
+//		}
 		
 		return GrainEnum.unknown;
 	}

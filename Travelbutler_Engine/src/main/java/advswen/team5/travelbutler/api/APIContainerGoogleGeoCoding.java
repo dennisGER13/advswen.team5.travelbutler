@@ -17,6 +17,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 
 import advswen.team5.travelbutler.api.google.gecoding.GoogleGeoCode;
+import advswen.team5.travelbutler.api.response.GoogleGeoCodingResponse;
 import advswen.team5.travelbutler.api.response.GoogleMapsResponse;
 
 public class APIContainerGoogleGeoCoding implements IAPIContainer{
@@ -24,12 +25,12 @@ public class APIContainerGoogleGeoCoding implements IAPIContainer{
 	private final String API_KEY ="AIzaSyDCfERTe9pquhxM38YqEhayDdjemtKBD0c";
 	
 	@Override
-	public GoogleMapsResponse processSearch(String requestString) {
+	public GoogleGeoCodingResponse processSearch(String requestString) {
 
-		//Gson gson = new Gson();
-		//GoogleMapsResponse response = new GoogleMapsResponse(gson.fromJson(getGeoCode(requestString), GoogleGeoCode[].class));
+		Gson gson = new Gson();
+		GoogleGeoCodingResponse response = new GoogleGeoCodingResponse(gson.fromJson(getGeoCode(requestString), GoogleGeoCode[].class));
 		
-		return null;
+		return response;
 		
 	}
 	
