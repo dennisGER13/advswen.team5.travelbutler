@@ -1,10 +1,10 @@
 package advswen.team5.travelbutler.api.response;
 
-import java.io.File;
-import java.util.Map;
+/*
+ * Author: Dennis Wagenblast
+ */
 
-import advswen.team5.travelbutler.api.APIContainerGoogleMaps;
-import advswen.team5.travelbutler.api.google.gecoding.GoogleGeoCode;
+import java.io.File;
 
 public class GoogleMapsResponse implements IAPIResponse{
 
@@ -13,7 +13,7 @@ private File file;
 private String baseUrl;
 
 	
-	//GoogleMapsResponse enthält das Bild mit der Karte
+	//GoogleMapsResponse gets the map picture
 	public GoogleMapsResponse(File file, String url) {
 		super();
 		this.file = file;

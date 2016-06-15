@@ -1,5 +1,9 @@
 package advswen.team5.travelbutler.strategy;
 
+/*
+ * Andreas Tauscher
+ */
+
 import advswen.team5.travelbutler.api.APIContainerGoogleImages;
 import advswen.team5.travelbutler.api.APIContainerGoogleMaps;
 import advswen.team5.travelbutler.api.APIContainerGoogleGeoCoding;
@@ -22,7 +26,7 @@ public class ConcreteStrategyCounty implements ISearchStrategy {
 		TwitterResponse twitter = new APIContainerTwitter().processSearch(response.getDestination());
 		GoogleMapsResponse googlemaps = new APIContainerGoogleMaps().processSearch(response.getDestination());
 		TravelbriefingResponse travelbriefing = new APIContainerTravelbriefing().processSearch(response.getDestination());
-		GoogleImagesResponse googleImages = new APIContainerGoogleImages().processSearch(response.getDestination());
+		GoogleImagesResponse googleImages = new APIContainerGoogleImages().processSearch(response.getDestination() + "+panorama");
 		
 		response.setWikipediaResponse(wiki);
 		response.setTwitterResponse(twitter);

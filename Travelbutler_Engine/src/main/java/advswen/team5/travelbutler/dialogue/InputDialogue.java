@@ -37,7 +37,7 @@ import advswen.team5.travelbutler.search.SearchRequestFassade;
 
 public class InputDialogue extends JFrame implements ActionListener {
 
-	//Elemente der GUI
+	//Elements of GUI
 	private JFrame frmInputWindow;
 	private JTextField txtInputString;
 	private JLabel lblInput;
@@ -48,22 +48,22 @@ public class InputDialogue extends JFrame implements ActionListener {
 	private JXDatePicker pickerStartDate;
 	private JXDatePicker pickerEndDate;
 	
-	//Attribute mit Getter und Setter, um Eingaben verwenden zu koennen
+	//Attributs that will be used through Getter and Setter methods
 	private Date startDate;
 	private Date endDate;
 	private String travelDestination;
 	
-	//Aufruf der SearchRequest mit Uebergabe des InputString 
+	//Call of the SearchRequestFassade
 	private SearchRequestFassade searchRequestFassade;
 	
-	//Constructor, der die GUI initialisiert ueber die Methode inizializeWindow();
+	//Constructor to inizialize the GUI
 	public InputDialogue(){
 		
 		initializeInputWindow();
 		
 	}
 
-	//Bauplan fuer die GUI mit Anordnung der Button, Label und Eingabefelder
+	//Building the GUI
 	private void initializeInputWindow() {
 
 		frmInputWindow = new JFrame();
@@ -120,7 +120,7 @@ public class InputDialogue extends JFrame implements ActionListener {
 		
 	}
 	
-	//Aufuehren des Programms
+	//Running the program
 	public void run() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -134,7 +134,7 @@ public class InputDialogue extends JFrame implements ActionListener {
 		});
 	}
 	
-	//Zentrierung des Fensters nach Starten des Programms
+	//Centre window on screen
 	public static void centreWindow (Window frame) {
 		
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
@@ -144,22 +144,21 @@ public class InputDialogue extends JFrame implements ActionListener {
 		
 	}
 	
-	//Behandeln der ActionEvents je nach Eingabekommando
+	//Treatment of user input through buttons
 	public void actionPerformed(ActionEvent e) {
 
 		if(e.getActionCommand().equals("SEARCH")){
 				
 			System.out.println("Search request is being processed!");
 			
-			//Fenster nach Sucheingabe schliessen!!
+			//Close window
 			frmInputWindow.dispose();
 			
-			//Attribute setzen, um keine null-Werte zu bekommen
 			setTravelDestination();
 //			setStartDate();
 //			setEndDate();
 			
-			//String travelDestination an SearchRequest uebergeben!!			
+			//String travelDestination give through to SearchRequestFassade			
 			searchRequestFassade = new SearchRequestFassade();
 			
 			try {
@@ -171,13 +170,13 @@ public class InputDialogue extends JFrame implements ActionListener {
 
 		}else if(e.getActionCommand().equals("CANCEL")){
 			
-			//Bei "Cancel" endet das Programm!
+			//End application
 			System.exit(0);
 			
 		}
 	}
 
-	//Getter und Setter der Attribute, die weiter Verwendung finden werden
+	//Getter and Setter
 	public String getTravelDestination() {
 		
 		return travelDestination;

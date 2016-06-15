@@ -11,27 +11,26 @@
 package advswen.team5.travelbutler.search;
 
 import advswen.team5.travelbutler.api.response.*;
-import advswen.team5.travelbutler.strategy.ConcreteStrategyBasic;
 import advswen.team5.travelbutler.strategy.ConcreteStrategyCity;
 import advswen.team5.travelbutler.strategy.ISearchStrategy;
 
 public class SearchEngine {
-	private ISearchStrategy _searchstrategy;
+	private ISearchStrategy searchstrategy;
 	
 	//Die SearchEngine wird Standardm��ig mit der Basic Strategie instanziert. (Kann Beispielswei�e Google sein)
 	public SearchEngine(){
-		_searchstrategy = new ConcreteStrategyCity();
+		searchstrategy = new ConcreteStrategyCity();
 	}
 	
 	
 	public Response execute(String requestString){
-		return _searchstrategy.executeSearch(requestString);
+		return searchstrategy.executeSearch(requestString);
 		
 	}
 	
 	//Wird von der SearchRequest genutzt, um die richtige Strategie f�r den jeweiligen Grain auszuw�hlen
 	public void setStrategy(ISearchStrategy concreteStrategy){
-		_searchstrategy = concreteStrategy;
+		searchstrategy = concreteStrategy;
 	}
 	
 	public void getStrategy(){

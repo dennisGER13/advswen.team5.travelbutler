@@ -11,6 +11,7 @@
 package advswen.team5.travelbutler.search;
 
 import advswen.team5.travelbutler.api.response.*;
+import advswen.team5.travelbutler.dialogue.InvalidRequestDialogue;
 import advswen.team5.travelbutler.strategy.*;
 
 import java.io.BufferedReader;
@@ -22,9 +23,10 @@ import java.util.Properties;
 
 public class SearchRequestFassade {
 	private String requestString;
-	private GrainEnum grain = GrainEnum.basic;
+	private GrainEnum grain = GrainEnum.unknown;
 	private LanguageEnum language;
 	private SearchEngine searchengine;
+	private InvalidRequestDialogue invalid;
 	
 	public SearchRequestFassade(){
 		searchengine  = new SearchEngine();
@@ -36,8 +38,21 @@ public class SearchRequestFassade {
 		System.out.println("Starting search");
 		this.requestString = requestString;
 		grain = this.grainDetection();
-		if(grain == GrainEnum.land){
+		
+		if(grain == GrainEnum.country){
 			searchengine.setStrategy(new ConcreteStrategyCounty());
+		}
+		
+		if (grain == GrainEnum.city){
+			searchengine.setStrategy(new ConcreteStrategyCity());
+		}
+		
+		if (grain == GrainEnum.unknown) {
+			
+			//If grain unknown is detected, there will open GUI to redirect user to search dialogue
+			invalid = new InvalidRequestDialogue();
+			invalid.run();
+			
 		}
 		return searchengine.execute(requestString);
 	}
@@ -52,7 +67,7 @@ public class SearchRequestFassade {
 
 		try {
 
-			//CSV-Datei laden und für die Grain-Detection nutzbar machen!
+			//Loading CSV-File to be able to use list of countries
 			ClassLoader classLoader = getClass().getClassLoader();
 			File file = new File(classLoader.getResource("countries.CSV").getFile());
 			Properties properties = new Properties();
@@ -65,7 +80,7 @@ public class SearchRequestFassade {
 				for (String foo : country) {
 					// System.out.println(foo);
 					if (searchString.toLowerCase().equals(foo.toLowerCase())) {
-						return GrainEnum.land;
+						return GrainEnum.country;
 					}
 				}
 			}
@@ -82,7 +97,18 @@ public class SearchRequestFassade {
 				}
 			}
 		}
-		return GrainEnum.basic;
+		
+//		if(){
+		//TODO GrainDetection City to be implemented here!
+		
+		
+		
+//		return GrainEnum.city;
+//		} else {
+//			return GrainEnum.unknown;
+//	}
+		
+		return null;
 	}
 	
 	public void languageDetection(){

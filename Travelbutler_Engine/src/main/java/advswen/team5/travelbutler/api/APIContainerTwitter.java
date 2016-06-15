@@ -38,19 +38,19 @@ public class APIContainerTwitter implements IAPIContainer{
 			.setOAuthAccessToken("3040667098-r6eZUatWvdaiF618uVUxVPTSsRmyTjw5ewOsJgh")
 			.setOAuthAccessTokenSecret("el1ZH6dEhniERoCCjhFIO6mCzM5ucYGLApUE7mAR29U9T");
 		
-		//Initialisieren der TwitterFactory, um die Anfrage zu starten, anhand der zuvor gewählten Keys
+		//Initialize TwitterFactory
 		Twitter twitter = new TwitterFactory(cb.build()).getInstance();
 	    
 		List <Status> tweets = null;
 		List <Status> usedTweets = new ArrayList<Status>();
 		
-		//Liste der durchsuchten Twitter-Accounts
+		//List of Twitter accounts that will be searched
 		String [] users ={"TripAdvisor", "LonelyPlanet", "NatGeoTravel", "TravelLeisure",
 				"fodorstravel", "travelchannel", "travelgov", "TheWorldStories", "travel",
 				"Holiday_ideas_", "DTW_Holidays", "Hisuitesorlando", "HolidayInn", "citythisway"};	
 		
 		try {
-			  //Pruefe fuer jedes Element des Arrays USERS, welche Tweets genutzt werden sollen
+			 
 	    	  for(String u : users){
 	    		  
 	    		  String queryString = requestedString + " from:" + u;
@@ -61,14 +61,14 @@ public class APIContainerTwitter implements IAPIContainer{
 		              tweets = result.getTweets();
 		             
 		              for (Status tweet : tweets) {
-		                  //Speichere die zu nutzenden Tweets in die Liste usedTweets ab
+		                  
 		            	  if(!tweet.isRetweet())
 		                	  usedTweets.add(tweet);
 		                  System.out.println(tweet.getUser().getScreenName() + " ------ " + tweet.getText());
 		              }
 	    		  
 	         
-		        //Falls das Ergebnis null ist, soll eine Fehlermeldung ausgegeben werden
+		        
 	          } while ((query = result.nextQuery()) != null);
 	    
 	      }
