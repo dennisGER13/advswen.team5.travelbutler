@@ -55,4 +55,21 @@ public class GoogleImagesResponse implements IAPIResponse {
 		return null;
 	}
 
+	public Image getSquareImage() {
+		for (GoogleSearchItem item : items) {
+			if (item.getImage().getWidth() >= 100 && item.getImage().getWidth() <= 2000
+					&& (item.getImage().getWidth() / item.getImage().getHeight()) >= 0.7
+					&& (item.getImage().getWidth() / item.getImage().getHeight()) <= 1.8){
+				
+				try {
+					return Image.getInstance(item.getLink());
+				} catch (Exception e) {
+					// Image can't be loaded, try the next one
+					break;
+				}
+			}
+		}
+
+		return null;
+	}
 }

@@ -12,6 +12,7 @@ public class Response {
 	private GoogleMapsResponse googlemapsResponse = null;
 	private TravelbriefingResponse travelbriefingResponse = null;
 	private GoogleImagesResponse googleImagesResponse = null;
+	private GooglePlacesResponse googlePlacesResponse = null;
 	
 	public Response(String destination) {
 		super();
@@ -60,6 +61,22 @@ public class Response {
 
 	public void setGoogleImagesResponse(GoogleImagesResponse googleImagesResponse) {
 		this.googleImagesResponse = googleImagesResponse;
+	}
+
+	public GoogleMapsResponse getGooglemapsResponse() {
+		return googlemapsResponse;
+	}
+
+	public void setGooglemapsResponse(GoogleMapsResponse googlemapsResponse) {
+		this.googlemapsResponse = googlemapsResponse;
+	}
+
+	public GooglePlacesResponse getGooglePlacesResponse() {
+		return googlePlacesResponse;
+	}
+
+	public void setGooglePlacesResponse(GooglePlacesResponse googlePlacesResponse) {
+		this.googlePlacesResponse = googlePlacesResponse;
 	}
 	
 	

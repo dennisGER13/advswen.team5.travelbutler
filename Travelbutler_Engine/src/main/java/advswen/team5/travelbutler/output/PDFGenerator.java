@@ -26,6 +26,11 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
+import advswen.team5.travelbutler.api.APIContainerGoogleImages;
+import advswen.team5.travelbutler.api.google.places.GooglePlace;
+import advswen.team5.travelbutler.api.google.places.StarRating;
+import advswen.team5.travelbutler.api.response.GoogleImagesResponse;
+import advswen.team5.travelbutler.api.response.GooglePlacesResponse;
 import advswen.team5.travelbutler.api.response.Response;
 import advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdvise;
 import advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdviseList;
@@ -89,6 +94,7 @@ public class PDFGenerator {
 		addTravelWarnings(document);
 		addWikipediaInfo(document);
 		addMap(document, writer);
+		addHotels(document);
 		addGoodToKnow(document);
 		addHealth(document);
 		addTweets(document, 10);
@@ -435,18 +441,83 @@ public class PDFGenerator {
 		if (response.getGoogleMapsResponse() == null || response.getGoogleMapsResponse().isMissing()) {
 			return;
 		}
-		
+
 		Paragraph distance = new Paragraph();
 		addEmptyLine(distance, 1);
 		document.add(distance);
-		
-		int height = Math.round(writer.getVerticalPosition(true) - document.bottomMargin() - document.getPageSize().getBottom());
+
+		int height = Math
+				.round(writer.getVerticalPosition(true) - document.bottomMargin() - document.getPageSize().getBottom());
 		float factor = (float) ((document.getPageSize().getWidth() - (document.left() * 2)) / 640.0);
 		Image image = Image.getInstance(response.getGoogleMapsResponse().getUrl(640, Math.round(height / factor) - 5));
 		image.scaleToFit(document.getPageSize().getWidth() - ((document.left() * 2)), height);
 		// image.setAbsolutePosition(0, 0);
 		document.add(image);
 		document.newPage();
+	}
+
+	private void addHotels(Document document) throws Exception {
+		// If there is no TravelbriefingResponse (= Travelbriefing.org API not
+		// used in this search) or the response does not contain a suitable
+		// result this chapter is skipped
+		if (response.getGooglePlacesResponse() == null || response.getGooglePlacesResponse().isMissing()) {
+			return;
+		}
+
+		float[] columnWidths = { 1, 1, 1 };
+		PdfPTable table = new PdfPTable(columnWidths);
+		table.setWidthPercentage(100);
+		PdfPCell cell;
+
+		int num;
+		if (response.getGooglePlacesResponse().getResults().length >= 6) {
+			num = 6;
+		} else {
+			num = response.getGooglePlacesResponse().getResults().length;
+		}
+
+		for (int i = 0; i < num; i++) {
+			GooglePlace place = response.getGooglePlacesResponse().getResults()[i];		
+			GoogleImagesResponse images = new APIContainerGoogleImages().processSearch(place.getName());
+
+			cell = new PdfPCell();
+			cell.setPadding(15);
+			cell.setBorderWidth(7);
+			cell.setBorderColor(BaseColor.WHITE);
+			cell.setBackgroundColor(new BaseColor(240, 240, 240));
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_TOP);
+			
+			Image image;
+			if(images.getSquareImage() != null){
+				image = Image.getInstance(images.getSquareImage());
+				image.scaleToFit(150, 150);
+			}else{
+				image = Image.getInstance(place.getIcon());
+				image.scaleToFit(40, 40);
+			}
+			image.setAlignment(Element.ALIGN_CENTER);
+			cell.addElement(image);
+			Paragraph p = new Paragraph(place.getName(), highlightFont);
+			p.setAlignment(Element.ALIGN_CENTER);
+			cell.addElement(p);
+			p = new Paragraph(place.getFormatted_address().split(",")[0] + ", " + place.getFormatted_address().split(",")[1], normalFont);
+			p.setAlignment(Element.ALIGN_CENTER);
+			cell.addElement(p);
+			
+			image = Image.getInstance(StarRating.getRatingStars(place.getRating()), null);
+			image.setAlignment(Element.ALIGN_CENTER);
+			image.scaleToFit(75, 50);
+			cell.addElement(image);
+			
+			table.addCell(cell);
+		}
+
+		Paragraph hotels = new Paragraph();
+		hotels.add(
+				generateSubCategory("Hotels in " + response.getDestination(), "src/main/resources/icons/bed.jpg"));
+		hotels.add(table);
+		document.add(hotels);
 	}
 
 	private static void addEmptyLine(Paragraph paragraph, int number) {

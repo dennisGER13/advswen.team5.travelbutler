@@ -22,7 +22,7 @@ public class ConcreteStrategyCounty implements ISearchStrategy {
 		TwitterResponse twitter = new APIContainerTwitter().processSearch(response.getDestination());
 		GoogleMapsResponse googlemaps = new APIContainerGoogleMaps().processSearch(response.getDestination());
 		TravelbriefingResponse travelbriefing = new APIContainerTravelbriefing().processSearch(response.getDestination());
-		GoogleImagesResponse googleImages = new APIContainerGoogleImages().processSearch(response.getDestination());
+		GoogleImagesResponse googleImages = new APIContainerGoogleImages().processSearch(response.getDestination() + "+panorama");
 		
 		response.setWikipediaResponse(wiki);
 		response.setTwitterResponse(twitter);

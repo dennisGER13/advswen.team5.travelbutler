@@ -22,6 +22,8 @@ import advswen.team5.travelbutler.api.response.IAPIResponse;
 import advswen.team5.travelbutler.api.response.WikipediaResponse;
 
 public class APIContainerGoogleImages implements IAPIContainer {
+	
+	private final String API_KEY = "AIzaSyDCfERTe9pquhxM38YqEhayDdjemtKBD0c";
 
 	@Override
 	public GoogleImagesResponse processSearch(String requestString) {
@@ -38,7 +40,7 @@ public class APIContainerGoogleImages implements IAPIContainer {
 	private JsonArray getPageAsJson(String requestString) {
 		InputStream in = null;
 		try {
-			in = new URL("https://www.googleapis.com/customsearch/v1?key=AIzaSyA5Fo9hzLVtie6kO8eQhQNCLXbL-QMtnQs&cx=011637653227000124025:pphpnrmqqlu&q=" + requestString.replace(" ", "+") + "+panorama&searchType=image&fileType=%22png,jpg%22").openStream();
+			in = new URL("https://www.googleapis.com/customsearch/v1?key=" + API_KEY + "&limit=5&cx=011637653227000124025:pphpnrmqqlu&q=" + requestString.replace(" ", "+") + "&searchType=image&fileType=%22png,jpg%22").openStream();
 			JsonParser parser = new JsonParser();
 			return parser.parse(IOUtils.toString(in)).getAsJsonObject().getAsJsonArray("items");
 		} catch (MalformedURLException e) {
