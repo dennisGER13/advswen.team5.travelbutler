@@ -34,16 +34,19 @@ public class GoogleImagesResponse implements IAPIResponse {
 	}
 
 	public Image getBannerImage() {
-		for (GoogleSearchItem item : items) {
-			if (item.getImage().getWidth() >= 1000 && item.getImage().getWidth() <= 8000
-					&& (item.getImage().getWidth() / item.getImage().getHeight()) >= 1
-					&& (item.getImage().getWidth() / item.getImage().getHeight()) <= 4){
-				
-				try {
-					return Image.getInstance(item.getLink());
-				} catch (Exception e) {
-					// Image can't be loaded, try the next one
-					break;
+
+		if (items != null) {
+			for (GoogleSearchItem item : items) {
+				if (item.getImage().getWidth() >= 1000 && item.getImage().getWidth() <= 8000
+						&& (item.getImage().getWidth() / item.getImage().getHeight()) >= 1
+						&& (item.getImage().getWidth() / item.getImage().getHeight()) <= 4) {
+
+					try {
+						return Image.getInstance(item.getLink());
+					} catch (Exception e) {
+						// Image can't be loaded, try the next one
+						break;
+					}
 				}
 			}
 		}
@@ -52,14 +55,14 @@ public class GoogleImagesResponse implements IAPIResponse {
 	}
 
 	public Image getSquareImage() {
-		if(items == null || items.length < 1)
+		if (items == null || items.length < 1)
 			return null;
-			
+
 		for (GoogleSearchItem item : items) {
 			if (item.getImage().getWidth() >= 100 && item.getImage().getWidth() <= 2000
 					&& (item.getImage().getWidth() / item.getImage().getHeight()) >= 0.7
-					&& (item.getImage().getWidth() / item.getImage().getHeight()) <= 1.8){
-				
+					&& (item.getImage().getWidth() / item.getImage().getHeight()) <= 1.8) {
+
 				try {
 					return Image.getInstance(item.getLink());
 				} catch (Exception e) {

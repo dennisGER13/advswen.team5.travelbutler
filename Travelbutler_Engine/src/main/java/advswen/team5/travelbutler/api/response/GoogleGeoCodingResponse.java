@@ -16,12 +16,12 @@ public class GoogleGeoCodingResponse implements IAPIResponse{
 
 	private boolean missing;
 	private GoogleGeoCode geocode;
-	private GoogleGeoAdressComponent result;
+	private GoogleGeoResult[] results;
 	
 
-	public GoogleGeoCodingResponse(GoogleGeoCode fromJson) {
+	public GoogleGeoCodingResponse(GoogleGeoResult[] results) {
 
-		fromJson = geocode;
+		this.results = results;
 	}
 
 	@Override
@@ -40,9 +40,10 @@ public class GoogleGeoCodingResponse implements IAPIResponse{
 	
 	//Method to get the Grain out of GoogleGeoCoding request
 	public GrainEnum getGrain(){
+		if(results.length < 1)
+			return GrainEnum.unknown;
 		
-		result = new GoogleGeoAdressComponent();
-		List <String> list = Arrays.asList(result.getTypes());
+		List <String> list = Arrays.asList(results[0].getTypes());
 		
 		if(list.contains("locality")){
 			

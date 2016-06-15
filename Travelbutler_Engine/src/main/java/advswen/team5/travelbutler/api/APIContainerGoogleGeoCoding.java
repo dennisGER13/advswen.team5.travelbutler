@@ -18,6 +18,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import advswen.team5.travelbutler.api.google.gecoding.GoogleGeoCode;
+import advswen.team5.travelbutler.api.google.gecoding.GoogleGeoResult;
 import advswen.team5.travelbutler.api.response.GoogleGeoCodingResponse;
 import advswen.team5.travelbutler.api.response.GoogleMapsResponse;
 
@@ -30,7 +31,7 @@ public class APIContainerGoogleGeoCoding implements IAPIContainer{
 
 		Gson gson = new Gson();
 		GoogleGeoCodingResponse response = new GoogleGeoCodingResponse(
-				gson.fromJson(getGeoCode(requestString), GoogleGeoCode.class));
+				gson.fromJson(getGeoCode(requestString), GoogleGeoResult[].class));
 		
 		//Giving back response object including geocode object
 		return response;
@@ -38,7 +39,7 @@ public class APIContainerGoogleGeoCoding implements IAPIContainer{
 	}
 	
 	//Perform Google GeoCoding request
-	private JsonObject getGeoCode(String requestString){
+	private JsonArray getGeoCode(String requestString){
 
 		InputStream in = null;
 			
@@ -48,7 +49,7 @@ public class APIContainerGoogleGeoCoding implements IAPIContainer{
 						+ API_KEY + "&sensor=false&address=" + requestString).openStream();
 				
 				JsonParser parser = new JsonParser();
-				return parser.parse(IOUtils.toString(in)).getAsJsonObject();
+				return parser.parse(IOUtils.toString(in)).getAsJsonObject().getAsJsonArray("results");
 			
 			} catch (MalformedURLException e) {
 				
