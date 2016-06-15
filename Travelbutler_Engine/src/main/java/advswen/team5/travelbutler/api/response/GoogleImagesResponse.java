@@ -52,6 +52,9 @@ public class GoogleImagesResponse implements IAPIResponse {
 	}
 
 	public Image getSquareImage() {
+		if(items == null || items.length < 1)
+			return null;
+			
 		for (GoogleSearchItem item : items) {
 			if (item.getImage().getWidth() >= 100 && item.getImage().getWidth() <= 2000
 					&& (item.getImage().getWidth() / item.getImage().getHeight()) >= 0.7
