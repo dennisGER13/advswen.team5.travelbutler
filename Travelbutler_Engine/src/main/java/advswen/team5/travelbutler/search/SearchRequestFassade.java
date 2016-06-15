@@ -104,9 +104,11 @@ public class SearchRequestFassade {
 		
 		
 //		return GrainEnum.city;
-//		}
+//		} else {
+//			return GrainEnum.unknown;
+//	}
 		
-		return GrainEnum.unknown;
+		return null;
 	}
 	
 	public void languageDetection(){
