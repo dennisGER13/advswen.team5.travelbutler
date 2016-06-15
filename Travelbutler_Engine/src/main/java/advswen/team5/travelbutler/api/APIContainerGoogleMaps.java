@@ -22,14 +22,13 @@ public class APIContainerGoogleMaps implements IAPIContainer {
 
 		APIContainerGoogleMaps googleMaps = new APIContainerGoogleMaps();
 
-		// Das Responseobjekt holt sich das Bild
+		// Response object is about to get the map picture
 		GoogleMapsResponse response = new GoogleMapsResponse(googleMaps.getGoogleMapsImage(requestString), getBaseUrl(requestString));
 
 		return response;
 	}
 
-	// Anfrage an GoogleMaps mit RequestString und der Groesse (500x500) des
-	// Bildes/der Karte
+	// Perform request call to Google Maps 
 	private File getGoogleMapsImage(String requestString) {
 		try {
 			BufferedImage img = ImageIO.read(new URL(getBaseUrl(requestString) + "&size=500x500"));

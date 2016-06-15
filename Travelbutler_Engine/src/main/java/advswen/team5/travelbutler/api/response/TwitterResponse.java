@@ -18,7 +18,6 @@ public class TwitterResponse implements IAPIResponse{
 		
 		this.tweets = tweets;
 		
-		//Bei leerer Liste keine Ergebnisse zu Tweets
 		if(tweets.isEmpty()){
 		
 			this.missing = true;

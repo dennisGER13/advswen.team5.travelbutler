@@ -33,6 +33,7 @@ public class APIContainerGoogleGeoCoding implements IAPIContainer{
 		
 	}
 	
+	//Perform Google GeoCoding request
 	private JsonArray getGeoCode(String requestString){
 
 		InputStream in = null;

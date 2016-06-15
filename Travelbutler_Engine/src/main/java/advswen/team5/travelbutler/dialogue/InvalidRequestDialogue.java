@@ -43,7 +43,9 @@ public class InvalidRequestDialogue extends JFrame implements ActionListener {
 
 	private String[] country;
 
-	private String random;
+	private String random0;
+	private String random1;
+	private String random2;
 	
 	
 	//Constructor to inizailize GUI
@@ -169,7 +171,9 @@ public class InvalidRequestDialogue extends JFrame implements ActionListener {
 					for (String csvfileString : country) {
 						for (int idx=0; idx<3; idx++){
 						idx = new Random().nextInt(country.length);
-						random = (country[idx]);
+						random0 = (country[0]);
+						random1 = (country[1]);
+						random2 = (country[2]);
 						}
 					}
 				}
