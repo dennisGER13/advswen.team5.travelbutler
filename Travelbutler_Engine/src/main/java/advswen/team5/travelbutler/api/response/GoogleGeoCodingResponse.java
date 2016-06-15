@@ -40,7 +40,7 @@ public class GoogleGeoCodingResponse implements IAPIResponse{
 	
 	//Method to get the Grain out of GoogleGeoCoding request
 	public GrainEnum getGrain(){
-		if(results.length < 1)
+		if(results == null || results.length < 1)
 			return GrainEnum.unknown;
 		
 		List <String> list = Arrays.asList(results[0].getTypes());

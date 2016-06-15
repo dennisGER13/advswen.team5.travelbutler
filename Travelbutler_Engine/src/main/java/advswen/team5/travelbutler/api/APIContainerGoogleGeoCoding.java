@@ -46,7 +46,7 @@ public class APIContainerGoogleGeoCoding implements IAPIContainer{
 			try {
 				
 				in = new URL("https://maps.googleapis.com/maps/api/geocode/json?key="
-						+ API_KEY + "&sensor=false&address=" + requestString).openStream();
+						+ API_KEY + "&sensor=false&address=" + requestString.replace(" ", "+")).openStream();
 				
 				JsonParser parser = new JsonParser();
 				return parser.parse(IOUtils.toString(in)).getAsJsonObject().getAsJsonArray("results");

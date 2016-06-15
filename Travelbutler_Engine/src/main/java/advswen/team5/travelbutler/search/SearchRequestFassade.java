@@ -23,7 +23,7 @@ public class SearchRequestFassade {
 
 	public SearchRequestFassade(String requestString){
 		searchengine  = new SearchEngine();
-		this.requestString=requestString;
+		this.requestString = formatInput(requestString);
 		
 		GoogleGeoCodingResponse geocode = new APIContainerGoogleGeoCoding().processSearch(requestString);
 
@@ -49,6 +49,19 @@ public class SearchRequestFassade {
 		}
 		
 		return searchengine.execute(requestString);
+	}
+	
+	private String formatInput(String requestString){
+		String returnValue = "";
+		String[] split = requestString.trim().split(" ");
+		for(String word : split){
+			returnValue += word.substring(0, 1).toUpperCase();
+			returnValue += word.substring(1).toLowerCase();
+			returnValue += " ";
+		}
+		
+		// remove the last blank
+		return returnValue.substring(0, returnValue.length()-1);
 	}
 	
 	public boolean isValid() {
