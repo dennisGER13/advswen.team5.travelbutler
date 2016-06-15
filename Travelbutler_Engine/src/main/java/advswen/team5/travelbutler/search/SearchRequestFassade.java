@@ -44,8 +44,7 @@ public class SearchRequestFassade {
 			searchengine.setStrategy(new ConcreteStrategyCity());
 		} else if (grain == GrainEnum.unknown) {
 			
-			//Wenn ConcreteStrategyBasic ausgewaehlt, dann zeige InvalidRequestDialogue
-			//mit der Moeglichkeit die Suche neu zu starten!
+			//If grain unknown is detected, there will open GUI to redirect user to search dialogue
 			invalid = new InvalidRequestDialogue();
 			invalid.run();
 			
@@ -63,7 +62,7 @@ public class SearchRequestFassade {
 
 		try {
 
-			//CSV-Datei laden und für die Grain-Detection nutzbar machen!
+			//Loading CSV-File to be able to use list of countries
 			ClassLoader classLoader = getClass().getClassLoader();
 			File file = new File(classLoader.getResource("countries.CSV").getFile());
 			Properties properties = new Properties();
@@ -93,6 +92,9 @@ public class SearchRequestFassade {
 				}
 			}
 		}
+		
+		//TODO GrainDetection City to be implemented here!
+		
 		return GrainEnum.unknown;
 	}
 	
