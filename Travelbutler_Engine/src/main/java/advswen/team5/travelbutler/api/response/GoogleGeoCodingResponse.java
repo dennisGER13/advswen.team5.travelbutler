@@ -3,8 +3,6 @@ package advswen.team5.travelbutler.api.response;
 import java.util.Arrays;
 import java.util.List;
 
-import advswen.team5.travelbutler.api.google.gecoding.GoogleGeoAdressComponent;
-import advswen.team5.travelbutler.api.google.gecoding.GoogleGeoCode;
 import advswen.team5.travelbutler.api.google.gecoding.GoogleGeoResult;
 import advswen.team5.travelbutler.search.GrainEnum;
 
@@ -15,7 +13,6 @@ import advswen.team5.travelbutler.search.GrainEnum;
 public class GoogleGeoCodingResponse implements IAPIResponse{
 
 	private boolean missing;
-	private GoogleGeoCode geocode;
 	private GoogleGeoResult[] results;
 	
 

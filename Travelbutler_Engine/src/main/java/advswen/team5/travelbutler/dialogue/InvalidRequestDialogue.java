@@ -15,16 +15,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.Array;
-import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-
-import advswen.team5.travelbutler.search.GrainEnum;
 
 public class InvalidRequestDialogue extends JFrame implements ActionListener {
 
