@@ -11,7 +11,6 @@
 package advswen.team5.travelbutler.search;
 
 import advswen.team5.travelbutler.api.response.*;
-import advswen.team5.travelbutler.strategy.ConcreteStrategyBasic;
 import advswen.team5.travelbutler.strategy.ConcreteStrategyCity;
 import advswen.team5.travelbutler.strategy.ISearchStrategy;
 
