@@ -14,12 +14,6 @@ import advswen.team5.travelbutler.api.APIContainerGoogleGeoCoding;
 import advswen.team5.travelbutler.api.response.*;
 import advswen.team5.travelbutler.strategy.*;
 
-//import java.io.BufferedReader;
-//import java.io.File;
-//import java.io.FileNotFoundException;
-//import java.io.FileReader;
-//import java.io.IOException;
-//import java.util.Properties;
 
 public class SearchRequestFassade {
 	private String requestString;
@@ -56,47 +50,6 @@ public class SearchRequestFassade {
 		
 		return searchengine.execute(requestString);
 	}
-	
-	
-//	public GrainEnum grainDetection() {
-//		// String csvFile = "src/lands.CSV";
-//		BufferedReader br = null;
-//		String line = "";
-//		String cvsSplitBy = ";";
-//		String searchString = this.requestString;
-//
-//		try {
-//
-//			//Loading CSV-File to be able to use list of countries
-//			ClassLoader classLoader = getClass().getClassLoader();
-//			File file = new File(classLoader.getResource("countries.CSV").getFile());
-//			Properties properties = new Properties();
-//			properties.load(new FileReader(file));
-//			
-//			br = new BufferedReader(new FileReader(file));
-//			while ((line = br.readLine()) != null) {
-//
-//				String[] country = line.split(cvsSplitBy);
-//				for (String foo : country) {
-//					// System.out.println(foo);
-//					if (searchString.toLowerCase().equals(foo.toLowerCase())) {
-//						return GrainEnum.country;
-//					}
-//				}
-//			}
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		} finally {
-//			if (br != null) {
-//				try {
-//					br.close();
-//				} catch (IOException e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		}
 	
 	public boolean isValid() {
 		return valid;
