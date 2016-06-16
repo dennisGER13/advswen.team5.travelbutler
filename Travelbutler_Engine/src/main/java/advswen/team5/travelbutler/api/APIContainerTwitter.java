@@ -62,7 +62,6 @@ public class APIContainerTwitter implements IAPIContainer{
 		                  
 		            	  if(!tweet.isRetweet())
 		                	  usedTweets.add(tweet);
-		                  System.out.println(tweet.getUser().getScreenName() + " ------ " + tweet.getText());
 		              }
 	    		  
 	         
