@@ -14,6 +14,7 @@ import advswen.team5.travelbutler.api.APIContainerGoogleGeoCoding;
 import advswen.team5.travelbutler.api.response.*;
 import advswen.team5.travelbutler.strategy.*;
 
+
 public class SearchRequestFassade {
 	private String requestString;
 	private GrainEnum grain = GrainEnum.unknown;
@@ -25,29 +26,31 @@ public class SearchRequestFassade {
 		this.requestString = formatInput(requestString);
 		
 		GoogleGeoCodingResponse geocode = new APIContainerGoogleGeoCoding().processSearch(requestString);
+
 		grain = geocode.getGrain();
 		
-		if (grain == GrainEnum.unknown)
+		if (grain == GrainEnum.unknown) {
+			
 			valid = false;
+			
+		}		
 	}
 	
-	//If search request is valid, there will be a decision if country or city will be the strategy
+	//If search request is valild, there will be a decision if country or city will be the stategy
 	public Response search(){
 		System.out.println("Starting search");
 		
 		if(grain == GrainEnum.country){
 			searchengine.setStrategy(new ConcreteStrategyCounty());
-		}else if (grain == GrainEnum.city){
+		}
+		
+		if (grain == GrainEnum.city){
 			searchengine.setStrategy(new ConcreteStrategyCity());
-		}else{
-			// Return null if no valid search strategy exists
-			return null;
 		}
 		
 		return searchengine.execute(requestString);
 	}
 	
-	// Capitalizes each word in the request string
 	private String formatInput(String requestString){
 		String returnValue = "";
 		String[] split = requestString.trim().split(" ");
@@ -58,7 +61,7 @@ public class SearchRequestFassade {
 		}
 		
 		// remove the last blank
-		return returnValue.trim();
+		return returnValue.substring(0, returnValue.length()-1);
 	}
 	
 	public boolean isValid() {
