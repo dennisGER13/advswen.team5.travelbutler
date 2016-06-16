@@ -17,22 +17,27 @@ import advswen.team5.travelbutler.api.response.Response;
 import advswen.team5.travelbutler.api.response.TwitterResponse;
 import advswen.team5.travelbutler.api.response.WikipediaResponse;
 
-public class ConcreteStrategyCity implements ISearchStrategy {
+public class ConcreteStrategyCity extends AbstractSearchStrategy {
 
 	public Response executeSearch(String requestString) {
 		Response response = new Response(requestString);
 		WikipediaResponse wiki = new APIContainerWikipedia().processSearch(response.getDestination());
+		setProgress(getProgress() + 20);
 		TwitterResponse twitter = new APIContainerTwitter().processSearch(response.getDestination());
+		setProgress(getProgress() + 20);
 		GoogleMapsResponse googlemaps = new APIContainerGoogleMaps().processSearch(response.getDestination());
+		setProgress(getProgress() + 20);
 		GoogleImagesResponse googleImages = new APIContainerGoogleImages().processSearch(response.getDestination() + "+panorama");
+		setProgress(getProgress() + 20);
 		GooglePlacesResponse googlePlaces = new APIContainerGooglePlaces().processSearch("hotels in " + response.getDestination());
-
+		setProgress(getProgress() + 20);
+		
 		response.setWikipediaResponse(wiki);
 		response.setTwitterResponse(twitter);
 		response.setGoogleMapsResponse(googlemaps);
 		response.setGoogleImagesResponse(googleImages);
 		response.setGooglePlacesResponse(googlePlaces);
-
+		
 		return response;
 	}
 
