@@ -1,7 +1,7 @@
 // *************************************************************************************
 // File:         [TravelbriefingResponseTest.java]
 // Created:      [2016/06/09 Thursday]
-// Last Changed: $Date: 2016/06/08 18:19:00 $
+// Last Changed: $Date: 2016/06/17 17:30:00 $
 // Author:       <A HREF="mailto:[ma-152478@hs-weingarten.de]">[Michael Aulbach]</A>
 //**************************************************************************************
 //Description: 	Test-Klasse für TravelbriefingResponse
@@ -11,7 +11,9 @@ package advswen.team5.travelbutler.api.response;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
+
 
 import advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdvise;
 import advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdviseList;
@@ -26,32 +28,46 @@ import advswen.team5.travelbutler.api.travelbriefing.TravelbriefingWater;
 
 public class TravelbriefingResponseTest {
 	
+	private TravelbriefingResponse travelResponse;
+	private TravelbriefingAdviseList adviseList;
+	private TravelbriefingCurrency trCurrency;
+	private TravelbriefingElectricity travelElectricity;
+	private TravelbriefingLanguage[] trLanguageArray;
+	private TravelbriefingTimezone trTimezone;
+	private TravelbriefingVaccination[] trVaccinationArray;
+	private TravelbriefingWater trWater;
+
 	/**
 	 * Preparation for tests: TravelbriefingResponse travelResponse is being created with dummy-data
 	 */
-	TravelbriefingAdvise travelAdvise1 = new TravelbriefingAdvise("concrete advise1", "www.example.com1");
-	TravelbriefingAdvise travelAdvise2 = new TravelbriefingAdvise("concrete advise2", "www.example.com2");
-	TravelbriefingAdvise travelAdvise3 = new TravelbriefingAdvise("concrete advise3", "www.example.com3");
-	TravelbriefingAdviseList adviseList = new TravelbriefingAdviseList(travelAdvise1, travelAdvise2, travelAdvise3);
-	TravelbriefingExchangeRate exchangeRate1 = new TravelbriefingExchangeRate("name1", 1);
-	TravelbriefingExchangeRate exchangeRate2 = new TravelbriefingExchangeRate("name2", 3);
-	TravelbriefingExchangeRate[] exchangeRateArray = {exchangeRate1, exchangeRate2};
-	TravelbriefingCurrency trCurrency = new TravelbriefingCurrency("currencyname", "currencysymbol", exchangeRateArray);
-	String[] plugs = {"Plug1", "Plug2", "Plug3"};
-	TravelbriefingElectricity travelElectricity = new TravelbriefingElectricity("voltage1", "frequency", plugs);
-	TravelbriefingLanguage trLanguage1 = new TravelbriefingLanguage("English", "French" );
-	TravelbriefingLanguage trLanguage2 = new TravelbriefingLanguage("Spanish", "French" );
-	TravelbriefingLanguage[] trLanguageArray = { trLanguage1, trLanguage2};
-	String tzName = "timezone1";				
-	TravelbriefingTimezone trTimezone = new TravelbriefingTimezone(tzName);
-	TravelbriefingVaccination trVaccination1 = new TravelbriefingVaccination("Vaccination-Name", "Vaccination-Message");
-	TravelbriefingVaccination trVaccination2 = new TravelbriefingVaccination("Vaccination-Name2", "Vaccination-Message2");
-	TravelbriefingVaccination[] trVaccinationArray = {trVaccination1, trVaccination2};
-	String shortDescription = "description";				
-	TravelbriefingWater trWater = new TravelbriefingWater(shortDescription);
-	TravelbriefingResponse travelResponse = new TravelbriefingResponse(adviseList, trCurrency, travelElectricity, trLanguageArray, trTimezone, trVaccinationArray, trWater);
 	
 	
+	@Before
+	public void setup(){
+		System.out.println("Setup");
+		TravelbriefingAdvise travelAdvise1 = new TravelbriefingAdvise("concrete advise1", "www.example.com1");
+		TravelbriefingAdvise travelAdvise2 = new TravelbriefingAdvise("concrete advise2", "www.example.com2");
+		TravelbriefingAdvise travelAdvise3 = new TravelbriefingAdvise("concrete advise3", "www.example.com3");
+		adviseList = new TravelbriefingAdviseList(travelAdvise1, travelAdvise2, travelAdvise3);
+		TravelbriefingExchangeRate exchangeRate1 = new TravelbriefingExchangeRate("name1", 1);
+		TravelbriefingExchangeRate exchangeRate2 = new TravelbriefingExchangeRate("name2", 3);
+		TravelbriefingExchangeRate[] exchangeRateArray = {exchangeRate1, exchangeRate2};
+		trCurrency = new TravelbriefingCurrency("currencyname", "currencysymbol", exchangeRateArray);
+		String[] plugs = {"Plug1", "Plug2", "Plug3"};
+		travelElectricity = new TravelbriefingElectricity("voltage1", "frequency", plugs);
+		TravelbriefingLanguage trLanguage1 = new TravelbriefingLanguage("English", "French" );
+		TravelbriefingLanguage trLanguage2 = new TravelbriefingLanguage("Spanish", "French" );
+		trLanguageArray = new TravelbriefingLanguage[] { trLanguage1, trLanguage2};
+		String tzName = "timezone1";				
+		trTimezone = new TravelbriefingTimezone(tzName);
+		TravelbriefingVaccination trVaccination1 = new TravelbriefingVaccination("Vaccination-Name", "Vaccination-Message");
+		TravelbriefingVaccination trVaccination2 = new TravelbriefingVaccination("Vaccination-Name2", "Vaccination-Message2");
+		trVaccinationArray = new TravelbriefingVaccination[] {trVaccination1, trVaccination2};
+		String shortDescription = "description";				
+		trWater = new TravelbriefingWater(shortDescription);
+		travelResponse = new TravelbriefingResponse(adviseList, trCurrency, travelElectricity, trLanguageArray, trTimezone, trVaccinationArray, trWater);
+	
+	}
 
 	/**
 	 * Test method for {@link advswen.team5.travelbutler.api.response.TravelbriefingResponse#TravelbriefingResponse(advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdviseList, advswen.team5.travelbutler.api.travelbriefing.TravelbriefingCurrency, advswen.team5.travelbutler.api.travelbriefing.TravelbriefingElectricity, advswen.team5.travelbutler.api.travelbriefing.TravelbriefingLanguage[], advswen.team5.travelbutler.api.travelbriefing.TravelbriefingTimezone, advswen.team5.travelbutler.api.travelbriefing.TravelbriefingVaccination[], advswen.team5.travelbutler.api.travelbriefing.TravelbriefingWater)}.
