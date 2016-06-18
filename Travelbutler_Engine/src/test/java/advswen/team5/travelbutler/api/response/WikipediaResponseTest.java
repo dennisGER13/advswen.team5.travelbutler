@@ -20,7 +20,7 @@ import org.junit.Test;
 public class WikipediaResponseTest {
 
 	/**
-	 * Preparation for tests: WikipediaResponse travelResponse is being created with dummy-data
+	 * Preparation for tests: WikipediaResponse wikiResponse is being created with dummy-data
 	 */
 	
 
