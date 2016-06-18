@@ -7,7 +7,6 @@ package advswen.team5.travelbutler.api.response;
 import java.util.List;
 
 import twitter4j.Status;
-import twitter4j.api.TweetsResources;
 
 public class TwitterResponse implements IAPIResponse{
 	

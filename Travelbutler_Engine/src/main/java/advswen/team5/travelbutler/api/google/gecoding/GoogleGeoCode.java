@@ -34,8 +34,5 @@ public class GoogleGeoCode {
 		}
 		public void setError_message(String error_message) {
 			this.error_message = error_message;
-		}
-	
-	    
-	    
+		}    
 }

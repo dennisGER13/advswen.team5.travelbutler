@@ -6,7 +6,6 @@ package advswen.team5.travelbutler.strategy;
 
 import advswen.team5.travelbutler.api.APIContainerGoogleImages;
 import advswen.team5.travelbutler.api.APIContainerGoogleMaps;
-import advswen.team5.travelbutler.api.APIContainerGoogleGeoCoding;
 import advswen.team5.travelbutler.api.APIContainerTravelbriefing;
 import advswen.team5.travelbutler.api.APIContainerTwitter;
 import advswen.team5.travelbutler.api.APIContainerWikipedia;

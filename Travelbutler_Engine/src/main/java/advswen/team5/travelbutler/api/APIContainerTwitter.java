@@ -7,9 +7,7 @@ package advswen.team5.travelbutler.api;
 import java.util.ArrayList;
 import java.util.List;
 
-import advswen.team5.travelbutler.api.response.IAPIResponse;
 import advswen.team5.travelbutler.api.response.TwitterResponse;
-import advswen.team5.travelbutler.dialogue.InputDialogue;
 import twitter4j.Query;
 import twitter4j.QueryResult;
 import twitter4j.Status;
@@ -64,7 +62,6 @@ public class APIContainerTwitter implements IAPIContainer{
 		                  
 		            	  if(!tweet.isRetweet())
 		                	  usedTweets.add(tweet);
-		                  System.out.println(tweet.getUser().getScreenName() + " ------ " + tweet.getText());
 		              }
 	    		  
 	         

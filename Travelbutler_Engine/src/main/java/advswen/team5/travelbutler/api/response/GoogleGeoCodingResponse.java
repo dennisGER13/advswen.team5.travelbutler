@@ -1,6 +1,10 @@
 package advswen.team5.travelbutler.api.response;
 
-import advswen.team5.travelbutler.api.google.gecoding.GoogleGeoCode;
+import java.util.Arrays;
+import java.util.List;
+
+import advswen.team5.travelbutler.api.google.gecoding.GoogleGeoResult;
+import advswen.team5.travelbutler.search.GrainEnum;
 
 /*
  * Author: Dennis Wagenblast
@@ -9,12 +13,12 @@ import advswen.team5.travelbutler.api.google.gecoding.GoogleGeoCode;
 public class GoogleGeoCodingResponse implements IAPIResponse{
 
 	private boolean missing;
-	private GoogleGeoCode[] geocode;
+	private GoogleGeoResult[] results;
 	
 
-	public GoogleGeoCodingResponse(GoogleGeoCode[] fromJson) {
+	public GoogleGeoCodingResponse(GoogleGeoResult[] results) {
 
-		fromJson = geocode;
+		this.results = results;
 	}
 
 	@Override
@@ -26,8 +30,32 @@ public class GoogleGeoCodingResponse implements IAPIResponse{
 
 	@Override
 	public boolean isMissing() {
-		// TODO Auto-generated method stub
+
 		return missing;
+	
+	}
+	
+	//Method to get the Grain out of GoogleGeoCoding request
+	public GrainEnum getGrain(){
+		if(results == null || results.length < 1)
+			return GrainEnum.unknown;
+		
+		List <String> list = Arrays.asList(results[0].getTypes());
+		
+		if(list.contains("locality")){
+			
+			return GrainEnum.city;
+			
+		} else if(list.contains("country")){
+			
+			return GrainEnum.country;
+			
+		} else {
+			
+			return GrainEnum.unknown;
+			
+		}
+		
 	}
 
 }

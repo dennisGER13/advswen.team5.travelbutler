@@ -474,7 +474,7 @@ public class PDFGenerator {
 
 		for (int i = 0; i < num; i++) {
 			GooglePlace place = response.getGooglePlacesResponse().getResults()[i];		
-			GoogleImagesResponse images = new APIContainerGoogleImages().processSearch(place.getName());
+			GoogleImagesResponse images = new APIContainerGoogleImages().processSearch(place.getName() + " " + response.getDestination());
 
 			cell = new PdfPCell();
 			cell.setPadding(15);
@@ -497,7 +497,11 @@ public class PDFGenerator {
 			Paragraph p = new Paragraph(place.getName(), highlightFont);
 			p.setAlignment(Element.ALIGN_CENTER);
 			cell.addElement(p);
-			p = new Paragraph(place.getFormatted_address().split(",")[0] + ", " + place.getFormatted_address().split(",")[1], normalFont);
+			if(place.getFormatted_address().split(",").length >= 2){
+				p = new Paragraph(place.getFormatted_address().split(",")[0] + ", " + place.getFormatted_address().split(",")[1], normalFont);	
+			}else{
+				p = new Paragraph(place.getFormatted_address(), normalFont);
+			}
 			p.setAlignment(Element.ALIGN_CENTER);
 			cell.addElement(p);
 			

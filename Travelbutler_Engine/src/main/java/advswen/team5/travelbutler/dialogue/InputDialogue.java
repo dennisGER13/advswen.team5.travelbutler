@@ -1,8 +1,5 @@
 package advswen.team5.travelbutler.dialogue;
 
-import java.awt.Component;
-import java.awt.Cursor;
-
 /*
  * Author: Dennis Wagenblast
  */
@@ -55,6 +52,7 @@ public class InputDialogue extends JFrame implements ActionListener {
 	
 	//Call of the SearchRequestFassade
 	private SearchRequestFassade searchRequestFassade;
+	private InvalidRequestDialogue invalid;
 	
 	//Constructor to inizialize the GUI
 	public InputDialogue(){
@@ -159,15 +157,24 @@ public class InputDialogue extends JFrame implements ActionListener {
 //			setEndDate();
 			
 			//String travelDestination give through to SearchRequestFassade			
-			searchRequestFassade = new SearchRequestFassade();
+			searchRequestFassade = new SearchRequestFassade(travelDestination);
 			
-			try {
-				File pdf = new PDFGenerator(searchRequestFassade.search(travelDestination)).generate();
-				Desktop.getDesktop().open(pdf);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
+			if (searchRequestFassade.isValid()){
+				
+				try {
+					File pdf = new PDFGenerator(searchRequestFassade.search()).generate();
+					Desktop.getDesktop().open(pdf);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
 
+			} else {
+				
+				invalid = new InvalidRequestDialogue();
+				invalid.run();
+				
+			}
+			
 		}else if(e.getActionCommand().equals("CANCEL")){
 			
 			//End application

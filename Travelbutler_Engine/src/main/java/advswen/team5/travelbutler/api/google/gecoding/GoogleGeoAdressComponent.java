@@ -29,6 +29,4 @@ public class GoogleGeoAdressComponent {
 		this.types = types;
 	}
     
-    
-	
 }

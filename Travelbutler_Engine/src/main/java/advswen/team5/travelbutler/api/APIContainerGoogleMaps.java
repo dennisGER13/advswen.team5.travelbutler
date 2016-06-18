@@ -4,7 +4,6 @@ package advswen.team5.travelbutler.api;
  * Author: Dennis Wagenblast
  */
 
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URL;
@@ -12,8 +11,6 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 
 import advswen.team5.travelbutler.api.response.GoogleMapsResponse;
-
-import advswen.team5.travelbutler.api.response.IAPIResponse;
 
 public class APIContainerGoogleMaps implements IAPIContainer {
 
