@@ -1,7 +1,7 @@
 // *************************************************************************************
 // File:         [TravelbriefingAdviseListTest.java]
 // Created:      [2016/06/08 Wednesday]
-// Last Changed: $Date: 2016/06/08 16:39:00 $
+// Last Changed: $Date: 2016/06/18 17:55:00 $
 // Author:       <A HREF="mailto:[ma-152478@hs-weingarten.de]">[Michael Aulbach]</A>
 //**************************************************************************************
 //Description: 	Test-Klasse für TravelbriefingAdviseList
@@ -11,111 +11,171 @@ package advswen.team5.travelbutler.api.travelbriefing;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
-public class TravelbriefingAdviseListTest {
 
+
+public class TravelbriefingAdviseListTest {
+	
+	/**
+	 * Preparation for tests: TravelbriefingAdviseList and TravelbriefingAdvises are being created with dummy-data
+	 */
+
+	private TravelbriefingAdvise travelAdviseUA;
+	private TravelbriefingAdvise travelAdviseUS;
+	private TravelbriefingAdvise travelAdviseCA;
+	private TravelbriefingAdviseList adviseList;
+	private String concAdvUA;
+	private String concAdvUS;
+	private String concAdvCA;
+	private String urlAdvUA;
+	private String urlAdvUS;
+	private String urlAdvCA;
+
+	@Before
+	public void setup(){
+		concAdvUA = "concrete adviseUA";
+		concAdvUS = "concrete adviseUS";
+		concAdvCA = "concrete adviseCA";
+		urlAdvUA = "www.example.ua";
+		urlAdvUS = "www.example.us";
+		urlAdvCA = "www.example.ca";
+		travelAdviseUA = new TravelbriefingAdvise(concAdvUA, urlAdvUA);
+		travelAdviseUS = new TravelbriefingAdvise(concAdvUS, urlAdvUS);
+		travelAdviseCA = new TravelbriefingAdvise(concAdvCA, urlAdvCA);
+		adviseList = new TravelbriefingAdviseList(travelAdviseUA, travelAdviseUS, travelAdviseCA);
+	
+	}
+	
+	
 	/**
 	 * Test method for {@link advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdviseList#TravelbriefingAdviseList(advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdvise, advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdvise, advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdvise)}.
+	 * The TravelbriefingAdviseList should not be null.
 	 */
 	@Test
-	public void testTravelbriefingAdviseList() {
-		System.out.println("Test: testTravelbriefingAdviseList");
-		TravelbriefingAdvise travelAdvise1 = new TravelbriefingAdvise("concrete advise1", "www.example.com1");
-		TravelbriefingAdvise travelAdvise2 = new TravelbriefingAdvise("concrete advise2", "www.example.com2");
-		TravelbriefingAdvise travelAdvise3 = new TravelbriefingAdvise("concrete advise3", "www.example.com3");
-		TravelbriefingAdviseList adviseList = new TravelbriefingAdviseList(travelAdvise1, travelAdvise2, travelAdvise3);
+	public void testTravelbriefingAdviseListShouldNotBeNull() {
 		assertNotNull(adviseList);	
 	}
 
 	/**
 	 * Test method for {@link advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdviseList#getUA()}.
+	 * The method getUA is being tested (generated dummy-data and returned value for advise should be equal).
 	 */
 	@Test
-	public void testGetUA() {
-		System.out.println("Test: testGetUA");
-		TravelbriefingAdvise travelAdviseUA = new TravelbriefingAdvise("concrete advise1", "www.example.com1");
-		TravelbriefingAdvise travelAdviseUS = new TravelbriefingAdvise("concrete advise2", "www.example.com2");
-		TravelbriefingAdvise travelAdviseCA = new TravelbriefingAdvise("concrete advise3", "www.example.com3");
-		TravelbriefingAdviseList adviseList = new TravelbriefingAdviseList(travelAdviseUA, travelAdviseUS, travelAdviseCA);
-		TravelbriefingAdvise adviseUA = adviseList.getUA();
-		assertEquals(adviseUA.getAdvise(), "concrete advise1");
+	public void testGetUaGetAdviseShouldBeEqualToUaConcreteAdvise() {
+		assertEquals("concrete adviseUA", adviseList.getUA().getAdvise());
+	}
+	
+	/**
+	 * Test method for {@link advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdviseList#getUA()}.
+	 * The method getUA is being tested (generated dummy-data and returned value for URL should be equal).
+	 */
+	@Test
+	public void testGetUaGetUrlUrlShouldBeEqualToUaUrl() {
+		assertEquals("www.example.ua", adviseList.getUA().getUrl());
 	}
 
 	/**
 	 * Test method for {@link advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdviseList#setUA(advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdvise)}.
+	 * The method setUA is being called and the new/changed advise should be returned.
 	 */
 	@Test
-	public void testSetUA() {
-		System.out.println("Test: testSetUA");
-		TravelbriefingAdvise travelAdviseUA = new TravelbriefingAdvise("concrete advise1", "www.example.com1");
-		TravelbriefingAdvise travelAdviseUS = new TravelbriefingAdvise("concrete advise2", "www.example.com2");
-		TravelbriefingAdvise travelAdviseCA = new TravelbriefingAdvise("concrete advise3", "www.example.com3");
-		TravelbriefingAdviseList adviseList = new TravelbriefingAdviseList(travelAdviseUA, travelAdviseUS, travelAdviseCA);
-		TravelbriefingAdvise newTravelAdviseUA = new TravelbriefingAdvise("concrete advise4", "www.example.com4");
+	public void testGetUaGetAdviseShouldBeEqualToNewConcreteAdviseAfterSetMethod() {
+		TravelbriefingAdvise newTravelAdviseUA = new TravelbriefingAdvise("new concrete adviseUA", "www.new-example.ua");
 		adviseList.setUA(newTravelAdviseUA);
-		TravelbriefingAdvise adviseUA = adviseList.getUA();
-		assertEquals(adviseUA.getAdvise(), "concrete advise4");
+		assertEquals("new concrete adviseUA", adviseList.getUA().getAdvise());
+	}
+	
+	/**
+	 * Test method for {@link advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdviseList#setUA(advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdvise)}.
+	 * The method setUA is being called and the new/changed URL should be returned.
+	 */
+	@Test
+	public void testGetUaGetAdviseShouldBeEqualToNewUrlAfterSetMethod() {
+		TravelbriefingAdvise newTravelAdviseUA = new TravelbriefingAdvise("new concrete adviseUA", "www.new-example.ua");
+		adviseList.setUA(newTravelAdviseUA);
+		assertEquals("www.new-example.ua", adviseList.getUA().getUrl());
 	}
 
 	/**
 	 * Test method for {@link advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdviseList#getUS()}.
+	 * The method getUA is being tested (generated dummy-data and returned value for advise should be equal).
 	 */
 	@Test
-	public void testGetUS() {
-		System.out.println("Test: testGetUS");
-		TravelbriefingAdvise travelAdviseUA = new TravelbriefingAdvise("concrete advise1", "www.example.com1");
-		TravelbriefingAdvise travelAdviseUS = new TravelbriefingAdvise("concrete advise2", "www.example.com2");
-		TravelbriefingAdvise travelAdviseCA = new TravelbriefingAdvise("concrete advise3", "www.example.com3");
-		TravelbriefingAdviseList adviseList = new TravelbriefingAdviseList(travelAdviseUA, travelAdviseUS, travelAdviseCA);
-		TravelbriefingAdvise adviseUS = adviseList.getUS();
-		assertEquals(adviseUS.getAdvise(), "concrete advise2");
+	public void testGetUsGetAdviseShouldBeEqualToUaConcreteAdvise() {
+		assertEquals("concrete adviseUS", adviseList.getUS().getAdvise());
+	}
+	
+	/**
+	 * Test method for {@link advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdviseList#getUS()}.
+	 * The method getUA is being tested (generated dummy-data and returned value for URL should be equal).
+	 */
+	@Test
+	public void testGetUsGetUrlUrlShouldBeEqualToUaUrl() {
+		assertEquals("www.example.us", adviseList.getUS().getUrl());
 	}
 
 	/**
 	 * Test method for {@link advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdviseList#setUS(advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdvise)}.
+	 * The method setUS is being called and the new/changed advise should be returned.
 	 */
 	@Test
-	public void testSetUS() {
-		System.out.println("Test: testSetUS");
-		TravelbriefingAdvise travelAdviseUA = new TravelbriefingAdvise("concrete advise1", "www.example.com1");
-		TravelbriefingAdvise travelAdviseUS = new TravelbriefingAdvise("concrete advise2", "www.example.com2");
-		TravelbriefingAdvise travelAdviseCA = new TravelbriefingAdvise("concrete advise3", "www.example.com3");
-		TravelbriefingAdviseList adviseList = new TravelbriefingAdviseList(travelAdviseUA, travelAdviseUS, travelAdviseCA);
-		TravelbriefingAdvise newTravelAdviseUS = new TravelbriefingAdvise("concrete advise4", "www.example.com4");
+	public void testGetUsGetAdviseShouldBeEqualToNewConcreteAdviseAfterSetMethod() {
+		TravelbriefingAdvise newTravelAdviseUS = new TravelbriefingAdvise("new concrete adviseUS", "www.new-example.us");
 		adviseList.setUS(newTravelAdviseUS);
-		TravelbriefingAdvise adviseUS = adviseList.getUS();
-		assertEquals(adviseUS.getAdvise(), "concrete advise4");
+		assertEquals("new concrete adviseUS", adviseList.getUS().getAdvise());
+	}
+	
+	/**
+	 * Test method for {@link advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdviseList#setUS(advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdvise)}.
+	 * The method setUS is being called and the new/changed URL should be returned.
+	 */
+	@Test
+	public void testGetUsGetAdviseShouldBeEqualToNewUrlAfterSetMethod() {
+		TravelbriefingAdvise newTravelAdviseUS = new TravelbriefingAdvise("new concrete adviseUS", "www.new-example.us");
+		adviseList.setUS(newTravelAdviseUS);
+		assertEquals("www.new-example.us", adviseList.getUS().getUrl());
 	}
 
 	/**
 	 * Test method for {@link advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdviseList#getCA()}.
+	 * The method getUA is being tested (generated dummy-data and returned value for advise should be equal).
 	 */
 	@Test
-	public void testGetCA() {
-		System.out.println("Test: testGetCA");
-		TravelbriefingAdvise travelAdviseUA = new TravelbriefingAdvise("concrete advise1", "www.example.com1");
-		TravelbriefingAdvise travelAdviseUS = new TravelbriefingAdvise("concrete advise2", "www.example.com2");
-		TravelbriefingAdvise travelAdviseCA = new TravelbriefingAdvise("concrete advise3", "www.example.com3");
-		TravelbriefingAdviseList adviseList = new TravelbriefingAdviseList(travelAdviseUA, travelAdviseUS, travelAdviseCA);
-		TravelbriefingAdvise adviseCA = adviseList.getCA();
-		assertEquals(adviseCA.getAdvise(), "concrete advise3");
+	public void testGetCaGetAdviseShouldBeEqualToUaConcreteAdvise() {
+		assertEquals("concrete adviseCA", adviseList.getCA().getAdvise());
+	}
+	
+	/**
+	 * Test method for {@link advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdviseList#getCA()}.
+	 * The method getUA is being tested (generated dummy-data and returned value for URL should be equal).
+	 */
+	@Test
+	public void testGetCaGetUrlShouldBeEqualToUaUrl() {
+		assertEquals("www.example.ca", adviseList.getCA().getUrl());
 	}
 
 	/**
 	 * Test method for {@link advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdviseList#setCA(advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdvise)}.
+	 * The method setCA is being called and the new/changed concrete advise should be returned.
 	 */
 	@Test
-	public void testSetCA() {
-		System.out.println("Test: testSetCA");
-		TravelbriefingAdvise travelAdviseUA = new TravelbriefingAdvise("concrete advise1", "www.example.com1");
-		TravelbriefingAdvise travelAdviseUS = new TravelbriefingAdvise("concrete advise2", "www.example.com2");
-		TravelbriefingAdvise travelAdviseCA = new TravelbriefingAdvise("concrete advise3", "www.example.com3");
-		TravelbriefingAdviseList adviseList = new TravelbriefingAdviseList(travelAdviseUA, travelAdviseUS, travelAdviseCA);
-		TravelbriefingAdvise newTravelAdviseCA = new TravelbriefingAdvise("concrete advise4", "www.example.com4");
+	public void testGetCaGetAdviseShouldBeEqualToNewConcreteAdviseAfterSetMethod() {
+		TravelbriefingAdvise newTravelAdviseCA = new TravelbriefingAdvise("new concrete adviseCA", "www.new-example.ca");
 		adviseList.setCA(newTravelAdviseCA);
-		TravelbriefingAdvise adviseCA = adviseList.getCA();
-		assertEquals(adviseCA.getAdvise(), "concrete advise4");
+		assertEquals("new concrete adviseCA", adviseList.getCA().getAdvise());
+	}
+	
+	/**
+	 * Test method for {@link advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdviseList#setCA(advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdvise)}.
+	 * The method setCA is being called and the new/changed URL should be returned.
+	 */
+	@Test
+	public void testGetCaGetAdviseShouldBeEqualToNewUrlAfterSetMethod() {
+		TravelbriefingAdvise newTravelAdviseCA = new TravelbriefingAdvise("new concrete adviseCA", "www.new-example.ca");
+		adviseList.setCA(newTravelAdviseCA);
+		assertEquals("www.new-example.ca", adviseList.getCA().getUrl());
 	}
 
 	/**
@@ -123,13 +183,8 @@ public class TravelbriefingAdviseListTest {
 	 */
 	@Test
 	public void testGetAll() {
-		System.out.println("Test: testGetAll");
-		TravelbriefingAdvise travelAdviseUA = new TravelbriefingAdvise("concrete advise1", "www.example.com1");
-		TravelbriefingAdvise travelAdviseUS = new TravelbriefingAdvise("concrete advise2", "www.example.com2");
-		TravelbriefingAdvise travelAdviseCA = new TravelbriefingAdvise("concrete advise3", "www.example.com3");
-		TravelbriefingAdviseList adviseList1 = new TravelbriefingAdviseList(travelAdviseUA, travelAdviseUS, travelAdviseCA);
 		TravelbriefingAdviseList adviseList2 = new TravelbriefingAdviseList(travelAdviseUA, travelAdviseUS, travelAdviseCA);
-		assertEquals(adviseList1.getAll(), adviseList2.getAll());
+		assertEquals(adviseList.getAll(), adviseList2.getAll());
 	}
 
 }
