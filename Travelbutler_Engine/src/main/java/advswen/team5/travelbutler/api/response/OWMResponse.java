@@ -16,6 +16,9 @@ public class OWMResponse implements IAPIResponse{
 	private ArrayList<Float> forecastTempMax= new ArrayList<Float>();
 	private ArrayList<String> forecastgeneral = new ArrayList<String>();
 	
+	public OWMResponse(){
+		super();
+	}
 	public String getCityname() {
 		return cityname;
 	}
@@ -125,9 +128,7 @@ public class OWMResponse implements IAPIResponse{
 
 
 	
-	public OWMResponse() {
-		super();
-	}
+
 		
 
 	

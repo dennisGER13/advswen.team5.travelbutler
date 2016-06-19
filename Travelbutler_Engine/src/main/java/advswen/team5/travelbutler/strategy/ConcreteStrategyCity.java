@@ -3,11 +3,13 @@ package advswen.team5.travelbutler.strategy;
 import advswen.team5.travelbutler.api.APIContainerGoogleImages;
 import advswen.team5.travelbutler.api.APIContainerGoogleMaps;
 import advswen.team5.travelbutler.api.APIContainerGooglePlaces;
+import advswen.team5.travelbutler.api.APIContainerOWM;
 import advswen.team5.travelbutler.api.APIContainerTwitter;
 import advswen.team5.travelbutler.api.APIContainerWikipedia;
 import advswen.team5.travelbutler.api.response.GoogleImagesResponse;
 import advswen.team5.travelbutler.api.response.GoogleMapsResponse;
 import advswen.team5.travelbutler.api.response.GooglePlacesResponse;
+import advswen.team5.travelbutler.api.response.OWMResponse;
 
 /*
  * Author: Andreas Tauscher
@@ -26,12 +28,14 @@ public class ConcreteStrategyCity implements ISearchStrategy {
 		GoogleMapsResponse googlemaps = new APIContainerGoogleMaps().processSearch(response.getDestination());
 		GoogleImagesResponse googleImages = new APIContainerGoogleImages().processSearch(response.getDestination() + "+panorama");
 		GooglePlacesResponse googlePlaces = new APIContainerGooglePlaces().processSearch("hotels in " + response.getDestination());
-
+		OWMResponse weather = new APIContainerOWM().processSearch(response.getDestination());
+		
 		response.setWikipediaResponse(wiki);
 		response.setTwitterResponse(twitter);
 		response.setGoogleMapsResponse(googlemaps);
 		response.setGoogleImagesResponse(googleImages);
 		response.setGooglePlacesResponse(googlePlaces);
+		response.setOpenWeatherMapResponse(weather);
 
 		return response;
 	}

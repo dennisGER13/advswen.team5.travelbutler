@@ -79,6 +79,14 @@ public class Response {
 	public void setGooglePlacesResponse(GooglePlacesResponse googlePlacesResponse) {
 		this.googlePlacesResponse = googlePlacesResponse;
 	}
+
+	public OWMResponse getOpenWeatherMapResponse() {
+		return openWeatherMapResponse;
+	}
+
+	public void setOpenWeatherMapResponse(OWMResponse openWeatherMapResponse) {
+		this.openWeatherMapResponse = openWeatherMapResponse;
+	}
 	
 	
 	

@@ -33,10 +33,11 @@ public class APIContainerOWM implements IAPIContainer {
 	OWMResponse owmresponse;
 	
 	@Override
-	public IAPIResponse processSearch(String requestString) {
+	public OWMResponse processSearch(String requestString) {
 		try {
 			 owmresponse = new OWMResponse();
 			this.searchWeatherInformation(requestString);
+			
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -48,7 +49,7 @@ public class APIContainerOWM implements IAPIContainer {
 			e.printStackTrace();
 		}
 		
-		return null;
+		return owmresponse;
 	}
 	
 	public void searchWeatherInformation(String requestString)throws IOException, MalformedURLException, JSONException{
