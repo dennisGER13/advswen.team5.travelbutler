@@ -33,6 +33,16 @@ public class SearchEngine {
 		searchstrategy = concreteStrategy;
 	}
 	
+	public ISearchStrategy getSearchstrategy() {
+		return searchstrategy;
+	}
+
+
+	public void setSearchstrategy(ISearchStrategy searchstrategy) {
+		this.searchstrategy = searchstrategy;
+	}
+
+
 	public void getStrategy(){
 		
 	}
