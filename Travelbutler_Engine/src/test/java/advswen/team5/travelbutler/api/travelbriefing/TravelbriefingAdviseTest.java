@@ -1,7 +1,7 @@
 // *************************************************************************************
 // File:         [TravelbriefingAdviseTest.java]
 // Created:      [2016/06/07 Wednesday]
-// Last Changed: $Date: 2016/06/19 10:42:00 $
+// Last Changed: $Date: 2016/06/20 10:15:00 $
 // Author:       <A HREF="mailto:[ma-152478@hs-weingarten.de]">[Michael Aulbach]</A>
 //**************************************************************************************
 //Description: 	Test-Klasse für TravelbriefingAdvise
@@ -52,7 +52,7 @@ public class TravelbriefingAdviseTest {
 	 * The method setAdvise is being called and the new/changed concrete advise should be returned.
 	 */
 	@Test
-	public void testGetAdviseShouldBeEqualToConcreteAdviseAfterSetMethod() {
+	public void testGetAdviseShouldBeEqualToNewConcreteAdvise() {
 		travelAdvise.setAdvise("new advise");
 		assertEquals("new advise", travelAdvise.getAdvise());	
 	}
@@ -71,7 +71,7 @@ public class TravelbriefingAdviseTest {
 	 * The method setUrl is being called and the new/changed URL should be returned.
 	 */
 	@Test
-	public void testGetUrlShouldBeEqualToUrlAfterSetMethod() {
+	public void testGetUrlShouldBeEqualToNewUrl() {
 		travelAdvise.setUrl("www.example2.com");
 		assertEquals("www.example2.com", travelAdvise.getUrl());	
 	}
@@ -90,7 +90,7 @@ public class TravelbriefingAdviseTest {
 	 * The method setSource is being called and the new/changed source should be returned.
 	 */
 	@Test
-	public void testGetSourceShouldBeEqualToSourceAfterSetMethod() {
+	public void testGetSourceShouldBeEqualToNewSource() {
 		travelAdvise.setSource("source");
 		assertEquals("source", travelAdvise.getSource());	
 	}	

@@ -101,5 +101,29 @@ public class TravelbriefingCurrencyTest {
 		trCurrency.setCompare(exchangeRateArray2);
 		assertArrayEquals(exchangeRateArray2, trCurrency.getCompare());
 	}
+	
+	/**
+	 * Test method for {@link advswen.team5.travelbutler.api.travelbriefing.TravelbriefingCurrency#getExchangeRates()}.
+	 */
+	@Test
+	public void testGetExchangeRates() {
+		fail("Not yet implemented");
+	}
+
+	/**
+	 * Test method for {@link advswen.team5.travelbutler.api.travelbriefing.TravelbriefingCurrency#setExchangeRates(java.util.Map)}.
+	 */
+	@Test
+	public void testSetExchangeRates() {
+		fail("Not yet implemented");
+	}
+
+	/**
+	 * Test method for {@link advswen.team5.travelbutler.api.travelbriefing.TravelbriefingCurrency#getExchangeRate(java.lang.String)}.
+	 */
+	@Test
+	public void testGetExchangeRate() {
+		fail("Not yet implemented");
+	}
 
 }
