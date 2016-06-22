@@ -33,7 +33,6 @@ public class WikipediaResponseTest {
 
 	@Before
 	public void setup(){
-		System.out.println("Setup");
 		pageid = "12";
 		title = "title";
 		extract = "This is an extract. It's generated for test-purposes";
@@ -142,20 +141,21 @@ public class WikipediaResponseTest {
 		assertEquals("This is an extract.", wikiResponse2.getShortExtract(18));
 	}
 	
+	@Test
+	public void testGetShortExtractShouldBeAnEmptyString() {
+		WikipediaResponse wikiResponse2 = new WikipediaResponse(pageid, title, "This is an extract. It's generated for test-purposes");
+		assertEquals("", wikiResponse2.getShortExtract(17));
+	}
+	
 	/**
 	 * Test method for {@link advswen.team5.travelbutler.api.response.WikipediaResponse#getShortExtract(int)}.
 	 */
 	@Test
-	public void testShortExtractShouldAlsoBeEqualToFirstSentenceAndNotBeingCutOffWithinTheSecondSentence() {
+	public void testShortExtractShouldOnlyProvideFullSentences() {
 		WikipediaResponse wikiResponse2 = new WikipediaResponse(pageid, title, "This is an extract. It's generated for test-purposes");
 		assertEquals("This is an extract.", wikiResponse2.getShortExtract(26));
 	}
 	
 	
-	@After
-	public void cleanup() {
-		System.out.println("Cleanup");
-		
-	}
 
 }

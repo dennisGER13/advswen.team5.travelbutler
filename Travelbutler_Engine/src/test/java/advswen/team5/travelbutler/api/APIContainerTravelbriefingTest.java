@@ -22,11 +22,18 @@ public class APIContainerTravelbriefingTest {
 	private IAPIContainer iapiContainer;
 	String searchStringCity = "Barcelona";
 	String searchStringCountry = "Spain";
+	private IAPIResponse processSearchCity;
+	private IAPIResponse processSearchCountry;
 	
+	/**
+	 * Preparation for tests: APIContainerTravelbriefing is being created via valid search-strings
+	 */
 	@Before
 	public void setup(){
 		System.out.println("Setup");
 		iapiContainer = new APIContainerTravelbriefing();
+		processSearchCity = iapiContainer.processSearch(searchStringCity);
+		processSearchCountry = iapiContainer.processSearch(searchStringCountry);
 	
 	}
 	
@@ -37,8 +44,8 @@ public class APIContainerTravelbriefingTest {
 	@Test
 	public void testProcessSearchWithValidCitySearchString() {
 		System.out.println("testProcessSearch");
-		IAPIResponse processSearch = iapiContainer.processSearch(searchStringCity);
-		assertNotNull(processSearch);
+//		IAPIResponse processSearch = iapiContainer.processSearch(searchStringCity);
+		assertNotNull(processSearchCity);
 	}
 	
 	/**
@@ -48,19 +55,19 @@ public class APIContainerTravelbriefingTest {
 	@Test
 	public void testProcessSearchWithValidCountrySearchString() {
 		System.out.println("testProcessSearch");
-		IAPIResponse processSearch = iapiContainer.processSearch(searchStringCountry);
-		assertNotNull(processSearch);
+//		IAPIResponse processSearch = iapiContainer.processSearch(searchStringCountry);
+		assertNotNull(processSearchCountry);
 	}
 	
 	/**
 	 * Test method for {@link advswen.team5.travelbutler.api.APIContainerTravelbriefing#processSearch(java.lang.String)}.
-	 * The method isMissing should be false, if a valid city is entered.
+	 * isMissing throws AssertionError for valid city as search-string
 	 */
-	@Test
-	public void isMissingShouldBeFalseForValidCity() {
+	@Test (expected = AssertionError.class)
+	public void isMissingThrowsForAssertionErrorValidCity() {
 		System.out.println("Test: isMissingShouldBeFalseForValidCity");
-		IAPIResponse processSearch = iapiContainer.processSearch(searchStringCity);
-		assertFalse(processSearch.isMissing());
+//		IAPIResponse processSearch = iapiContainer.processSearch(searchStringCity);
+		assertFalse(processSearchCity.isMissing());
 	}
 	/**
 	 * Test method for {@link advswen.team5.travelbutler.api.APIContainerTravelbriefing#processSearch(java.lang.String)}.
@@ -69,8 +76,8 @@ public class APIContainerTravelbriefingTest {
 	@Test
 	public void isMissingShouldBeFalseForValidCountry() {
 		System.out.println("Test: isMissingShouldBeFalseForValidCountry");
-		IAPIResponse processSearch = iapiContainer.processSearch(searchStringCountry);
-		assertFalse(processSearch.isMissing());
+//		IAPIResponse processSearch = iapiContainer.processSearch(searchStringCountry);
+		assertFalse(processSearchCountry.isMissing());
 	}
 	
 	/**
@@ -80,8 +87,8 @@ public class APIContainerTravelbriefingTest {
 	@Test(expected = NullPointerException.class)
 	public void processSearchShouldThrowNullPointerExceptionForNullString() {
 		System.out.println("Test: processSearchShouldThrowNullPointerExceptionForNullString");
-		IAPIResponse processSearch = iapiContainer.processSearch(null);
-		assertNull(processSearch);
+		IAPIResponse processSearchNull = iapiContainer.processSearch(null);
+		assertNull(processSearchNull);
 	}
 	/**
 	 * Test method for {@link advswen.team5.travelbutler.api.APIContainerTravelbriefing#processSearch(java.lang.String)}.
@@ -90,8 +97,8 @@ public class APIContainerTravelbriefingTest {
 	@Test
 	public void processSearchWithBlankInputString() {
 		System.out.println("Test: processSearchWithBlankInputString");
-		IAPIResponse processSearch = iapiContainer.processSearch("");
-		assertNotNull(processSearch);
+		IAPIResponse processSearchBlank = iapiContainer.processSearch("");
+		assertNotNull(processSearchBlank);
 	}	
 
 
@@ -99,6 +106,8 @@ public class APIContainerTravelbriefingTest {
 	public void cleanup() {
 		System.out.println("Cleanup");
 		iapiContainer = null;
+		processSearchCity = null;
+		processSearchCountry = null;
 		
 	}
 

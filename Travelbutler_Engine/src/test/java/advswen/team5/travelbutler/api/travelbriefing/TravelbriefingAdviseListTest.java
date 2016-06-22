@@ -180,9 +180,10 @@ public class TravelbriefingAdviseListTest {
 
 	/**
 	 * Test method for {@link advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdviseList#getAll()}.
+	 * The method getAll should return all advises.
 	 */
 	@Test
-	public void testGetAll() {
+	public void testGetAllShouldReturnAllAdvises() {
 		TravelbriefingAdviseList adviseList2 = new TravelbriefingAdviseList(travelAdviseUA, travelAdviseUS, travelAdviseCA);
 		assertEquals(adviseList.getAll(), adviseList2.getAll());
 	}

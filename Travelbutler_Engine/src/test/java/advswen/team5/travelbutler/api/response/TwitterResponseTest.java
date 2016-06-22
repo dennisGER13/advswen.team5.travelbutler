@@ -37,7 +37,6 @@ private TwitterResponse twitterRespCity;
  */
 	@Before
 	public void setup(){
-		System.out.println("Setup");
 		searchStringCity = "Barcelona";
 		searchStringCountry = "Spain";
 		twitterRespCountry = new APIContainerTwitter().processSearch(searchStringCountry);
