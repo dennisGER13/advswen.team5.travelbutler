@@ -31,10 +31,10 @@ public class TravelbriefingCurrencyTest {
 	
 	@Before
 	public void setup(){
-		exchangeRate1 = new TravelbriefingExchangeRate("name1", 1);
-		exchangeRate2 = new TravelbriefingExchangeRate("name2", 3);
+		exchangeRate1 = new TravelbriefingExchangeRate("Euro", 1);
+		exchangeRate2 = new TravelbriefingExchangeRate("US-Dollar", 1.5);
 		exchangeRateArray = new TravelbriefingExchangeRate[] {exchangeRate1, exchangeRate2};
-		trCurrency = new TravelbriefingCurrency("currencyname", "currencysymbol", exchangeRateArray);
+		trCurrency = new TravelbriefingCurrency("Euro", "currencysymbol", exchangeRateArray);
 		exchangeRateMap = new HashMap<String, TravelbriefingExchangeRate>();
 		for (TravelbriefingExchangeRate rate : exchangeRateArray) {
 			exchangeRateMap.put(rate.getName(), rate);
@@ -56,7 +56,7 @@ public class TravelbriefingCurrencyTest {
 	 */
 	@Test
 	public void testGetNameShouldBeEqualToName() {
-		assertEquals("currencyname", trCurrency.getName());
+		assertEquals("Euro", trCurrency.getName());
 	}
 
 	/**
@@ -65,8 +65,8 @@ public class TravelbriefingCurrencyTest {
 	 */
 	@Test
 	public void testGetNameShouldBeEqualToNewName() {
-		trCurrency.setName("new currency name");
-		assertEquals("new currency name", trCurrency.getName());
+		trCurrency.setName("Yen");
+		assertEquals("Yen", trCurrency.getName());
 	}
 
 	/**
@@ -126,7 +126,7 @@ public class TravelbriefingCurrencyTest {
 	public void testExchangeRateMapShouldContainExchangeRate1NameAsKeyAndExchangeRate1AsValue() {
 //		System.out.println(exchangeRateMap.equals(exchangeRateMap));
 //		System.out.println(map2.equals(map2))
-		boolean blnExistsKey = exchangeRateMap.containsKey("name1");
+		boolean blnExistsKey = exchangeRateMap.containsKey("Euro");
 		boolean blnExistsValue = exchangeRateMap.containsValue(exchangeRate1);
 		assertTrue(blnExistsKey && blnExistsValue);
 
@@ -137,7 +137,7 @@ public class TravelbriefingCurrencyTest {
 	 */
 	@Test
 	public void testExchangeRateMapShouldContainExchangeRate2NameAsKeyAndExchangeRate2AsValue() {
-		boolean blnExistsKey = exchangeRateMap.containsKey("name2");
+		boolean blnExistsKey = exchangeRateMap.containsKey("US-Dollar");
 		boolean blnExistsValue = exchangeRateMap.containsValue(exchangeRate2);
 		assertTrue(blnExistsKey && blnExistsValue);
 
@@ -148,7 +148,7 @@ public class TravelbriefingCurrencyTest {
 	 */
 	@Test
 	public void testRateFromExchangeRate1ShouldBeEqualToCorrespondingRateFromExchangeRateMap() {
-		assertEquals(1.0, trCurrency.getExchangeRates().get("name1").getRate(), 0);			
+		assertEquals(1.0, trCurrency.getExchangeRates().get("Euro").getRate(), 0);			
 	}
 	
 	/**
@@ -156,7 +156,7 @@ public class TravelbriefingCurrencyTest {
 	 */
 	@Test
 	public void testRateFromExchangeRate2ShouldBeEqualToCorrespondingRateFromExchangeRateMap() {
-		assertEquals(3.0, trCurrency.getExchangeRates().get("name2").getRate(), 0);			
+		assertEquals(1.5, trCurrency.getExchangeRates().get("US-Dollar").getRate(), 0);			
 	}
 
 	
@@ -175,8 +175,8 @@ public class TravelbriefingCurrencyTest {
 	@Test
 	public void testSetExchangeRateMap() {
 		Map<String, TravelbriefingExchangeRate> exchangeRateMap2;
-		TravelbriefingExchangeRate exchangeRate3 = new TravelbriefingExchangeRate("name3", 3);
-		TravelbriefingExchangeRate exchangeRate4 = new TravelbriefingExchangeRate("name4", 4);
+		TravelbriefingExchangeRate exchangeRate3 = new TravelbriefingExchangeRate("Yen", 3);
+		TravelbriefingExchangeRate exchangeRate4 = new TravelbriefingExchangeRate("CA-Dollar", 4);
 		TravelbriefingExchangeRate[] exchangeRateArray2 = {exchangeRate3, exchangeRate4};
 		exchangeRateMap2 = new HashMap<String, TravelbriefingExchangeRate>();
 		for (TravelbriefingExchangeRate rate : exchangeRateArray2) {
@@ -193,10 +193,10 @@ public class TravelbriefingCurrencyTest {
 	 */
 	@Test
 	public void testGetExchangeRate() {
-		System.out.println(trCurrency.getExchangeRate("currencyname"));
-		System.out.println(trCurrency.getExchangeRate("name1"));
-		System.out.println(trCurrency.getExchangeRate("name2"));
-		fail("Not yet implemented");
+//		System.out.println(trCurrency.getExchangeRate("currencyname"));
+//		System.out.println(trCurrency.getExchangeRate("name1"));
+//		System.out.println(trCurrency.getExchangeRate("name2"));
+		assertEquals( 1.5, trCurrency.getExchangeRate("US-Dollar"), 0);
 	}
 	
 
