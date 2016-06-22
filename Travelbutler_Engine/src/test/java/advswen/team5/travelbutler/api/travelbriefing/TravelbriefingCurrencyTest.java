@@ -90,10 +90,10 @@ public class TravelbriefingCurrencyTest {
 
 	/**
 	 * Test method for {@link advswen.team5.travelbutler.api.travelbriefing.TravelbriefingCurrency#getCompare()}.
-	 * The method getCompare is being tested (generated dummy-data and returned value for symbol should be equal).
+	 * The method getCompare is being tested (generated dummy-data and returned value for compare should be equal).
 	 */
 	@Test
-	public void testGetCompareShouldBeEqualToExchangeRateArray() {
+	public void testGetCompareShouldBeEqualToCompare() {
 		assertArrayEquals(exchangeRateArray, trCurrency.getCompare());
 	}
 
@@ -102,7 +102,7 @@ public class TravelbriefingCurrencyTest {
 	 * The method setCompare is being called and the new/changed name should be returned.
 	 */
 	@Test
-	public void testGetCompareShouldBeEqualToNewExchangeRate() {
+	public void testGetCompareShouldBeEqualToNewCompare() {
 		TravelbriefingExchangeRate exchangeRate3 = new TravelbriefingExchangeRate("name3", 5);
 		TravelbriefingExchangeRate exchangeRate4 = new TravelbriefingExchangeRate("name4", 6);
 		TravelbriefingExchangeRate[] exchangeRateArray2 = {exchangeRate3, exchangeRate4};
@@ -115,8 +115,7 @@ public class TravelbriefingCurrencyTest {
 	 */
 	@Test
 	public void testExchangeRateMapShouldNotBeNull() {
-		assertNotNull(exchangeRateMap);
-		
+		assertNotNull(exchangeRateMap);		
 	}
 	
 	/**
@@ -124,8 +123,6 @@ public class TravelbriefingCurrencyTest {
 	 */
 	@Test
 	public void testExchangeRateMapShouldContainExchangeRate1NameAsKeyAndExchangeRate1AsValue() {
-//		System.out.println(exchangeRateMap.equals(exchangeRateMap));
-//		System.out.println(map2.equals(map2))
 		boolean blnExistsKey = exchangeRateMap.containsKey("Euro");
 		boolean blnExistsValue = exchangeRateMap.containsValue(exchangeRate1);
 		assertTrue(blnExistsKey && blnExistsValue);
@@ -144,24 +141,25 @@ public class TravelbriefingCurrencyTest {
 	}
 		
 	/**
-	 * 
+	 * The rate from ExchangeRate1 should beEqual to corresponding rate from ExchangeRates
 	 */
 	@Test
-	public void testRateFromExchangeRate1ShouldBeEqualToCorrespondingRateFromExchangeRateMap() {
+	public void testRateFromExchangeRate1ShouldBeEqualToCorrespondingRateFromExchangeRates() {
 		assertEquals(1.0, trCurrency.getExchangeRates().get("Euro").getRate(), 0);			
 	}
 	
 	/**
-	 * 
+	 * The rate from ExchangeRate1 should beEqual to corresponding rate from ExchangeRates
 	 */
 	@Test
-	public void testRateFromExchangeRate2ShouldBeEqualToCorrespondingRateFromExchangeRateMap() {
+	public void testRateFromExchangeRate2ShouldBeEqualToCorrespondingRateFromExchangeRates() {
 		assertEquals(1.5, trCurrency.getExchangeRates().get("US-Dollar").getRate(), 0);			
 	}
 
 	
 	/**
 	 * Test method for {@link advswen.team5.travelbutler.api.travelbriefing.TravelbriefingCurrency#getExchangeRates()}.
+	 * getExchangeRates should be equal to ExchangeRates from dummy-data
 	 */
 	@Test
 	public void testGetExchangeRatesShouldBeEqualToExchangeRateMap() {
@@ -171,9 +169,10 @@ public class TravelbriefingCurrencyTest {
 	
 	/**
 	 * Test method for {@link advswen.team5.travelbutler.api.travelbriefing.TravelbriefingCurrency#setExchangeRates(java.util.Map)}.
+	 * The ExchangeRates of the currency is changed via setExchangeRates, thus getExchangeRates should return the new/changed Map.
 	 */
 	@Test
-	public void testSetExchangeRateMap() {
+	public void testGetExchangeRatesShouldBeEqualToNewExchangeRates() {
 		Map<String, TravelbriefingExchangeRate> exchangeRateMap2;
 		TravelbriefingExchangeRate exchangeRate3 = new TravelbriefingExchangeRate("Yen", 3);
 		TravelbriefingExchangeRate exchangeRate4 = new TravelbriefingExchangeRate("CA-Dollar", 4);
@@ -190,12 +189,10 @@ public class TravelbriefingCurrencyTest {
 	
 	/**
 	 * Test method for {@link advswen.team5.travelbutler.api.travelbriefing.TravelbriefingCurrency#getExchangeRate(java.lang.String)}.
+	 * getExchangeRate and value from dummy-data should be equal.
 	 */
 	@Test
-	public void testGetExchangeRate() {
-//		System.out.println(trCurrency.getExchangeRate("currencyname"));
-//		System.out.println(trCurrency.getExchangeRate("name1"));
-//		System.out.println(trCurrency.getExchangeRate("name2"));
+	public void testGetExchangeRateShouldBeEqualToDummyExchangeRate() {
 		assertEquals( 1.5, trCurrency.getExchangeRate("US-Dollar"), 0);
 	}
 	
