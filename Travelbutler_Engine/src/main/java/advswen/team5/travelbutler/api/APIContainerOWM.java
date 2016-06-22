@@ -1,15 +1,12 @@
 package advswen.team5.travelbutler.api;
 
-import java.awt.List;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 import org.json.JSONException;
 
-import advswen.team5.travelbutler.api.response.IAPIResponse;
 import advswen.team5.travelbutler.api.response.OWMResponse;
-import javassist.expr.NewArray;
 import net.aksingh.owmjapis.CurrentWeather;
 import net.aksingh.owmjapis.DailyForecast;
 import net.aksingh.owmjapis.OpenWeatherMap;

@@ -2,8 +2,6 @@ package advswen.team5.travelbutler.api.response;
 
 import java.util.ArrayList;
 
-import advswen.team5.travelbutler.api.IAPIContainer;
-
 public class OWMResponse implements IAPIResponse{
 
 	private String cityname;

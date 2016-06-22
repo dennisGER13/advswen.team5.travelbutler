@@ -1,6 +1,8 @@
 package advswen.team5.travelbutler.api;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -10,7 +12,6 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import net.aksingh.owmjapis.CurrentWeather;
-import net.aksingh.owmjapis.OpenWeatherMap;
 
 public class APIContainerOWMTest {
 	

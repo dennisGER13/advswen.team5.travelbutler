@@ -5,26 +5,18 @@ package advswen.team5.travelbutler.dialogue;
  */
 
 import java.awt.Desktop;
-
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.FlowLayout;
-import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 import org.jdesktop.swingx.JXDatePicker;

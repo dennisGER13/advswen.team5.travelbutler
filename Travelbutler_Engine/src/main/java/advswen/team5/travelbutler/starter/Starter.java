@@ -1,6 +1,5 @@
 package advswen.team5.travelbutler.starter;
 
-import advswen.team5.travelbutler.api.APIContainerOWMTest;
 import advswen.team5.travelbutler.dialogue.InputDialogue;
 
 public class Starter {

@@ -9,7 +9,10 @@
 //**************************************************************************************
 package advswen.team5.travelbutler.api.response;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -19,8 +22,6 @@ import org.junit.Test;
 
 import advswen.team5.travelbutler.api.APIContainerTwitter;
 import advswen.team5.travelbutler.api.IAPIContainer;
-import advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdvise;
-import advswen.team5.travelbutler.api.travelbriefing.TravelbriefingAdviseList;
 import twitter4j.Status;
 
 

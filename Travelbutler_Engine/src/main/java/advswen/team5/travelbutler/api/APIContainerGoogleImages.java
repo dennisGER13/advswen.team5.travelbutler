@@ -13,13 +13,10 @@ import org.apache.commons.io.IOUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import advswen.team5.travelbutler.api.google.images.GoogleSearchItem;
 import advswen.team5.travelbutler.api.response.GoogleImagesResponse;
-import advswen.team5.travelbutler.api.response.IAPIResponse;
-import advswen.team5.travelbutler.api.response.WikipediaResponse;
 
 public class APIContainerGoogleImages implements IAPIContainer {
 	
