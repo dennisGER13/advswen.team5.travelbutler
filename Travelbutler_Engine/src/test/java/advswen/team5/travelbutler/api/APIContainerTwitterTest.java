@@ -1,19 +1,24 @@
+// *************************************************************************************
+// File:         [APIContainerTwitterTest.java]
+// Created:      [2016/06/08 Wednesday]
+// Last Changed: $Date: 2016/06/22 19:16:00 $
+// Author:       <A HREF="mailto:[ma-152478@hs-weingarten.de]">[Michael Aulbach]</A>
+//**************************************************************************************
+//Description: 	Test-Klasse für APIContainerTwitter
+//				
+//**************************************************************************************
 package advswen.team5.travelbutler.api;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
-import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import advswen.team5.travelbutler.api.response.IAPIResponse;
-import advswen.team5.travelbutler.api.response.TwitterResponse;
-import twitter4j.Status;
+
 
 public class APIContainerTwitterTest {
 	
@@ -21,6 +26,9 @@ public class APIContainerTwitterTest {
 	String searchString = "France";
 	private IAPIResponse processSearch;
 	
+	/**
+	 * Preparation for tests: IAPIResponse being created via valid search-strings
+	 */
 	@Before
 	public void setup(){
 		System.out.println("Setup");
@@ -28,34 +36,27 @@ public class APIContainerTwitterTest {
 		processSearch = iapiContainer.processSearch(searchString);
 	
 	}
-
+	
+	/**
+	 * Test method for {@link advswen.team5.travelbutler.api.APIContainerTwitter#processSearch(java.lang.String)}.
+	 * The IAPIResponse should not be null for a valid search-string.
+	 */
 	@Test
-	public void testProcessSearchNotNull() {
+	public void testProcessSearchShouldNotBeNull() {
 		System.out.println("testProcessSearch");
 		assertNotNull(processSearch);
 	}
 	
-	
+	/**
+	 * Test method for {@link advswen.team5.travelbutler.api.APIContainerTwitter#processSearch(java.lang.String)}.
+	 * isMissing for the IAPIResponse should not return false for a valid
+	 */
 	@Test
 	public void isMissingShouldBeFalseForValidInputString() {
 		System.out.println("Test: isMissingShouldBeFalseForValidInputString");
-//		IAPIResponse processSearch = iapiContainer.processSearch(searchString);
 		assertFalse(processSearch.isMissing());
 	}
 	
-	@Test(expected = AssertionError.class)
-	public void processSearchShouldThrowAssertionErrorForNullString() {
-		System.out.println("Test: processSearchShouldThrowNullPointerExceptionForNullString");
-		IAPIResponse processSearch = iapiContainer.processSearch(null);
-		assertNull(processSearch);
-	}
-	
-	@Test(expected = AssertionError.class)
-	public void processSearchShouldThrowAssertionErrorForBlankString() {
-		System.out.println("Test: processSearchShouldThrowNullPointerExceptionForBlankString");
-		IAPIResponse processSearch = iapiContainer.processSearch("");
-		assertNull(processSearch);
-	}
 	
 	@After
 	public void cleanup() {
@@ -64,22 +65,6 @@ public class APIContainerTwitterTest {
 		
 	}
 
-	@Test
-	public void testTweetShouldContainSearchString() {
-		String requestedString = "Barcelona";
-		TwitterResponse Twitter = new APIContainerTwitter().processSearch(requestedString);
-		List<Status> usedTweets = Twitter.getTweets();
-		
-		boolean found = true;
-		for(Status status: usedTweets) {
-		    if(!status.getText().toLowerCase().contains(requestedString.toLowerCase()))
-		       found = false;
-		}
 
-		assertTrue(found);
-		
-
-	}
 
 }
-

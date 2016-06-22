@@ -1,7 +1,7 @@
 // *************************************************************************************
 // File:         [TravelbriefingCurrencyTest.java]
 // Created:      [2016/06/08 Wednesday]
-// Last Changed: $Date: 2016/06/19 19:52:00 $
+// Last Changed: $Date: 2016/06/22 19:18:00 $
 // Author:       <A HREF="mailto:[ma-152478@hs-weingarten.de]">[Michael Aulbach]</A>
 //**************************************************************************************
 //Description: 	Test-Klasse für TravelbriefingCurrency

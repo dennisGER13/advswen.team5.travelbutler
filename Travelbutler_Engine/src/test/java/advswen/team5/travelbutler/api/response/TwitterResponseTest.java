@@ -1,7 +1,7 @@
 // *************************************************************************************
 // File:         [TwitterResponseTest.java]
 // Created:      [2016/06/08 Wednesday]
-// Last Changed: $Date: 2016/06/08 18:19:00 $
+// Last Changed: $Date: 2016/06/22 19:16:00 $
 // Author:       <A HREF="mailto:[ma-152478@hs-weingarten.de]">[Michael Aulbach]</A>
 //**************************************************************************************
 //Description: 	Test-Klasse für TwitterResponse
@@ -16,13 +16,10 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import advswen.team5.travelbutler.api.APIContainerTwitter;
-import advswen.team5.travelbutler.api.IAPIContainer;
 import twitter4j.Status;
 
 
@@ -35,7 +32,9 @@ private TwitterResponse twitterRespCountry;
 private TwitterResponse twitterRespCity;
 
 
-	
+/**
+ * Preparation for tests: TwitterResponses are being created via valid search-strings
+ */
 	@Before
 	public void setup(){
 		System.out.println("Setup");

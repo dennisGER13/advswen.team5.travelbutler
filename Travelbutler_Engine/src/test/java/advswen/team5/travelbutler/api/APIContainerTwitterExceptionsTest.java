@@ -1,6 +1,12 @@
-/**
- * 
- */
+// *************************************************************************************
+// File:         [APIContainerTwitterExceptionsTest.java]
+// Created:      [2016/06/22 Wednesday]
+// Last Changed: $Date: 2016/06/22 19:20:00 $
+// Author:       <A HREF="mailto:[ma-152478@hs-weingarten.de]">[Michael Aulbach]</A>
+//**************************************************************************************
+//Description: 	Test-Klasse für APIContainerTwitter
+//				
+//**************************************************************************************
 package advswen.team5.travelbutler.api;
 
 import static org.junit.Assert.*;
@@ -27,8 +33,8 @@ public class APIContainerTwitterExceptionsTest {
 	
 	/**
 	 * Test method for {@link advswen.team5.travelbutler.api.APIContainerTwitter#processSearch(java.lang.String)}.
+	 * The method processSearch should throw an AssertionError for null as provided parameter
 	 */
-	// Funktioniert nur mit @Before, nicht mit @BeforeClass?!
 	@Test(expected = AssertionError.class)
 	public void processSearchShouldThrowAssertionErrorForNullString() {
 		System.out.println("Test: processSearchShouldThrowAssertionErrorForNullString");
@@ -38,8 +44,8 @@ public class APIContainerTwitterExceptionsTest {
 	
 	/**
 	 * Test method for {@link advswen.team5.travelbutler.api.APIContainerTwitter#processSearch(java.lang.String)}.
+	 * The method processSearch should throw an AssertionError for a blank string
 	 */
-	// Funktioniert nur mit @Before, nicht mit @BeforeClass?!
 	@Test(expected = AssertionError.class)
 	public void processSearchShouldThrowAssertionErrorForBlankString() {
 		System.out.println("Test: processSearchShouldThrowAssertionErrorForBlankString");
