@@ -31,7 +31,7 @@ public class APIContainerOWM implements IAPIContainer {
 //	private ArrayList<Float> forecastclouds = new ArrayList<Float>();
 	private ArrayList<String> forecastgeneral = new ArrayList<String>();
 	OWMResponse owmresponse;
-	
+	OpenWeatherMap owm;
 	@Override
 	public OWMResponse processSearch(String requestString) {
 		try {
@@ -54,7 +54,7 @@ public class APIContainerOWM implements IAPIContainer {
 	
 	public void searchWeatherInformation(String requestString)throws IOException, MalformedURLException, JSONException{
 	// declaring object of "OpenWeatherMap" class
-    OpenWeatherMap owm = new OpenWeatherMap(Units.METRIC, Language.GERMAN, "9d67ca64545f5cdd04e72bd82835d104");
+    owm = new OpenWeatherMap(Units.METRIC, Language.GERMAN, "9d67ca64545f5cdd04e72bd82835d104");
 
     //Abrufen der Wetterinformationen des Strings
     CurrentWeather cwd = owm.currentWeatherByCityName(requestString);
