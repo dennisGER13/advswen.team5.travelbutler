@@ -193,6 +193,7 @@ public class TravelbriefingCurrencyTest {
 	 */
 	@Test
 	public void testGetExchangeRate() {
+		System.out.println(trCurrency.getExchangeRate("currencyname"));
 		System.out.println(trCurrency.getExchangeRate("name1"));
 		System.out.println(trCurrency.getExchangeRate("name2"));
 		fail("Not yet implemented");
