@@ -11,6 +11,9 @@ package advswen.team5.travelbutler.api.travelbriefing;
 
 import static org.junit.Assert.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,6 +22,7 @@ public class TravelbriefingCurrencyTest {
 	private TravelbriefingExchangeRate exchangeRate1;
 	private TravelbriefingExchangeRate exchangeRate2;
 	private TravelbriefingExchangeRate[] exchangeRateArray;
+	private Map<String, TravelbriefingExchangeRate> exchangeRateMap;
 	private TravelbriefingCurrency trCurrency;
 
 	/**
@@ -30,7 +34,11 @@ public class TravelbriefingCurrencyTest {
 		exchangeRate1 = new TravelbriefingExchangeRate("name1", 1);
 		exchangeRate2 = new TravelbriefingExchangeRate("name2", 3);
 		exchangeRateArray = new TravelbriefingExchangeRate[] {exchangeRate1, exchangeRate2};
-		trCurrency = new TravelbriefingCurrency("currencyname", "currencysymbol", exchangeRateArray);		
+		trCurrency = new TravelbriefingCurrency("currencyname", "currencysymbol", exchangeRateArray);
+		exchangeRateMap = new HashMap<String, TravelbriefingExchangeRate>();
+		for (TravelbriefingExchangeRate rate : exchangeRateArray) {
+			exchangeRateMap.put(rate.getName(), rate);
+		}
 	}
 
 	/**
@@ -56,7 +64,7 @@ public class TravelbriefingCurrencyTest {
 	 * The method setName is being called and the new/changed name should be returned.
 	 */
 	@Test
-	public void testGetNameShouldBeEqualToNameAfterSetMethod() {
+	public void testGetNameShouldBeEqualToNewName() {
 		trCurrency.setName("new currency name");
 		assertEquals("new currency name", trCurrency.getName());
 	}
@@ -75,7 +83,7 @@ public class TravelbriefingCurrencyTest {
 	 * The method setName is being called and the new/changed name should be returned.
 	 */
 	@Test
-	public void testGetSymbolShouldBeEqualToSymbolAfterSetMethod() {
+	public void testGetSymbolShouldBeEqualToNewSymbol() {
 		trCurrency.setSymbol("new symbol");
 		assertEquals("new symbol", trCurrency.getSymbol());
 	}
@@ -85,7 +93,7 @@ public class TravelbriefingCurrencyTest {
 	 * The method getCompare is being tested (generated dummy-data and returned value for symbol should be equal).
 	 */
 	@Test
-	public void testGetCompareShouldBeEqualToCompare() {
+	public void testGetCompareShouldBeEqualToExchangeRateArray() {
 		assertArrayEquals(exchangeRateArray, trCurrency.getCompare());
 	}
 
@@ -94,7 +102,7 @@ public class TravelbriefingCurrencyTest {
 	 * The method setCompare is being called and the new/changed name should be returned.
 	 */
 	@Test
-	public void testGetCompareShouldBeEqualToCompareAfterSetMethod() {
+	public void testGetCompareShouldBeEqualToNewExchangeRate() {
 		TravelbriefingExchangeRate exchangeRate3 = new TravelbriefingExchangeRate("name3", 5);
 		TravelbriefingExchangeRate exchangeRate4 = new TravelbriefingExchangeRate("name4", 6);
 		TravelbriefingExchangeRate[] exchangeRateArray2 = {exchangeRate3, exchangeRate4};
@@ -103,27 +111,93 @@ public class TravelbriefingCurrencyTest {
 	}
 	
 	/**
+	 * ExchangeRateMap should not be null
+	 */
+	@Test
+	public void testExchangeRateMapShouldNotBeNull() {
+		assertNotNull(exchangeRateMap);
+		
+	}
+	
+	/**
+	 * The object Map<String, TravelbriefingExchangeRate> exchangeRateMap should contain the name of ExchangeRate1 as key and ExchangeRate1 as value
+	 */
+	@Test
+	public void testExchangeRateMapShouldContainExchangeRate1NameAsKeyAndExchangeRate1AsValue() {
+//		System.out.println(exchangeRateMap.equals(exchangeRateMap));
+//		System.out.println(map2.equals(map2))
+		boolean blnExistsKey = exchangeRateMap.containsKey("name1");
+		boolean blnExistsValue = exchangeRateMap.containsValue(exchangeRate1);
+		assertTrue(blnExistsKey && blnExistsValue);
+
+	}
+	
+	/**
+	 * The object Map<String, TravelbriefingExchangeRate> exchangeRateMap should contain the name of ExchangeRate2 as key and ExchangeRate2 as value
+	 */
+	@Test
+	public void testExchangeRateMapShouldContainExchangeRate2NameAsKeyAndExchangeRate2AsValue() {
+		boolean blnExistsKey = exchangeRateMap.containsKey("name2");
+		boolean blnExistsValue = exchangeRateMap.containsValue(exchangeRate2);
+		assertTrue(blnExistsKey && blnExistsValue);
+
+	}
+		
+	/**
+	 * 
+	 */
+	@Test
+	public void testRateFromExchangeRate1ShouldBeEqualToCorrespondingRateFromExchangeRateMap() {
+		assertEquals(1.0, trCurrency.getExchangeRates().get("name1").getRate(), 0);			
+	}
+	
+	/**
+	 * 
+	 */
+	@Test
+	public void testRateFromExchangeRate2ShouldBeEqualToCorrespondingRateFromExchangeRateMap() {
+		assertEquals(3.0, trCurrency.getExchangeRates().get("name2").getRate(), 0);			
+	}
+
+	
+	/**
 	 * Test method for {@link advswen.team5.travelbutler.api.travelbriefing.TravelbriefingCurrency#getExchangeRates()}.
 	 */
 	@Test
-	public void testGetExchangeRates() {
-		fail("Not yet implemented");
+	public void testGetExchangeRatesShouldBeEqualToExchangeRateMap() {
+		assertEquals(exchangeRateMap, trCurrency.getExchangeRates());
+		
 	}
-
+	
 	/**
 	 * Test method for {@link advswen.team5.travelbutler.api.travelbriefing.TravelbriefingCurrency#setExchangeRates(java.util.Map)}.
 	 */
 	@Test
-	public void testSetExchangeRates() {
-		fail("Not yet implemented");
-	}
+	public void testSetExchangeRateMap() {
+		Map<String, TravelbriefingExchangeRate> exchangeRateMap2;
+		TravelbriefingExchangeRate exchangeRate3 = new TravelbriefingExchangeRate("name3", 3);
+		TravelbriefingExchangeRate exchangeRate4 = new TravelbriefingExchangeRate("name4", 4);
+		TravelbriefingExchangeRate[] exchangeRateArray2 = {exchangeRate3, exchangeRate4};
+		exchangeRateMap2 = new HashMap<String, TravelbriefingExchangeRate>();
+		for (TravelbriefingExchangeRate rate : exchangeRateArray2) {
+			exchangeRateMap2.put(rate.getName(), rate);
+		}
+		trCurrency.setExchangeRates(exchangeRateMap2);
+		assertEquals(exchangeRateMap2, trCurrency.getExchangeRates());
+		
 
+	}
+	
 	/**
 	 * Test method for {@link advswen.team5.travelbutler.api.travelbriefing.TravelbriefingCurrency#getExchangeRate(java.lang.String)}.
 	 */
 	@Test
 	public void testGetExchangeRate() {
+		System.out.println(trCurrency.getExchangeRate("name1"));
+		System.out.println(trCurrency.getExchangeRate("name2"));
 		fail("Not yet implemented");
 	}
+	
+
 
 }
