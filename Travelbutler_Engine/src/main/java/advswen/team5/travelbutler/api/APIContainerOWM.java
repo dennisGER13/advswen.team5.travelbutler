@@ -25,6 +25,7 @@ public class APIContainerOWM implements IAPIContainer {
 	private float currentHumidity;
 	private float currentPressure;
 	private String currentGeneralWeather;
+	private String currentWeatherIcon;
 	private ArrayList<Float> forecastTempMin= new ArrayList<Float>();
 	private ArrayList<Float> forecastTempMax= new ArrayList<Float>();
 //	private ArrayList<Float> forecastRain= new ArrayList<Float>();
@@ -64,6 +65,7 @@ public class APIContainerOWM implements IAPIContainer {
     owmresponse.setCurrentHumidity(currentHumidity = cwd.getMainInstance().getHumidity());
     owmresponse.setCurrentPressure(currentPressure = cwd.getMainInstance().getPressure());
     owmresponse.setCurrentGeneralWeather(currentGeneralWeather = cwd.getWeatherInstance(0).getWeatherDescription());
+    owmresponse.setCurrentWeatherIcon(currentGeneralWeather = cwd.getWeatherInstance(0).getWeatherIconName());
     
    DailyForecast df = owm.dailyForecastByCityName(requestString, (byte) 5);
    for(int i=0;i<5;i++){

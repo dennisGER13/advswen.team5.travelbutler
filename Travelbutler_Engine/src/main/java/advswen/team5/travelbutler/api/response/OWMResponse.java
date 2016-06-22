@@ -12,6 +12,7 @@ public class OWMResponse implements IAPIResponse{
 	private float currentHumidity;
 	private float currentPressure;
 	private String currentGeneralWeather;
+	private String currentWeatherIcon;
 	private ArrayList<Float> forecastTempMin= new ArrayList<Float>();
 	private ArrayList<Float> forecastTempMax= new ArrayList<Float>();
 	private ArrayList<String> forecastgeneral = new ArrayList<String>();
@@ -132,6 +133,12 @@ public class OWMResponse implements IAPIResponse{
 		
 
 	
+	public String getCurrentWeatherIcon() {
+		return currentWeatherIcon;
+	}
+	public void setCurrentWeatherIcon(String currentWeatherIcon) {
+		this.currentWeatherIcon = currentWeatherIcon;
+	}
 	@Override
 	public void setMissing(boolean missing) {
 		// TODO Auto-generated method stub
