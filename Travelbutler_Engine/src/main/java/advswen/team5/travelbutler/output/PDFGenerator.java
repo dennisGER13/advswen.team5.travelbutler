@@ -534,11 +534,11 @@ public class PDFGenerator {
 			return;
 		}
 
-		float[] columnWidths = { 1, 1, 1};
+		float[] columnWidths = { 1, 1, 1 };
 		PdfPTable table = new PdfPTable(columnWidths);
 		table.setWidthPercentage(100);
 		PdfPCell cell;
-		
+
 		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Germany/Berlin"));
 		SimpleDateFormat format = new SimpleDateFormat("E, dd.MM.yyy");
 
@@ -556,12 +556,18 @@ public class PDFGenerator {
 		cell.addElement(p);
 		p = new Paragraph(response.getOpenWeatherMapResponse().getCurrentGeneralWeather(), normalFont);
 		p.setAlignment(Element.ALIGN_CENTER);
-		cell.addElement(p);
 
-		Image image = Image.getInstance("http://openweathermap.org/img/w/" + response.getOpenWeatherMapResponse().getCurrentWeatherIcon() + ".png");
+		Image image = Image.getInstance("http://openweathermap.org/img/w/"
+				+ response.getOpenWeatherMapResponse().getCurrentWeatherIcon() + ".png");
 		image.scaleToFit(50, 50);
 		image.setAlignment(Element.ALIGN_CENTER);
 		cell.addElement(image);
+		
+		cell.addElement(p);
+		p = new Paragraph(response.getOpenWeatherMapResponse().getCurrentMinTemperatur() + "°C - "
+				+ response.getOpenWeatherMapResponse().getCurrentMaxTemperatur() + "°C", normalFont);
+		p.setAlignment(Element.ALIGN_CENTER);
+		cell.addElement(p);
 
 		table.addCell(cell);
 
@@ -581,12 +587,17 @@ public class PDFGenerator {
 			p = new Paragraph(response.getOpenWeatherMapResponse().getForecastgeneral().get(i), normalFont);
 			p.setAlignment(Element.ALIGN_CENTER);
 			cell.addElement(p);
+			p = new Paragraph(response.getOpenWeatherMapResponse().getForecastTempMin().get(i) + "°C - "
+					+ response.getOpenWeatherMapResponse().getForecastTempMax().get(i) + "°C", normalFont);
+			p.setAlignment(Element.ALIGN_CENTER);
+			cell.addElement(p);
 
 			table.addCell(cell);
 		}
 
 		Paragraph weather = new Paragraph();
-		weather.add(generateSubCategory("Weather in " + response.getDestination(), "src/main/resources/icons/weather.png"));
+		weather.add(
+				generateSubCategory("Weather in " + response.getDestination(), "src/main/resources/icons/weather.png"));
 		weather.add(table);
 		addEmptyLine(weather, 2);
 		document.add(weather);
