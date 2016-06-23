@@ -1,15 +1,12 @@
 package advswen.team5.travelbutler.api;
 
-import java.awt.List;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 import org.json.JSONException;
 
-import advswen.team5.travelbutler.api.response.IAPIResponse;
 import advswen.team5.travelbutler.api.response.OWMResponse;
-import javassist.expr.NewArray;
 import net.aksingh.owmjapis.CurrentWeather;
 import net.aksingh.owmjapis.DailyForecast;
 import net.aksingh.owmjapis.OpenWeatherMap;
@@ -25,6 +22,7 @@ public class APIContainerOWM implements IAPIContainer {
 	private float currentHumidity;
 	private float currentPressure;
 	private String currentGeneralWeather;
+	private String currentWeatherIcon;
 	private ArrayList<Float> forecastTempMin= new ArrayList<Float>();
 	private ArrayList<Float> forecastTempMax= new ArrayList<Float>();
 	private ArrayList<String> forecastgeneral = new ArrayList<String>();
@@ -124,6 +122,7 @@ public class APIContainerOWM implements IAPIContainer {
     owmresponse.setCurrentHumidity(currentHumidity = cwd.getMainInstance().getHumidity());
     owmresponse.setCurrentPressure(currentPressure = cwd.getMainInstance().getPressure());
     owmresponse.setCurrentGeneralWeather(currentGeneralWeather = cwd.getWeatherInstance(0).getWeatherDescription());
+    owmresponse.setCurrentWeatherIcon(currentGeneralWeather = cwd.getWeatherInstance(0).getWeatherIconName());
     
    DailyForecast df = owm.dailyForecastByCityName(requestString, (byte) 5);
    for(int i=0;i<5;i++){

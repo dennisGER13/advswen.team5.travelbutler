@@ -9,7 +9,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
@@ -90,6 +93,7 @@ public class PDFGenerator {
 		addTravelWarnings(document);
 		addWikipediaInfo(document);
 		addMap(document, writer);
+		addWeather(document);
 		addHotels(document);
 		addGoodToKnow(document);
 		addHealth(document);
@@ -473,8 +477,9 @@ public class PDFGenerator {
 		}
 
 		for (int i = 0; i < num; i++) {
-			GooglePlace place = response.getGooglePlacesResponse().getResults()[i];		
-			GoogleImagesResponse images = new APIContainerGoogleImages().processSearch(place.getName() + " " + response.getDestination());
+			GooglePlace place = response.getGooglePlacesResponse().getResults()[i];
+			GoogleImagesResponse images = new APIContainerGoogleImages()
+					.processSearch(place.getName() + " " + response.getDestination());
 
 			cell = new PdfPCell();
 			cell.setPadding(15);
@@ -483,12 +488,12 @@ public class PDFGenerator {
 			cell.setBackgroundColor(new BaseColor(240, 240, 240));
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			cell.setVerticalAlignment(Element.ALIGN_TOP);
-			
+
 			Image image;
-			if(images.getSquareImage() != null){
+			if (images.getSquareImage() != null) {
 				image = Image.getInstance(images.getSquareImage());
 				image.scaleToFit(150, 150);
-			}else{
+			} else {
 				image = Image.getInstance(place.getIcon());
 				image.scaleToFit(40, 40);
 			}
@@ -497,27 +502,94 @@ public class PDFGenerator {
 			Paragraph p = new Paragraph(place.getName(), highlightFont);
 			p.setAlignment(Element.ALIGN_CENTER);
 			cell.addElement(p);
-			if(place.getFormatted_address().split(",").length >= 2){
-				p = new Paragraph(place.getFormatted_address().split(",")[0] + ", " + place.getFormatted_address().split(",")[1], normalFont);	
-			}else{
+			if (place.getFormatted_address().split(",").length >= 2) {
+				p = new Paragraph(
+						place.getFormatted_address().split(",")[0] + ", " + place.getFormatted_address().split(",")[1],
+						normalFont);
+			} else {
 				p = new Paragraph(place.getFormatted_address(), normalFont);
 			}
 			p.setAlignment(Element.ALIGN_CENTER);
 			cell.addElement(p);
-			
+
 			image = Image.getInstance(StarRating.getRatingStars(place.getRating()), null);
 			image.setAlignment(Element.ALIGN_CENTER);
 			image.scaleToFit(75, 50);
 			cell.addElement(image);
-			
+
 			table.addCell(cell);
 		}
 
 		Paragraph hotels = new Paragraph();
-		hotels.add(
-				generateSubCategory("Hotels in " + response.getDestination(), "src/main/resources/icons/bed.jpg"));
+		hotels.add(generateSubCategory("Hotels in " + response.getDestination(), "src/main/resources/icons/bed.jpg"));
 		hotels.add(table);
 		document.add(hotels);
+	}
+
+	private void addWeather(Document document) throws Exception {
+		// If there is no OWMResponse (= OWM API not
+		// used in this search) or the response does not contain a suitable
+		// result this chapter is skipped
+		if (response.getOpenWeatherMapResponse() == null || response.getOpenWeatherMapResponse().isMissing()) {
+			return;
+		}
+
+		float[] columnWidths = { 1, 1, 1};
+		PdfPTable table = new PdfPTable(columnWidths);
+		table.setWidthPercentage(100);
+		PdfPCell cell;
+		
+		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Germany/Berlin"));
+		SimpleDateFormat format = new SimpleDateFormat("E, dd.MM.yyy");
+
+		cell = new PdfPCell();
+		cell.setPadding(15);
+		cell.setBorderWidth(7);
+		cell.setBorderColor(BaseColor.WHITE);
+		cell.setBackgroundColor(BaseColor.YELLOW);
+		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		cell.setVerticalAlignment(Element.ALIGN_TOP);
+		cell.setRowspan(2);
+
+		Paragraph p = new Paragraph(format.format(calendar.getTime()), highlightFont);
+		p.setAlignment(Element.ALIGN_CENTER);
+		cell.addElement(p);
+		p = new Paragraph(response.getOpenWeatherMapResponse().getCurrentGeneralWeather(), normalFont);
+		p.setAlignment(Element.ALIGN_CENTER);
+		cell.addElement(p);
+
+		Image image = Image.getInstance("http://openweathermap.org/img/w/" + response.getOpenWeatherMapResponse().getCurrentWeatherIcon() + ".png");
+		image.scaleToFit(50, 50);
+		image.setAlignment(Element.ALIGN_CENTER);
+		cell.addElement(image);
+
+		table.addCell(cell);
+
+		for (int i = 0; i < 4; i++) {
+			cell = new PdfPCell();
+			cell.setPadding(15);
+			cell.setBorderWidth(7);
+			cell.setBorderColor(BaseColor.WHITE);
+			cell.setBackgroundColor(new BaseColor(240, 240, 240));
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_TOP);
+
+			calendar.add(Calendar.DAY_OF_MONTH, 1);
+			p = new Paragraph(format.format(calendar.getTime()), highlightFont);
+			p.setAlignment(Element.ALIGN_CENTER);
+			cell.addElement(p);
+			p = new Paragraph(response.getOpenWeatherMapResponse().getForecastgeneral().get(i), normalFont);
+			p.setAlignment(Element.ALIGN_CENTER);
+			cell.addElement(p);
+
+			table.addCell(cell);
+		}
+
+		Paragraph weather = new Paragraph();
+		weather.add(generateSubCategory("Weather in " + response.getDestination(), "src/main/resources/icons/weather.png"));
+		weather.add(table);
+		addEmptyLine(weather, 2);
+		document.add(weather);
 	}
 
 	private static void addEmptyLine(Paragraph paragraph, int number) {

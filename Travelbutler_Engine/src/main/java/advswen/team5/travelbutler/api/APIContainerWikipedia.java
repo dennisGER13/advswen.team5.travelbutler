@@ -12,11 +12,9 @@ import java.net.URL;
 import org.apache.commons.io.IOUtils;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import advswen.team5.travelbutler.api.response.IAPIResponse;
 import advswen.team5.travelbutler.api.response.WikipediaResponse;
 
 public class APIContainerWikipedia implements IAPIContainer {

@@ -1,8 +1,6 @@
 package advswen.team5.travelbutler.api.travelbriefing;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /*
@@ -53,7 +51,7 @@ public class TravelbriefingCurrency {
 		return compare;
 	}
 
-	protected void setCompare(TravelbriefingExchangeRate[] compare) {
+	public void setCompare(TravelbriefingExchangeRate[] compare) {
 		this.compare = compare;
 		this.prepared = false;
 	}
@@ -64,7 +62,7 @@ public class TravelbriefingCurrency {
 		return exchangeRates;
 	}
 
-	public void setExchangeRates(Map<String, TravelbriefingExchangeRate> exchangeRates) {
+	protected void setExchangeRates(Map<String, TravelbriefingExchangeRate> exchangeRates) {
 		this.exchangeRates = exchangeRates;
 		this.prepared = false;
 	}
@@ -75,6 +73,7 @@ public class TravelbriefingCurrency {
 		for (TravelbriefingExchangeRate rate : compare) {
 			exchangeRates.put(rate.getName(), rate);
 		}
+		prepared = true;
 	}
 
 	// As the exchange rates returned by the API are always based on US Dollars

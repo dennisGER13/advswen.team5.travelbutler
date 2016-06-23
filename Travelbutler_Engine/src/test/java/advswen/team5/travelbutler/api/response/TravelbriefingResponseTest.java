@@ -1,7 +1,7 @@
 // *************************************************************************************
 // File:         [TravelbriefingResponseTest.java]
 // Created:      [2016/06/09 Thursday]
-// Last Changed: $Date: 2016/06/17 17:30:00 $
+// Last Changed: $Date: 2016/06/22 21:44:00 $
 // Author:       <A HREF="mailto:[ma-152478@hs-weingarten.de]">[Michael Aulbach]</A>
 //**************************************************************************************
 //Description: 	Test-Klasse für TravelbriefingResponse
@@ -94,7 +94,7 @@ public class TravelbriefingResponseTest {
 	 * The method setAdvise is being called and the new/changed values should be returned.
 	 */
 	@Test
-	public void testGetAdviseShouldBeEqualToAdviseList2AfterSetMethod() {
+	public void testGetAdviseShouldBeEqualToNewAdviseList() {
 		TravelbriefingAdvise travelAdvise4 = new TravelbriefingAdvise("concrete advise4", "www.example.com4");
 		TravelbriefingAdvise travelAdvise5 = new TravelbriefingAdvise("concrete advise5", "www.example.com5");
 		TravelbriefingAdvise travelAdvise6 = new TravelbriefingAdvise("concrete advise6", "www.example.com6");
@@ -117,7 +117,7 @@ public class TravelbriefingResponseTest {
 	 * The method setCurrency is being called and the new/changed values should be returned.
 	 */
 	@Test
-	public void testGetCurrencyShouldBeEqualToTrCurrency2AfterSetMethod() {
+	public void testGetCurrencyShouldBeEqualToNewTravelbriefingCurrency() {
 		TravelbriefingExchangeRate exchangeRate3 = new TravelbriefingExchangeRate("name3", 1);
 		TravelbriefingExchangeRate exchangeRate4 = new TravelbriefingExchangeRate("name4", 3);
 		TravelbriefingExchangeRate[] exchangeRateArray2 = {exchangeRate3, exchangeRate4};
@@ -140,7 +140,7 @@ public class TravelbriefingResponseTest {
 	 * The method setElectricity is being called and the new/changed values should be returned.
 	 */
 	@Test
-	public void testGetElectricityShouldBeEqualToTravelElectricity2AfterSetMethod() {
+	public void testGetElectricityShouldBeEqualToNewTravelElectricity() {
 		String[] plugs2 = {"Plug4", "Plug5", "Plug6"};
 		TravelbriefingElectricity travelElectricity2 = new TravelbriefingElectricity("voltage1", "frequency", plugs2);
 		travelResponse.setElectricity(travelElectricity2);
@@ -161,7 +161,7 @@ public class TravelbriefingResponseTest {
 	 * The method setLanguage is being called and the new/changed values should be returned.
 	 */
 	@Test
-	public void testGetlanguageShouldBeEqualToTrLanguageArray2AfterSetMethod() {
+	public void testGetlanguageShouldBeEqualToNewTravelbriefingLanguage() {
 		TravelbriefingLanguage trLanguage3 = new TravelbriefingLanguage("German", "French" );
 		TravelbriefingLanguage trLanguage4 = new TravelbriefingLanguage("Chinese", "French" );
 		TravelbriefingLanguage[] trLanguageArray2 = { trLanguage3, trLanguage4};
@@ -183,7 +183,7 @@ public class TravelbriefingResponseTest {
 	 * The method setTimezone is being called and the new/changed values should be returned.
 	 */
 	@Test
-	public void testGetTimezoneShouldBeEqualToTrTimezone2AfterSetMethod() {
+	public void testGetTimezoneShouldBeEqualToNewTravelbriefingTimezone() {
 		TravelbriefingTimezone trTimezone2 = new TravelbriefingTimezone("timezone2");
 		travelResponse.setTimezone(trTimezone2);
 		assertEquals(trTimezone2, travelResponse.getTimezone());
@@ -203,7 +203,7 @@ public class TravelbriefingResponseTest {
 	 * The method setVaccinations is being called and the new/changed values should be returned.
 	 */
 	@Test
-	public void testGetVaccinationsShouldBeEqualToTrVaccinationArray2AfterSetMethod() {
+	public void testGetVaccinationsShouldBeEqualToNewTravelbriefingVaccination() {
 		TravelbriefingVaccination trVaccination3 = new TravelbriefingVaccination("Vaccination-Name3", "Vaccination-Message3");
 		TravelbriefingVaccination trVaccination4 = new TravelbriefingVaccination("Vaccination-Name4", "Vaccination-Message4");
 		TravelbriefingVaccination[] trVaccinationArray2 = {trVaccination3, trVaccination4};
@@ -216,7 +216,7 @@ public class TravelbriefingResponseTest {
 	 * The method getWater is being tested (generated dummy-data and returned value should be equal).
 	 */
 	@Test
-	public void testGetWaterShouldBeEqualToTrWater() {
+	public void testGetWaterShouldBeEqualToTravelbriefingWater() {
 		assertEquals(trWater, travelResponse.getWater());
 	}
 
@@ -225,7 +225,7 @@ public class TravelbriefingResponseTest {
 	 * The method setWater is being called and the new/changed values should be returned.
 	 */
 	@Test
-	public void testGetWaterShouldBeEqualToTrWater2AfterSetMethod() {
+	public void testGetWaterShouldBeEqualToNewTravelbriefingWater() {
 		TravelbriefingWater trWater2 = new TravelbriefingWater("description2");
 		travelResponse.setWater(trWater2);
 		assertEquals(trWater2, travelResponse.getWater());

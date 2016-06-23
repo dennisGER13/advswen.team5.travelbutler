@@ -1,7 +1,7 @@
 // *************************************************************************************
-// File:         [APIContainerTwitterTest.java]
-// Created:      [2016/06/08 Wednesday]
-// Last Changed: $Date: 2016/06/22 19:16:00 $
+// File:         [APIContainerTwitterExceptionsTest.java]
+// Created:      [2016/06/22 Wednesday]
+// Last Changed: $Date: 2016/06/22 19:20:00 $
 // Author:       <A HREF="mailto:[ma-152478@hs-weingarten.de]">[Michael Aulbach]</A>
 //**************************************************************************************
 //Description: 	Test-Klasse für APIContainerTwitter
@@ -9,9 +9,7 @@
 //**************************************************************************************
 package advswen.team5.travelbutler.api;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-
+import static org.junit.Assert.*;
 
 import org.junit.After;
 import org.junit.Before;
@@ -20,43 +18,40 @@ import org.junit.Test;
 import advswen.team5.travelbutler.api.response.IAPIResponse;
 
 
-public class APIContainerTwitterTest {
-	
+public class APIContainerTwitterExceptionsTest {
+
 	private IAPIContainer iapiContainer;
 	String searchString = "France";
 	private IAPIResponse processSearch;
 	
-	/**
-	 * Preparation for tests: IAPIResponse being created via valid search-strings
-	 */
 	@Before
 	public void setup(){
 		System.out.println("Setup");
 		iapiContainer = new APIContainerTwitter();
-		processSearch = iapiContainer.processSearch(searchString);
 	
 	}
 	
 	/**
 	 * Test method for {@link advswen.team5.travelbutler.api.APIContainerTwitter#processSearch(java.lang.String)}.
-	 * The IAPIResponse should not be null for a valid search-string.
+	 * The method processSearch should throw an AssertionError for null as provided parameter
 	 */
-	@Test
-	public void testProcessSearchShouldNotBeNull() {
-		System.out.println("testProcessSearch");
-		assertNotNull(processSearch);
+	@Test(expected = AssertionError.class)
+	public void processSearchShouldThrowAssertionErrorForNullString() {
+		System.out.println("Test: processSearchShouldThrowAssertionErrorForNullString");
+		processSearch = iapiContainer.processSearch(null);
+		assertNull(processSearch);
 	}
 	
 	/**
 	 * Test method for {@link advswen.team5.travelbutler.api.APIContainerTwitter#processSearch(java.lang.String)}.
-	 * isMissing for the IAPIResponse should not return false for a valid
+	 * The method processSearch should throw an AssertionError for a blank string
 	 */
-	@Test
-	public void isMissingShouldBeFalseForValidInputString() {
-		System.out.println("Test: isMissingShouldBeFalseForValidInputString");
-		assertFalse(processSearch.isMissing());
+	@Test(expected = AssertionError.class)
+	public void processSearchShouldThrowAssertionErrorForBlankString() {
+		System.out.println("Test: processSearchShouldThrowAssertionErrorForBlankString");
+		processSearch = iapiContainer.processSearch("");
+		assertNull(processSearch);
 	}
-	
 	
 	@After
 	public void cleanup() {
@@ -64,7 +59,5 @@ public class APIContainerTwitterTest {
 		iapiContainer = null;
 		
 	}
-
-
 
 }
