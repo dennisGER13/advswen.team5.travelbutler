@@ -64,7 +64,7 @@ public class APIContainerOWMTest {
 	}
 	
 	@Test
-	public void forecastTempMinWirdBefüllt()throws Exception{
+	public void forecastTempMinWirdBefüllt(){
 		try{
 		assertTrue(out.getForecastTempMin().get(0) != 0.0f);
 		}catch(IndexOutOfBoundsException e){
@@ -73,7 +73,7 @@ public class APIContainerOWMTest {
 	}
 	
 	@Test
-	public void forecastTempMaxWirdBefüllt()throws Exception{
+	public void forecastTempMaxWirdBefüllt(){
 		try{
 		assertTrue(out.getForecastTempMax().get(0) != 0.0f);
 		}catch(IndexOutOfBoundsException e){
@@ -82,7 +82,7 @@ public class APIContainerOWMTest {
 	}
 	
 	@Test
-	public void forecastGeneralWirdBefüllt()throws Exception{
+	public void forecastGeneralWirdBefüllt(){
 		try{
 		assertNotNull(out.getForecastgeneral().get(0));
 		}catch(IndexOutOfBoundsException e){
