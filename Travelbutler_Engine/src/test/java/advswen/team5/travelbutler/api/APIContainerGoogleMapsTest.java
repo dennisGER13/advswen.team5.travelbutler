@@ -39,8 +39,8 @@ public class APIContainerGoogleMapsTest {
 		// Testing that processSearch is not giving back null
 	}
 	@Test
-	public void processSearchShouldNotBeNullForValidCity() {
-		System.out.println("processSearchShouldNotBeNullForValidCity");
+	public void processSearchShouldNotBeNullForValidCountry() {
+		System.out.println("processSearchShouldNotBeNullForValidCountry");
 		assertNotNull(processSearchCountry);	
 	}
 	

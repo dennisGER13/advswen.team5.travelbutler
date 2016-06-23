@@ -38,7 +38,7 @@ public class APIContainerGooglePlacesTest {
 		assertNotNull(processSearchCity);	
 	}
 	@Test
-	public void processSearchShouldNotBeNullForValidCity() {
+	public void processSearchShouldNotBeNullForValidCountry() {
 		System.out.println("processSearchShouldNotBeNullForValidCity");
 		assertNotNull(processSearchCountry);	
 	}
