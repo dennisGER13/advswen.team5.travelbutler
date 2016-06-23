@@ -12,14 +12,11 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-
-import org.jdesktop.swingx.JXDatePicker;
 
 import advswen.team5.travelbutler.output.PDFGenerator;
 import advswen.team5.travelbutler.search.SearchRequestFassade;
@@ -32,14 +29,8 @@ public class InputDialogue extends JFrame implements ActionListener {
 	private JLabel lblInput;
 	private JButton btnSearch;
 	private JButton btnCancel;
-	private JLabel lblStartDate;
-	private JLabel lblEndDate;
-	private JXDatePicker pickerStartDate;
-	private JXDatePicker pickerEndDate;
 	
 	//Attributs that will be used through Getter and Setter methods
-	private Date startDate;
-	private Date endDate;
 	private String travelDestination;
 	
 	//Call of the SearchRequestFassade
@@ -85,29 +76,7 @@ public class InputDialogue extends JFrame implements ActionListener {
 		txtInputString = new JTextField();
 		txtInputString.setBounds(160, 45, 180, 30);
 		frmInputWindow.add(txtInputString);
-	
-//		lblStartDate = new JLabel();
-//		lblStartDate.setText("Check-In");
-//		lblStartDate.setBounds(40, 80, 125, 30);
-//		frmInputWindow.getContentPane().add(lblStartDate);
-//		
-//		pickerStartDate = new JXDatePicker();
-//		pickerStartDate.setBounds(160, 80, 125, 30);
-//		frmInputWindow.getContentPane().add(pickerStartDate);
-//		pickerStartDate.setDate(Calendar.getInstance().getTime());
-//		pickerStartDate.setFormats(new SimpleDateFormat("dd.MM.yyyy"));
-//		
-//		lblEndDate = new JLabel();
-//		lblEndDate.setText("Check-Out");
-//		lblEndDate.setBounds(40, 115, 125, 30);
-//		frmInputWindow.getContentPane().add(lblEndDate);
-//		
-//		pickerEndDate = new JXDatePicker();
-//		pickerEndDate.setBounds(160, 115, 125, 28);
-//		frmInputWindow.getContentPane().add(pickerEndDate);
-//		pickerEndDate.setDate(Calendar.getInstance().getTime());
-//		pickerEndDate.setFormats(new SimpleDateFormat("dd.MM.yyyy"));
-		
+
 	}
 	
 	//Running the program
@@ -145,8 +114,6 @@ public class InputDialogue extends JFrame implements ActionListener {
 			frmInputWindow.dispose();
 			
 			setTravelDestination();
-//			setStartDate();
-//			setEndDate();
 			
 			//String travelDestination give through to SearchRequestFassade			
 			searchRequestFassade = new SearchRequestFassade(travelDestination);
@@ -185,30 +152,6 @@ public class InputDialogue extends JFrame implements ActionListener {
 	public void setTravelDestination() {
 		
 		travelDestination = txtInputString.getText();
-	
-	}
-
-	public Date getStartDate() {
-		
-		return startDate;
-	
-	}
-
-	public void setStartDate() {
-		
-		startDate = pickerStartDate.getDate();
-	
-	}
-
-	public Date getEndDate() {
-	
-		return endDate;
-	
-	}
-
-	public void setEndDate() {
-	
-		endDate = pickerEndDate.getDate();
 	
 	}
 
