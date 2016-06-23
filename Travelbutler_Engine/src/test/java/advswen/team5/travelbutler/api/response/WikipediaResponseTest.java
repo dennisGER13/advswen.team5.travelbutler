@@ -1,7 +1,7 @@
 // *************************************************************************************
 // File:         [WikipediaResponseTest.java]
 // Created:      [2016/06/07 Tuesday]
-// Last Changed: $Date: 2016/06/17 19:48:00 $
+// Last Changed: $Date: 2016/06/23 15:16:00 $
 // Author:       <A HREF="mailto:[ma-152478@hs-weingarten.de]">[Michael Aulbach]</A>
 //**************************************************************************************
 //Description: 	Test-Klasse für WikipediaResponse
@@ -141,14 +141,21 @@ public class WikipediaResponseTest {
 		assertEquals("This is an extract.", wikiResponse2.getShortExtract(18));
 	}
 	
+	/**
+	 * Test method for {@link advswen.team5.travelbutler.api.response.WikipediaResponse#getShortExtract(int)}.
+	 * In this case the short extract should be an empty string, because within the first 17 characters there is no dot,
+	 * which would indicate the end of a sentence. The provided sentence is 18 characters long (without the dot at the end).
+	 */
 	@Test
 	public void testGetShortExtractShouldBeAnEmptyString() {
 		WikipediaResponse wikiResponse2 = new WikipediaResponse(pageid, title, "This is an extract. It's generated for test-purposes");
 		assertEquals("", wikiResponse2.getShortExtract(17));
 	}
 	
+	
 	/**
 	 * Test method for {@link advswen.team5.travelbutler.api.response.WikipediaResponse#getShortExtract(int)}.
+	 * This test ensures, that only full sentences are returned by getShortExtract.
 	 */
 	@Test
 	public void testShortExtractShouldOnlyProvideFullSentences() {

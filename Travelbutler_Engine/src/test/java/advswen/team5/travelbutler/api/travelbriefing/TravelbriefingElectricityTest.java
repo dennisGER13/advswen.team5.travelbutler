@@ -83,7 +83,7 @@ public class TravelbriefingElectricityTest {
 	 */
 	@Test
 	public void testGetPlugsShouldBeEqualToPlugs() {
-		assertArrayEquals(travelElectricity.getPlugs(), new String[]{"Plug1", "Plug2", "Plug3"});
+		assertArrayEquals(new String[]{"Plug1", "Plug2", "Plug3"}, travelElectricity.getPlugs());
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class TravelbriefingElectricityTest {
 	public void testGetPlugsShouldBeEqualToNewPlugs() {
 		String[] plugs2 = {"Plug4", "Plug5", "Plug6"};
 		travelElectricity.setPlugs(plugs2);
-		assertArrayEquals(travelElectricity.getPlugs(), new String[]{"Plug4", "Plug5", "Plug6"});
+		assertArrayEquals(new String[]{"Plug4", "Plug5", "Plug6"}, travelElectricity.getPlugs());
 	}
 
 }

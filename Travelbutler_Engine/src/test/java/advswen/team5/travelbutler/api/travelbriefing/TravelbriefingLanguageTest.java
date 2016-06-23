@@ -43,7 +43,7 @@ public class TravelbriefingLanguageTest {
 
 	/**
 	 * Test method for {@link advswen.team5.travelbutler.api.travelbriefing.TravelbriefingLanguage#getLanguage()}.
-	 * The method getLanguage is being tested (generated dummy-data and returned values for language should be equal).
+	 * The method getLanguage is being tested (generated dummy-data and returned value for language should be equal).
 	 */
 	@Test
 	public void testGetLanguageShouldBeEqualToLanguage() {
@@ -62,7 +62,7 @@ public class TravelbriefingLanguageTest {
 
 	/**
 	 * Test method for {@link advswen.team5.travelbutler.api.travelbriefing.TravelbriefingLanguage#getOfficial()}.
-	 * The method getOfficial is being tested (generated dummy-data and returned values for official should be equal).
+	 * The method getOfficial is being tested (generated dummy-data and returned values for Official should be equal).
 	 */
 	@Test
 	public void testGetOfficialShouldBeEqualToOfficial() {
@@ -71,7 +71,7 @@ public class TravelbriefingLanguageTest {
 
 	/**
 	 * Test method for {@link advswen.team5.travelbutler.api.travelbriefing.TravelbriefingLanguage#setOfficial(java.lang.String)}.
-	 * The method setOfficial is being called and the new/changed official should be returned.
+	 * The method setOfficial is being called and the new/changed Official should be returned.
 	 */
 	@Test
 	public void testGetOfficialShouldBeEqualToNewOfficial() {

@@ -1,7 +1,7 @@
 // *************************************************************************************
 // File:         [PDFGeneratorTest.java]
 // Created:      [2016/06/23 Thursday]
-// Last Changed: $Date: 2016/06/23 11:34:00 $
+// Last Changed: $Date: 2016/06/23 14:50:00 $
 // Author:       <A HREF="mailto:[ma-152478@hs-weingarten.de]">[Michael Aulbach]</A>
 //**************************************************************************************
 //Description: 	Test-Klasse für PDFGenerator
@@ -84,9 +84,6 @@ public class PDFGeneratorTest {
 		trWater = new TravelbriefingWater(shortDescription);
 		travelResponse = new TravelbriefingResponse(adviseList, trCurrency, travelElectricity, trLanguageArray, trTimezone, trVaccinationArray, trWater);
 		
-//		response = new Response("Test-Destination");
-//		response.setWikipediaResponse(wikiResponse);
-//		response.setTravelbriefingResponse(travelResponse);
 		
 	}
 	

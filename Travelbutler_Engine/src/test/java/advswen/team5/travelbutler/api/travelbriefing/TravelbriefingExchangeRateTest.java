@@ -59,7 +59,7 @@ public class TravelbriefingExchangeRateTest {
 
 	/**
 	 * Test method for {@link advswen.team5.travelbutler.api.travelbriefing.TravelbriefingExchangeRate#getRate()}.
-	 * The method getRate is being tested (generated dummy-data and returned value for rate should be equal).
+	 * The method getRate is being tested (generated dummy-data and returned value for rate should be equal, delta is set to 0, thus there is no difference between the values).
 	 */
 	@Test
 	public void testGetRateShouldBeEqualToRate() {

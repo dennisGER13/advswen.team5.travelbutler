@@ -1,7 +1,7 @@
 // *************************************************************************************
 // File:         [TravelbriefingTimezoneTest.java]
 // Created:      [2016/06/08 Wednesday]
-// Last Changed: $Date: 2016/06/20 10:53:00 $
+// Last Changed: $Date: 2016/06/23 14:55:00 $
 // Author:       <A HREF="mailto:[ma-152478@hs-weingarten.de]">[Michael Aulbach]</A>
 //**************************************************************************************
 //Description: 	Test-Klasse für TravelbriefingTimezone
@@ -37,7 +37,7 @@ public class TravelbriefingTimezoneTest {
 	 * TravelbriefingTimezone should not be null.
 	 */
 	@Test
-	public void testTravelbriefingTimezone() {
+	public void testTravelbriefingTimezoneShouldNotBeNull() {
 	assertNotNull(trTimezone);
 	}
 
