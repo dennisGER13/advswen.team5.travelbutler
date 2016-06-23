@@ -16,7 +16,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({ APIContainerGoogleGeoCodingTest.class, APIContainerOWMTest.class, APIContainerTravelbriefingTest.class,
 		APIContainerTwitterExceptionsTest.class, APIContainerTwitterMockTest.class, APIContainerTwitterTest.class,
-		APIContainerWikipediaTest.class })
+		APIContainerWikipediaTest.class, APIContainerGoogleMapsTest.class, APIContainerGooglePlacesTest.class })
 public class APITestSuite {
 
 }
