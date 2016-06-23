@@ -14,19 +14,14 @@ import net.aksingh.owmjapis.OpenWeatherMap;
 
 public class APIContainerOWMTest {
 	
-	@Mock
-	CurrentWeather cw;
-	
-	@InjectMocks
 	APIContainerOWM out;
-	
+
 	
 	
 	@Before
 	public void setUp()throws Exception{
 		out = new APIContainerOWM();
-		MockitoAnnotations.initMocks(this);
-		Mockito.when(cw.getMainInstance().getMinTemperature()).thenReturn(10.0F);
+		out.processSearch("Berlin");
 	}
 	
 	@Test
@@ -35,15 +30,64 @@ public class APIContainerOWMTest {
 	}
 	
 	@Test
-	public void testAPIContainerOWMErzeugtCurrentWeatherObjekt(){
-	fail();
+	public void testAPIContainerOWMErzeugtOpenWeatherMap(){
+	assertNotNull(out.getOwm());
 	}
 	
 	@Test
-	public void testeSetCurrentWeather(){
-		float f = cw.getMainInstance().getMinTemperature();
-		assertEquals(10.0F, f, 0);
+	public void testAPIContainerOWMErzeugtResponseObjekt(){
+	assertNotNull(out.getOwmresponse());
+	}
+	
+	@Test
+	public void currentMinTemperaturWirdBefüllt(){
+		assertTrue(out.getCurrentMinTemperatur() != 0.0f);
+	}
+	
+	@Test
+	public void currentMaxTemperaturWirdBefüllt(){
+		assertTrue(out.getCurrentMaxTemperatur() != 0.0f);
+	}
+	
+	@Test
+	public void currentHumidityWirdBefüllt(){
+		assertTrue(out.getCurrentHumidity() != 0.0f);
+	}
+	
+	@Test
+	public void currentPressureWirdBefüllt(){
+		assertTrue(out.getCurrentPressure() != 0.0f);
 	}
 
+	@Test
+	public void currentGeneralWeatherWirdBefüllt(){
+		assertNotNull(out.getCurrentGeneralWeather());
+	}
 	
+	@Test
+	public void forecastTempMinWirdBefüllt()throws Exception{
+		try{
+		assertTrue(out.getForecastTempMin().get(0) != 0.0f);
+		}catch(IndexOutOfBoundsException e){
+			fail();
+		}
+	}
+	
+	@Test
+	public void forecastTempMaxWirdBefüllt()throws Exception{
+		try{
+		assertTrue(out.getForecastTempMax().get(0) != 0.0f);
+		}catch(IndexOutOfBoundsException e){
+			fail();
+		}
+	}
+	
+	@Test
+	public void forecastGeneralWirdBefüllt()throws Exception{
+		try{
+		assertNotNull(out.getForecastgeneral().get(0));
+		}catch(IndexOutOfBoundsException e){
+			fail();
+		}
+	}
 }

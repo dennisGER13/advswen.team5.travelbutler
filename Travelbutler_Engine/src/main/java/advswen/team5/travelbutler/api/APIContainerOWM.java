@@ -27,8 +27,6 @@ public class APIContainerOWM implements IAPIContainer {
 	private String currentGeneralWeather;
 	private ArrayList<Float> forecastTempMin= new ArrayList<Float>();
 	private ArrayList<Float> forecastTempMax= new ArrayList<Float>();
-//	private ArrayList<Float> forecastRain= new ArrayList<Float>();
-//	private ArrayList<Float> forecastclouds = new ArrayList<Float>();
 	private ArrayList<String> forecastgeneral = new ArrayList<String>();
 	OWMResponse owmresponse;
 	OpenWeatherMap owm;
@@ -52,9 +50,71 @@ public class APIContainerOWM implements IAPIContainer {
 		return owmresponse;
 	}
 	
+	
+	
+	public float getCurrentMinTemperatur() {
+		return currentMinTemperatur;
+	}
+
+
+
+	public float getCurrentMaxTemperatur() {
+		return currentMaxTemperatur;
+	}
+
+
+
+	public float getCurrentHumidity() {
+		return currentHumidity;
+	}
+
+
+
+	public float getCurrentPressure() {
+		return currentPressure;
+	}
+
+
+
+	public String getCurrentGeneralWeather() {
+		return currentGeneralWeather;
+	}
+
+
+
+	public ArrayList<Float> getForecastTempMin() {
+		return forecastTempMin;
+	}
+
+
+
+	public ArrayList<Float> getForecastTempMax() {
+		return forecastTempMax;
+	}
+
+
+
+	public ArrayList<String> getForecastgeneral() {
+		return forecastgeneral;
+	}
+
+
+
+	public OWMResponse getOwmresponse() {
+		return owmresponse;
+	}
+
+
+
+	public OpenWeatherMap getOwm() {
+		return owm;
+	}
+
+
+
 	public void searchWeatherInformation(String requestString)throws IOException, MalformedURLException, JSONException{
-	// declaring object of "OpenWeatherMap" class
-    owm = new OpenWeatherMap(Units.METRIC, Language.GERMAN, "9d67ca64545f5cdd04e72bd82835d104");
+
+    owm = new OpenWeatherMap(Units.METRIC, Language.ENGLISH, "9d67ca64545f5cdd04e72bd82835d104");
 
     //Abrufen der Wetterinformationen des Strings
     CurrentWeather cwd = owm.currentWeatherByCityName(requestString);
