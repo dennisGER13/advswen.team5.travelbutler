@@ -1,7 +1,7 @@
 // *************************************************************************************
 // File:         [TravelbriefingCurrencyTest.java]
 // Created:      [2016/06/08 Wednesday]
-// Last Changed: $Date: 2016/06/22 19:18:00 $
+// Last Changed: $Date: 2016/06/23 10:13:00 $
 // Author:       <A HREF="mailto:[ma-152478@hs-weingarten.de]">[Michael Aulbach]</A>
 //**************************************************************************************
 //Description: 	Test-Klasse für TravelbriefingCurrency
@@ -110,6 +110,7 @@ public class TravelbriefingCurrencyTest {
 		assertArrayEquals(exchangeRateArray2, trCurrency.getCompare());
 	}
 	
+	
 	/**
 	 * ExchangeRateMap should not be null
 	 */
@@ -167,35 +168,71 @@ public class TravelbriefingCurrencyTest {
 		
 	}
 	
-	/**
-	 * Test method for {@link advswen.team5.travelbutler.api.travelbriefing.TravelbriefingCurrency#setExchangeRates(java.util.Map)}.
-	 * The ExchangeRates of the currency is changed via setExchangeRates, thus getExchangeRates should return the new/changed Map.
-	 */
-	@Test
-	public void testGetExchangeRatesShouldBeEqualToNewExchangeRates() {
-		Map<String, TravelbriefingExchangeRate> exchangeRateMap2;
-		TravelbriefingExchangeRate exchangeRate3 = new TravelbriefingExchangeRate("Yen", 3);
-		TravelbriefingExchangeRate exchangeRate4 = new TravelbriefingExchangeRate("CA-Dollar", 4);
-		TravelbriefingExchangeRate[] exchangeRateArray2 = {exchangeRate3, exchangeRate4};
-		exchangeRateMap2 = new HashMap<String, TravelbriefingExchangeRate>();
-		for (TravelbriefingExchangeRate rate : exchangeRateArray2) {
-			exchangeRateMap2.put(rate.getName(), rate);
-		}
-		trCurrency.setExchangeRates(exchangeRateMap2);
-		assertEquals(exchangeRateMap2, trCurrency.getExchangeRates());
-		
 
-	}
-	
 	/**
 	 * Test method for {@link advswen.team5.travelbutler.api.travelbriefing.TravelbriefingCurrency#getExchangeRate(java.lang.String)}.
 	 * getExchangeRate and value from dummy-data should be equal.
 	 */
 	@Test
-	public void testGetExchangeRateShouldBeEqualToDummyExchangeRate() {
+	public void testCurrencyConversionForDummyExchangeRate() {
 		assertEquals( 1.5, trCurrency.getExchangeRate("US-Dollar"), 0);
 	}
 	
+	/**
+	 * Test method for {@link advswen.team5.travelbutler.api.travelbriefing.TravelbriefingCurrency#setExchangeRates(java.util.Map)}.
+	 * This test is "commented out", because the new TravelbriefingExchangeRate are provided via a prepared HashMap, which is not intended, so please look
+	 * at the following tests (testCurrencyConversionForNewYenExchangeRate and testCurrencyConversionForNewCADollarExchangeRate), 
+	 * which test the currency conversion for new TravelbriefingExchangeRates.
+	 */
+//	@Test
+//	public void testGetExchangeRatesShouldBeEqualToNewExchangeRates() {
+//		Map<String, TravelbriefingExchangeRate> exchangeRateMap2;
+//		TravelbriefingExchangeRate exchangeRate3 = new TravelbriefingExchangeRate("Yen", 3);
+//		TravelbriefingExchangeRate exchangeRate4 = new TravelbriefingExchangeRate("CA-Dollar", 4);
+//		TravelbriefingExchangeRate[] exchangeRateArray2 = {exchangeRate3, exchangeRate4};
+//		exchangeRateMap2 = new HashMap<String, TravelbriefingExchangeRate>();
+//		for (TravelbriefingExchangeRate rate : exchangeRateArray2) {
+//			exchangeRateMap2.put(rate.getName(), rate);
+//		}
+//		trCurrency.setExchangeRates(exchangeRateMap2);
+//		assertEquals(exchangeRateMap2, trCurrency.getExchangeRates());
+//		
+//
+//	}
+	
+	/**
+	 * New TravelbriefingExchangeRates are set via the method setCompare, after that the TravelbriefingExchangeRates are copied into
+	 * the exchangeRateMap via getCompare. So the currency conversion can finally be tested for the new TravelbriefingExchangeRates.
+	 * 
+	 */
+	@Test
+	public void testCurrencyConversionForNewYenExchangeRate() {
+		TravelbriefingExchangeRate exchangeRate3 = new TravelbriefingExchangeRate("Euro", 1);
+		TravelbriefingExchangeRate exchangeRate4 = new TravelbriefingExchangeRate("Yen", 5);
+		TravelbriefingExchangeRate exchangeRate5 = new TravelbriefingExchangeRate("CA-Dollar", 3);
+		TravelbriefingExchangeRate[] exchangeRateArray2 = {exchangeRate3, exchangeRate4, exchangeRate5};
+		trCurrency.setCompare(exchangeRateArray2);
+		trCurrency.getCompare();
+		assertEquals( 5.0, trCurrency.getExchangeRate("Yen"), 0);
+		
+	}
+	
+	/**
+	 * New TravelbriefingExchangeRates are set via the method setCompare, after that the TravelbriefingExchangeRates are copied into
+	 * the exchangeRateMap via getCompare. So the currency conversion can finally be tested for the new TravelbriefingExchangeRates.
+	 * 
+	 */
+	@Test
+	public void testCurrencyConversionForNewCADollarExchangeRate() {
+		TravelbriefingExchangeRate exchangeRate3 = new TravelbriefingExchangeRate("Euro", 1);
+		TravelbriefingExchangeRate exchangeRate4 = new TravelbriefingExchangeRate("Yen", 5);
+		TravelbriefingExchangeRate exchangeRate5 = new TravelbriefingExchangeRate("CA-Dollar", 3);
+		TravelbriefingExchangeRate[] exchangeRateArray2 = {exchangeRate3, exchangeRate4, exchangeRate5};
+		trCurrency.setCompare(exchangeRateArray2);
+		trCurrency.getCompare();
+		assertEquals( 3.0, trCurrency.getExchangeRate("CA-Dollar"), 0);
+		
+	}
 
 
 }
